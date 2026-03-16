@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HuCon — Humans in Conversation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1a2f6b;
+    --navy-deep:  #111e4a;
+    --navy-mid:   #2a4080;
+    --cream:      #f5f0e8;
+    --cream-dark: #e8e0d0;
+    --gold:       #e8c832;
+    --gold-pale:  #f5e27a;
+    --text-on-navy: rgba(245,240,232,0.68);
+    --text-muted: #5a6a8a;
+    --border-navy: rgba(26,47,107,0.14);
+    --border-cream: rgba(245,240,232,0.14);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--navy-deep);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  .cursor {
+    position: fixed;
+    width: 10px; height: 10px;
+    background: var(--navy);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width .25s, height .25s, background .2s;
+    mix-blend-mode: multiply;
+  }
+  .cursor.grow { width: 42px; height: 42px; background: var(--gold); opacity: .7; }
+
+  .lace-bg {
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(245,240,232,0.055)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='rgba(245,240,232,0.04)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='9' fill='none' stroke='rgba(245,240,232,0.05)' stroke-width='.4'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='rgba(245,240,232,0.03)' stroke-width='.4'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.5rem 3.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .4s, backdrop-filter .4s;
+  }
+  nav.scrolled { background: rgba(17,30,74,.96); backdrop-filter: blur(14px); }
+
+  .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; filter: brightness(0) invert(1); opacity: .9; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: .06em; color: var(--cream); }
+
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: .5; transition: opacity .2s; }
+  .nav-links a:hover { opacity: 1; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; background: var(--navy-deep);
+    display: grid; grid-template-columns: 1fr 1fr;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-mandala {
+    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
+    width: 660px; height: 660px; opacity: .065; pointer-events: none; z-index: 0;
+  }
+
+  .hero-left {
+    padding: 11rem 4rem 6rem 6rem;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem; font-weight: 400;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow::before { content:''; display:block; width:36px; height:1px; background:var(--gold); }
+
+  h1.hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(50px,5.5vw,78px); font-weight: 300;
+    line-height: 1.06; color: var(--cream); margin-bottom: 2rem;
+  }
+  h1.hero-headline em { font-style: italic; color: var(--gold); }
+
+  .hero-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 380px; margin-bottom: 3rem; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--navy-deep); background: var(--gold);
+    padding: 15px 32px; text-decoration: none; border: none; cursor: none;
+    transition: background .25s, transform .2s;
+  }
+  .btn-primary:hover { background: var(--gold-pale); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 12px;
+    font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400;
+    letter-spacing: .14em; text-transform: uppercase;
+    color: var(--cream); background: transparent;
+    padding: 14px 32px; text-decoration: none;
+    border: 1px solid rgba(245,240,232,.3); cursor: none;
+    transition: border-color .25s, background .25s;
+  }
+  .btn-outline:hover { border-color: var(--cream); background: rgba(245,240,232,.07); }
+
+  .hero-right {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 8rem 5rem 6rem 3rem; gap: 1.5rem;
+    border-left: 1px solid var(--border-cream);
+  }
+
+  .hero-card {
+    background: rgba(245,240,232,.05); border: 1px solid rgba(245,240,232,.11);
+    padding: 2rem 2.25rem; cursor: none;
+    transition: background .25s, border-color .25s;
+  }
+  .hero-card:hover { background: rgba(245,240,232,.09); border-color: rgba(245,240,232,.22); }
+
+  .event-pill {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--gold); color: var(--navy-deep);
+    font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+    padding: 5px 12px; margin-bottom: 1rem;
+  }
+  .event-dot { width:5px; height:5px; background:var(--navy-deep); border-radius:50%; animation: pulse 1.8s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+  .hero-card-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; font-weight:400; }
+  .hero-card-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; color:var(--cream); line-height:1.35; margin-bottom:.75rem; font-style:italic; }
+  .hero-card-meta { font-size:12px; color:rgba(245,240,232,.32); letter-spacing:.07em; }
+
+  /* MARQUEE */
+  .marquee-wrap { background: var(--navy); overflow: hidden; padding: .9rem 0; border-top: 1px solid rgba(245,240,232,.07); border-bottom: 1px solid rgba(245,240,232,.07); }
+  .marquee-track { display:flex; animation: marquee 32s linear infinite; white-space:nowrap; }
+  .marquee-item { font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic; color:rgba(245,240,232,.32); padding:0 2.5rem; flex-shrink:0; }
+  .marquee-item .dot { color:var(--gold); font-style:normal; font-size:20px; margin:0 .6rem; vertical-align:middle; }
+  @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* SHARED */
+  .section-inner { max-width:1200px; margin:0 auto; padding:0 5rem; }
+
+  .section-label {
+    font-size:10px; letter-spacing:.25em; text-transform:uppercase;
+    color:var(--navy-mid); margin-bottom:1.75rem; font-weight:400;
+    display:flex; align-items:center; gap:1rem;
+  }
+  .section-label::before { content:''; display:block; width:28px; height:1px; background:var(--navy-mid); }
+  .section-label.light { color:var(--gold); }
+  .section-label.light::before { background:var(--gold); }
+
+  .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,4vw,54px); font-weight:300; line-height:1.1; color:var(--navy-deep); margin-bottom:2rem; }
+  .section-title em { font-style:italic; color:var(--navy-mid); }
+  .section-title.light { color:var(--cream); }
+  .section-title.light em { color:var(--gold); }
+
+  /* WHAT */
+  .what { padding:10rem 0 8rem; }
+  .what-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:7rem; align-items:start; }
+  .what-left { position:sticky; top:6rem; }
+  .seal-img { width:150px; height:150px; object-fit:contain; opacity:.16; margin-top:2.5rem; filter:saturate(0); }
+
+  .body-text { font-size:17px; line-height:1.9; color:#3a4a6a; margin-bottom:1.5rem; }
+  .body-text strong { color:var(--navy-deep); font-weight:500; }
+
+  .big-quote {
+    font-family:'Cormorant Garamond',serif; font-size:clamp(26px,3.2vw,42px); font-weight:300; font-style:italic;
+    line-height:1.3; color:var(--navy-deep); margin:6rem 0;
+    padding:2.5rem 3rem; border-left:3px solid var(--navy);
+    background:rgba(26,47,107,.04); max-width:780px;
+  }
+
+  /* HOW */
+  .how { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
+
+  .steps-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:5rem; position:relative; }
+  .steps-grid::before { content:''; position:absolute; top:31px; left:8%; right:8%; height:1px; background:rgba(245,240,232,.1); }
+
+  .step { padding:0 1.75rem; position:relative; }
+  .step-num { width:62px; height:62px; border:1px solid rgba(245,240,232,.18); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--gold); margin-bottom:2rem; background:var(--navy-deep); position:relative; z-index:1; }
+  .step h3 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:var(--cream); margin-bottom:.75rem; line-height:1.3; }
+  .step p { font-size:13px; line-height:1.85; color:rgba(232,200,50,.75); }
+
+  /* BOWL */
+  .bowl-section { display:grid; grid-template-columns:1fr 1fr; background:var(--navy); min-height:500px; }
+  .bowl-img-wrap { position:relative; overflow:hidden; }
+  .bowl-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; opacity:.88; }
+
+  .bowl-text { padding:6rem 5rem; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:2; border-left:1px solid var(--border-cream); }
+  .bowl-text .section-label { color:var(--gold); }
+  .bowl-text .section-label::before { background:var(--gold); }
+  .bowl-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,2.6vw,34px); font-weight:300; font-style:italic; color:var(--cream); line-height:1.35; margin-bottom:1.75rem; }
+  .bowl-body { font-size:15px; line-height:1.85; color:var(--text-on-navy); }
+
+  /* EVENTS */
+  .events { padding:10rem 0; }
+  .events-list { margin-top:4rem; border-top:1px solid var(--border-navy); }
+  .event-row { display:grid; grid-template-columns:110px 1fr 1.2fr auto; align-items:center; gap:3rem; padding:2.25rem 0; border-bottom:1px solid var(--border-navy); cursor:none; transition:padding .2s, background .2s; }
+  .event-row:hover { background:rgba(26,47,107,.04); padding-left:1.25rem; padding-right:1.25rem; margin:0 -1.25rem; }
+
+  .event-date { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--navy); line-height:1; }
+  .event-date span { display:block; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); font-family:'Outfit',sans-serif; margin-top:4px; }
+  .event-city { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:var(--navy-deep); }
+  .event-theme { font-size:14px; color:var(--text-muted); line-height:1.65; font-style:italic; }
+  .event-tag { font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 18px; border:1px solid var(--border-navy); color:var(--text-muted); white-space:nowrap; }
+  .event-tag.live { background:var(--navy); border-color:var(--navy); color:var(--gold); }
+
+  /* MISSION */
+  .mission { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
+  .mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
+  .mission-left { padding-right:7rem; border-right:1px solid var(--border-cream); }
+  .mission-right { padding-left:7rem; display:flex; flex-direction:column; justify-content:center; }
+  .mission .body-text { color:var(--text-on-navy); }
+  .mission .body-text strong { color:var(--cream); font-weight:400; }
+
+  .stats-grid { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--border-cream); }
+  .stat-cell { padding:2.25rem; border-right:1px solid var(--border-cream); border-bottom:1px solid var(--border-cream); }
+  .stat-cell:nth-child(2n) { border-right:none; }
+  .stat-cell:nth-child(3), .stat-cell:nth-child(4) { border-bottom:none; }
+  .stat-big { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:8px; }
+  .stat-desc { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.28); line-height:1.6; }
+
+  /* HOST */
+  .host { padding:10rem 0; }
+  .host-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:8rem; align-items:start; }
+
+  .host-steps { margin-top:3rem; }
+  .host-step { display:flex; gap:2rem; padding:1.75rem 0; border-bottom:1px solid var(--border-navy); }
+  .host-step-num { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:var(--navy-mid); opacity:.35; line-height:1; flex-shrink:0; width:36px; }
+  .host-step h4 { font-size:14px; font-weight:500; color:var(--navy-deep); margin-bottom:5px; }
+  .host-step p { font-size:13px; line-height:1.75; color:var(--text-muted); }
+
+  .host-cta { background:var(--navy); padding:3.5rem; position:relative; overflow:hidden; }
+  .host-cta-seal { position:absolute; bottom:-30px; right:-30px; width:180px; opacity:.12; pointer-events:none; }
+  .host-cta h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; line-height:1.25; color:var(--cream); margin-bottom:1.25rem; position:relative; z-index:1; }
+  .host-cta p { font-size:15px; line-height:1.8; color:var(--text-on-navy); margin-bottom:2rem; position:relative; z-index:1; }
+
+  /* SPOTIFY */
+  .spotify { padding:9rem 0; background:var(--navy-deep); text-align:center; position:relative; overflow:hidden; }
+  .spotify-sub { font-size:17px; line-height:1.85; color:var(--text-on-navy); max-width:520px; margin:1.5rem auto 1.5rem; }
+  .spotify-embed-wrap { max-width:860px; margin:0 auto 0; width:100%; }
+  .spotify-btn { display:inline-flex; align-items:center; gap:12px; background:#1DB954; color:white; font-family:'Outfit',sans-serif; font-size:14px; font-weight:500; letter-spacing:.06em; padding:16px 36px; text-decoration:none; border-radius:100px; transition:transform .2s, background .2s; cursor:none; }
+  .spotify-btn:hover { transform:scale(1.04); background:#1ed760; }
+
+  /* FOOTER */
+  footer { background:var(--navy-deep); border-top:1px solid var(--border-cream); padding:5rem 5rem 3rem; }
+  .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:6rem; margin-bottom:4rem; }
+  .footer-brand-logo { display:flex; align-items:center; gap:12px; margin-bottom:1.25rem; }
+  .footer-brand-logo img { width:42px; height:42px; object-fit:contain; filter: brightness(0) invert(1); opacity:.6; }
+  .footer-brand h2 { font-family:'Cormorant Garamond',serif; font-size:24px; font-weight:300; color:var(--cream); }
+  .footer-brand p { font-size:14px; line-height:1.8; color:var(--text-on-navy); max-width:300px; }
+  .footer-col h4 { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.5rem; font-weight:400; }
+  .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:.75rem; }
+  .footer-col a { font-size:14px; color:var(--text-on-navy); text-decoration:none; transition:color .2s; }
+  .footer-col a:hover { color:var(--cream); }
+  .footer-bottom { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; padding-top:2rem; border-top:1px solid var(--border-cream); }
+  .footer-bottom p { font-size:12px; color:rgba(245,240,232,.28); }
+  .footer-tagline { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:rgba(245,240,232,.32); }
+
+
+
+  /* FOUNDER NOTE */
+  .founder-note {
+    display: flex; gap: 1.5rem; align-items: flex-start;
+    margin-top: 2.5rem; padding-top: 2rem;
+    border-top: 1px solid var(--border-cream);
+  }
+  .founder-img-wrap { flex-shrink: 0; }
+  .founder-img {
+    width: 80px; height: 80px; border-radius: 50%;
+    object-fit: cover; object-position: top;
+    border: 2px solid rgba(245,240,232,.2);
+    display: block;
+  }
+  .founder-label {
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px; font-weight: 400;
+  }
+  .founder-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 20px;
+    font-weight: 400; color: var(--cream); margin-bottom: .6rem; line-height: 1.2;
+  }
+  .founder-bio {
+    font-size: 13px; line-height: 1.8;
+    color: rgba(245,240,232,.5); margin-bottom: .75rem;
+  }
+  .founder-bio em { font-style: italic; color: rgba(245,240,232,.65); }
+  .founder-link {
+    font-size: 12px; letter-spacing: .08em; color: var(--gold);
+    text-decoration: none; text-transform: uppercase;
+    transition: opacity .2s;
+  }
+  .founder-link:hover { opacity: .7; }
+
+  /* PARTNERS */
+  .partners-block {
+    margin-top: 2.5rem; padding-top: 2rem;
+    border-top: 1px solid var(--border-navy);
+  }
+  .partners-label {
+    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--navy-mid); margin-bottom: 1.25rem; font-weight: 400;
+  }
+  .partners-list { display: flex; flex-direction: column; gap: 0; }
+  .partner-item {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: .6rem 0; border-bottom: 1px solid var(--border-navy);
+    font-size: 14px;
+  }
+  .partner-item:last-child { border-bottom: none; }
+  .partner-city {
+    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--navy-mid); min-width: 90px; flex-shrink: 0;
+  }
+  .partner-name { color: var(--navy-deep); font-weight: 400; }
+
+  @media (max-width: 960px) {
+    .founder-note { flex-direction: column; gap: 1.25rem; }
+    .founder-img { width: 64px; height: 64px; }
+  }
+
+  /* GALLERY */
+  .gallery { padding: 10rem 0 6rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .postcard { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1; cursor: none; }
+  .postcard img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
+  .postcard:hover img { transform: scale(1.04); }
+  .postcard-label { position: absolute; bottom: 0; left: 0; right: 0; padding: .75rem 1rem; background: linear-gradient(transparent, rgba(17,30,74,.85)); color: var(--cream); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; }
+
+  /* SIGNUP */
+  .signup-section { padding: 9rem 0; background: var(--navy-deep); position: relative; overflow: hidden; }
+  .signup-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start; }
+  .signup-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 380px; margin-top: 1.5rem; }
+
+  .signup-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .form-group { display: flex; flex-direction: column; gap: .5rem; }
+  .form-group label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 400; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: rgba(245,240,232,.06);
+    border: 1px solid rgba(245,240,232,.15);
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 14px 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(245,240,232,.3); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group select option { background: var(--navy-deep); color: var(--cream); }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+
+  @media (max-width:960px) {
+    .gallery { padding: 5rem 0 3rem; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .signup-section { padding: 5rem 0; }
+    .signup-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .signup-sub { max-width: 100%; }
+  }
+  @media (max-width:480px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .85s ease, transform .85s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay:.1s; }
+  .reveal-delay-2 { transition-delay:.2s; }
+  .reveal-delay-3 { transition-delay:.3s; }
+  .reveal-delay-4 { transition-delay:.4s; }
+  .reveal-delay-5 { transition-delay:.5s; }
+
+  /* RESPONSIVE */
+  @media (max-width:960px) {
+    /* Hide custom cursor on touch devices */
+    .cursor { display: none; }
+    body { cursor: auto; }
+
+    nav { padding:1.25rem 1.5rem; }
+    .nav-links { display:none; }
+
+    /* Logo: the seal PNG has a black bg — show text only on mobile */
+    .nav-logo img { display: none; }
+    .nav-logo-text { font-size: 22px; }
+
+    .hero { grid-template-columns:1fr; min-height: auto; }
+    .hero-left { padding:7rem 1.5rem 2.5rem; }
+    .hero-headline { font-size: clamp(38px, 10vw, 56px); }
+    .hero-sub { font-size: 15px; max-width: 100%; }
+    .hero-right { border-left:none; border-top:1px solid var(--border-cream); padding:2rem 1.5rem 2.5rem; gap: 1rem; }
+    .hero-card-title { font-size: 19px; }
+    .hero-mandala { display:none; }
+
+    .section-inner { padding:0 1.5rem; }
+
+    /* What section */
+    .what { padding: 5rem 0 4rem; }
+    .what-grid { grid-template-columns:1fr; gap:2rem; }
+    .what-left { position:static; }
+    .seal-img { display: none; }
+    .section-title { font-size: clamp(30px, 8vw, 44px); }
+    .body-text { font-size: 15px; line-height: 1.8; }
+    .big-quote { font-size: clamp(20px, 5.5vw, 28px); padding: 1.5rem 1.5rem; margin: 3rem 0; }
+
+    /* How it works — single column on mobile */
+    .how { padding: 5rem 0; }
+    .steps-grid { grid-template-columns: 1fr; gap: 0; margin-top: 3rem; }
+    .steps-grid::before { display:none; }
+    .step { padding: 1.75rem 0; border-bottom: 1px solid rgba(245,240,232,0.1); }
+    .step:last-child { border-bottom: none; }
+    .step-num { width: 48px; height: 48px; font-size: 18px; margin-bottom: 1rem; }
+    .step h3 { font-size: 20px; color: var(--cream); }
+    .step p { font-size: 15px; color: var(--gold) !important; opacity: 1; line-height: 1.75; }
+
+    /* Bowl */
+    .bowl-section { grid-template-columns:1fr; }
+    .bowl-img-wrap { min-height:260px; }
+    .bowl-text { padding:2.5rem 1.5rem; border-left:none; border-top:1px solid var(--border-cream); }
+    .bowl-quote { font-size: clamp(18px, 5vw, 26px); }
+    .bowl-body { font-size: 14px; }
+
+    /* Events */
+    .events { padding: 5rem 0; }
+    .event-row { grid-template-columns: 70px 1fr; gap: 1rem; padding: 1.5rem 0; }
+    .event-date { font-size: 28px; }
+    .event-city { font-size: 22px; }
+    .event-theme { display: none; }
+    .event-tag { display: inline-block; font-size: 11px; padding: 5px 12px; grid-column: 2; }
+
+    /* Mission */
+    .mission { padding: 5rem 0; }
+    .mission-grid { grid-template-columns: 1fr; }
+    .mission-left { padding-right:0; border-right:none; border-bottom:1px solid var(--border-cream); padding-bottom:3rem; margin-bottom:3rem; padding-top: 0; }
+    .mission-right { padding-left:0; }
+    .stat-big { font-size: 40px; }
+    .stat-cell { padding: 1.5rem; }
+
+    /* Host */
+    .host { padding: 5rem 0; }
+    .host-grid { grid-template-columns:1fr; gap:3rem; }
+    .host-cta { padding: 2.5rem 1.5rem; }
+    .host-cta h3 { font-size: 26px; }
+
+    /* Spotify */
+    .spotify { padding: 5rem 0; }
+    .spotify-sub { font-size: 15px; padding: 0 1rem; }
+
+    /* Footer */
+    footer { padding: 3.5rem 1.5rem 2rem; }
+    .footer-inner { grid-template-columns:1fr; gap:2.5rem; margin-bottom: 2.5rem; }
+    .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
+  }
+
+  /* Extra small phones */
+  @media (max-width: 380px) {
+    .hero-headline { font-size: 34px; }
+    .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">
+    <img src="Circular_Seal_HIC_LOGO.png" alt="HuCon seal">
+    <span class="nav-logo-text">HuCon</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#what">What is HuCon</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#gallery">Cities</a></li>
+    <li><a href="#signup">Join a table</a></li>
+    <li><a href="#host">Host</a></li>
+    <li><a href="#listen">Listen</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="lace-bg"></div>
+  <img class="hero-mandala" src="Circular_Seal_HIC_LOGO.png" alt="">
+
+  <div class="hero-left">
+    <p class="hero-eyebrow">Humans in Conversation</p>
+    <h1 class="hero-headline">Where cities<br>pause to<br><em>really listen.</em></h1>
+    <p class="hero-sub">Small tables. Honest stories. No cameras. HuCon gathers people in cities around the world to share how they're truly doing — and sends those stories into a global archive.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="#events" class="btn-primary">Find an event →</a>
+      <a href="#host" class="btn-outline">Host a table</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
+      <p class="hero-card-label">Pittsburgh · 13 March 2026</p>
+      <p class="hero-card-title">"When the cost of care keeps rising, how do you protect your wellbeing?"</p>
+      <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
+    </div>
+    <div class="hero-card">
+      <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
+      <p class="hero-card-label">Milano · 20 March 2026</p>
+      <p class="hero-card-title">"In a city of non-stop performance, how do you show up for you?"</p>
+      <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
+    </div>
+    <div class="hero-card">
+      <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
+      <p class="hero-card-label">Rome · 27 March 2026</p>
+      <p class="hero-card-title">"You came to Rome to begin again. How is that going for you?"</p>
+      <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
+    </div>
+    <p style="font-size:12px;color:rgba(245,240,232,.28);letter-spacing:.06em;margin-top:.5rem;">These are the stories we don't usually tell.</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> New York <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> New York <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+  </div>
+</div>
+
+<!-- WHAT IS HUCON -->
+<section class="what" id="what">
+  <div class="section-inner">
+    <div class="what-grid">
+      <div class="what-left">
+        <p class="section-label reveal">What is HuCon</p>
+        <h2 class="section-title reveal reveal-delay-1">The stories<br>cities need<br><em>to hear.</em></h2>
+        <img class="seal-img reveal reveal-delay-2" src="Circular_Seal_HIC_LOGO.png" alt="Humans in Conversation seal">
+      </div>
+      <div>
+        <p class="body-text reveal reveal-delay-2">HuCon — <strong>Humans in Conversation</strong> — is a global movement that creates intimate, guided listening tables in cities around the world. Each table begins with one question that truly matters to the people in the room.</p>
+        <p class="body-text reveal reveal-delay-3">Participants share honest, often anonymous stories about how they're really doing. Everything is <strong>audio-recorded</strong> and published on the HuCon Spotify archive — a living document of urban human experience.</p>
+        <p class="body-text reveal reveal-delay-4">Ultimately, these stories help <strong>cities, researchers, and AI designers</strong> build more human messages and interventions in an era when authentic human data matters more than ever.</p>
+
+        <div class="partners-block reveal reveal-delay-5">
+          <p class="partners-label">Partners &amp; collaborators</p>
+          <div class="partners-list">
+            <!-- ADD PARTNERS HERE: copy a <div class="partner-item"> block -->
+            <div class="partner-item">
+              <span class="partner-city">Pittsburgh</span>
+              <span class="partner-name">Jennifer Schaupp</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Valdosta</span>
+              <span class="partner-name">Unoma Azuah</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Lagos</span>
+              <span class="partner-name">Marvis Chukwudi</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Bari</span>
+              <span class="partner-name">Gianni Marsico</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Milano</span>
+              <span class="partner-name">Add partner name</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Rome</span>
+              <span class="partner-name">Add partner name</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Madrid</span>
+              <span class="partner-name">Add partner name</span>
+            </div>
+            <div class="partner-item">
+              <span class="partner-city">Barcelona</span>
+              <span class="partner-name">Add partner name</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <blockquote class="big-quote reveal">"We aim to honor human experiences that are often reduced or misunderstood, so people can feel seen and heard."</blockquote>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="lace-bg"></div>
+  <div class="section-inner" style="position:relative;z-index:2;">
+    <p class="section-label light reveal">How it works</p>
+    <h2 class="section-title light reveal reveal-delay-1">Five steps.<br><em>One honest evening.</em></h2>
+    <div class="steps-grid">
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <h3>Pick a date &amp; question</h3>
+        <p>Choose a theme rooted in your city's reality — reinvention, identity, belonging, pressure. The question should matter to everyone at the table.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <h3>Find your tribe</h3>
+        <p>Invite 3 to 10 people who agree to share their stories. It's a conversation, not a panel. Find people who'll be honest.</p>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <h3>Choose a safe space</h3>
+        <p>Somewhere guests can speak freely. A home, a quiet room, a trusted community space. You guide — that's all.</p>
+      </div>
+      <div class="step reveal reveal-delay-4">
+        <div class="step-num">04</div>
+        <h3>Press record</h3>
+        <p>Audio only. No cameras. Ever. Participants may choose to share anonymously. Record and send to the global archive.</p>
+      </div>
+      <div class="step reveal reveal-delay-5">
+        <div class="step-num">05</div>
+        <h3>Share food &amp; send</h3>
+        <p>Bring a dish meaningful to your community. Tell the global audience its significance. Send your stories. You've hosted a HuCon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOWL FEATURE -->
+<section class="bowl-section">
+  <div class="bowl-img-wrap">
+    <img src="HIC_bowl.png" alt="HuCon ceremonial bowl — Humans in Conversation">
+  </div>
+  <div class="bowl-text">
+    <div class="lace-bg"></div>
+    <p class="section-label reveal" style="position:relative;z-index:1;">The ritual</p>
+    <p class="bowl-quote reveal reveal-delay-1" style="position:relative;z-index:1;">"Every table begins with food that means something to the community."</p>
+    <p class="bowl-body reveal reveal-delay-2" style="position:relative;z-index:1;">The HuCon bowl sits at the centre of every gathering. Sharing food is not incidental — it's the ritual that opens people to honesty. It signals: this is a different kind of conversation.</p>
+    <p class="bowl-body reveal reveal-delay-3" style="margin-top:1rem;position:relative;z-index:1;">When you host a table, you choose a dish from your world, bring it to the room, and explain its meaning — to the people present, and to the global archive.</p>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="events" id="events">
+  <div class="section-inner">
+    <p class="section-label reveal">Upcoming tables</p>
+    <h2 class="section-title reveal reveal-delay-1">Find a HuCon<br><em>near you.</em></h2>
+    <div class="events-list">
+      <div class="event-row reveal">
+        <div class="event-date">13<span>March 2026</span></div>
+        <div class="event-city">Pittsburgh</div>
+        <div class="event-theme">"When the cost of care keeps rising, how do you protect your wellbeing?"</div>
+        <a href="#signup" class="event-tag live">Register →</a>
+      </div>
+      <div class="event-row reveal reveal-delay-1">
+        <div class="event-date">20<span>March 2026</span></div>
+        <div class="event-city">Milano</div>
+        <div class="event-theme">"In a city of non-stop performance, how do you show up for you?"</div>
+        <a href="#signup" class="event-tag live">Register →</a>
+      </div>
+      <div class="event-row reveal reveal-delay-2">
+        <div class="event-date">27<span>March 2026</span></div>
+        <div class="event-city">Rome</div>
+        <div class="event-theme">"You came to Rome to begin again. How is that going for you?"</div>
+        <a href="#signup" class="event-tag live">Register →</a>
+      </div>
+      <div class="event-row reveal reveal-delay-3">
+        <div class="event-date">27<span>May 2026</span></div>
+        <div class="event-city">Madrid</div>
+        <div class="event-theme">"In a city full of light, life, and ambition, how is your wellbeing?"</div>
+        <a href="#signup" class="event-tag live">Register →</a>
+      </div>
+      <div class="event-row reveal reveal-delay-4">
+        <div class="event-date">28<span>May 2026</span></div>
+        <div class="event-city">Barcelona</div>
+        <div class="event-theme">"Where do you go when you feel like a tourist in your own city?"</div>
+        <a href="#signup" class="event-tag live">Register →</a>
+      </div>
+    </div>
+    <div style="margin-top:3rem;" class="reveal">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:1.25rem;">Don't see your city? Host a table yourself.</p>
+      <a href="#host" class="btn-outline" style="color:var(--navy-deep);border-color:var(--navy);">Learn to host →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- POSTCARD GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-inner">
+    <p class="section-label reveal">Cities</p>
+    <h2 class="section-title reveal reveal-delay-1">HuCon around<br><em>the world.</em></h2>
+    <p class="body-text reveal reveal-delay-2" style="max-width:560px; margin-bottom:3rem;">Each city gets its own postcard — a window into the question that started the conversation there.</p>
+    <div class="gallery-grid reveal reveal-delay-2">
+      <!-- POSTCARDS in date order — add new ones by copying a block below -->
+      <div class="postcard">
+        <img src="postcard-pittsburgh.png" alt="HuCon Pittsburgh">
+        <div class="postcard-label">Pittsburgh · 13 March 2026</div>
+      </div>
+      <div class="postcard">
+        <img src="postcard-milano.png" alt="HuCon Milano">
+        <div class="postcard-label">Milano · 20 March 2026</div>
+      </div>
+      <div class="postcard">
+        <img src="postcard-rome.png" alt="HuCon Rome">
+        <div class="postcard-label">Rome · 27 March 2026</div>
+      </div>
+      <div class="postcard">
+        <img src="postcard-madrid.png" alt="HuCon Madrid">
+        <div class="postcard-label">Madrid · 27 May 2026</div>
+      </div>
+      <div class="postcard">
+        <img src="postcard-barcelona-2.png" alt="HuCon Barcelona">
+        <div class="postcard-label">Barcelona · 28 May 2026</div>
+      </div>
+      <!-- ADD NEW POSTCARDS HERE — copy a block above, change image src and label -->
+    </div>
+  </div>
+</section>
+
+<!-- SIGN UP -->
+<section class="signup-section" id="signup">
+  <div class="lace-bg"></div>
+  <div class="section-inner" style="position:relative;z-index:2;">
+    <div class="signup-grid">
+      <div>
+        <p class="section-label light reveal">Join a table</p>
+        <h2 class="section-title light reveal reveal-delay-1">Reserve your<br><em>seat.</em></h2>
+        <p class="signup-sub reveal reveal-delay-2">Small group. Confidential. No cameras. Tell us your name, number, and which city you want to join — we'll be in touch directly.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <form name="hucon-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="signup-form">
+          <input type="hidden" name="form-name" value="hucon-signup">
+          <p style="display:none;"><input name="bot-field"></p>
+
+          <div class="form-group">
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+
+          <div class="form-group">
+            <label>Phone number</label>
+            <input type="tel" name="phone" placeholder="+39 or your country code" required>
+          </div>
+
+          <div class="form-group">
+            <label>Which city are you interested in?</label>
+            <select name="city" required>
+              <option value="" disabled selected>Select a city</option>
+              <option value="Pittsburgh — 13 March 2026">Pittsburgh — 13 March 2026</option>
+              <option value="Milano — 20 March 2026">Milano — 20 March 2026</option>
+              <option value="Rome — 27 March 2026">Rome — 27 March 2026</option>
+              <option value="Madrid — 27 May 2026">Madrid — 27 May 2026</option>
+              <option value="Barcelona — 28 May 2026">Barcelona — 28 May 2026</option>
+              <option value="Other / notify me">Other — notify me when my city is added</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Anything you want us to know? <span style="opacity:.5;">(optional)</span></label>
+            <textarea name="message" rows="3" placeholder="How did you hear about HuCon, or anything else..."></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;cursor:pointer;">Reserve my seat →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION + STATS -->
+<section class="mission" id="about">
+  <div class="lace-bg"></div>
+  <div class="section-inner" style="position:relative;z-index:2;">
+    <div class="mission-grid">
+      <div class="mission-left">
+        <p class="section-label light reveal">The mission</p>
+        <h2 class="section-title light reveal reveal-delay-1">Cities that listen<br><em>design better lives.</em></h2>
+        <p class="body-text mission reveal reveal-delay-2">In a world shaped by curated feeds and performance metrics, people have fewer spaces to speak honestly about <strong>reinvention, loneliness, belonging, and the real cost of change.</strong></p>
+        <p class="body-text mission reveal reveal-delay-3">HuCon creates that space — and then sends what it hears back to the cities, researchers, and AI systems that need to understand <strong>what humans actually experience.</strong></p>
+      </div>
+      <div class="mission-right">
+        <div class="stats-grid reveal">
+          <div class="stat-cell"><div class="stat-big">12+</div><div class="stat-desc">Cities in the 2026 programme</div></div>
+          <div class="stat-cell"><div class="stat-big">3–10</div><div class="stat-desc">Participants per table</div></div>
+          <div class="stat-cell"><div class="stat-big">0</div><div class="stat-desc">Cameras. Ever.</div></div>
+          <div class="stat-cell"><div class="stat-big">∞</div><div class="stat-desc">Stories in the global archive</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOST -->
+<section class="host" id="host">
+  <div class="section-inner">
+    <div class="host-grid">
+      <div>
+        <p class="section-label reveal">Host a table</p>
+        <h2 class="section-title reveal reveal-delay-1">Your city needs<br>this conversation.<br><em>You can start it.</em></h2>
+        <div class="host-steps">
+          <div class="host-step reveal"><div class="host-step-num">1</div><div><h4>Be passionate about the topic and your city</h4><p>That's the most important first step. Everything else follows from genuine care.</p></div></div>
+          <div class="host-step reveal reveal-delay-1"><div class="host-step-num">2</div><div><h4>Find 3 to 10 people willing to share</h4><p>People who bring honest stories to the table. A conversation, not a performance.</p></div></div>
+          <div class="host-step reveal reveal-delay-2"><div class="host-step-num">3</div><div><h4>Choose a location where guests can speak freely</h4><p>All you need to do is guide. You don't need to be an expert — just a good listener.</p></div></div>
+          <div class="host-step reveal reveal-delay-3"><div class="host-step-num">4</div><div><h4>Press record on your audio device</h4><p>Audio only. No cameras, no video, ever. Ready to send to the global archive.</p></div></div>
+          <div class="host-step reveal reveal-delay-4"><div class="host-step-num">5</div><div><h4>Share food that means something to your community</h4><p>Tell your global audience its significance. Send your stories. You've hosted a HuCon.</p></div></div>
+        </div>
+      </div>
+      <div>
+        <div class="host-cta reveal reveal-delay-1">
+          <div class="lace-bg"></div>
+          <img class="host-cta-seal" src="Circular_Seal_HIC_LOGO.png" alt="">
+          <h3>Ready to host a HuCon in your city?</h3>
+          <p>We'll give you the question prompts, the format, and the archive destination. You bring the people, the place, and the food.</p>
+          <a href="/cdn-cgi/l/email-protection#10787f63645078657d717e63797e737f7e667562637164797f7e3e737f7d" class="btn-primary">Get the hosting guide →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTIFY -->
+<section class="spotify" id="listen">
+  <div class="lace-bg"></div>
+  <div class="section-inner" style="position:relative;z-index:2;">
+    <p class="section-label light reveal" style="justify-content:center;">The archive</p>
+    <h2 class="section-title light reveal reveal-delay-1" style="text-align:center;">Every story<br><em>lives on Spotify.</em></h2>
+    <p class="spotify-sub reveal reveal-delay-2">Every table, every city, every honest conversation — listen directly below or open in Spotify.</p>
+
+    <div class="spotify-embed-wrap reveal reveal-delay-3">
+      <iframe
+        src="https://open.spotify.com/embed/show/2ILbCJPVYC5YXUJunZSBy6?utm_source=generator&theme=0"
+        width="100%"
+        height="452"
+        frameborder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        style="border-radius: 12px;">
+      </iframe>
+    </div>
+
+    <div class="reveal reveal-delay-4" style="margin-top:2rem;">
+      <a href="https://open.spotify.com/show/2ILbCJPVYC5YXUJunZSBy6" target="_blank" class="spotify-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+        Open in Spotify
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-brand-logo">
+        <img src="Circular_Seal_HIC_LOGO.png" alt="HuCon">
+        <h2>Humans in Conversation</h2>
+      </div>
+      <p>HuCon is where cities pause to listen to how we're really doing. Join us at a table, host one yourself, or listen to the archive on Spotify.</p>
+
+      <div class="founder-note">
+        <div class="founder-img-wrap">
+          <img src="https://images.squarespace-cdn.com/content/v1/58854f90e4fcb5d74e14606e/1603472864038-GYRXM0MODM6BM0OUKE01/Kehinde-Bademosi-black-high-res.png" alt="Dr. Kehinde Bademosi" class="founder-img">
+        </div>
+        <div class="founder-text">
+          <p class="founder-label">Convener</p>
+          <p class="founder-name">Dr. Kehinde Bademosi</p>
+          <p class="founder-bio">Storytelling strategist, empathy researcher, and author of the forthcoming Bloomsbury book <em>Design in Public Health Crises</em> (2026). Founder of Orange Academy — Africa's first practical school of Integrated Brand Experience. His work spans Africa, the US, and Europe, connecting commerce, public health, and human dignity. HuCon is his global lab for understanding how cities and institutions can communicate with more humanity.</p>
+          <a href="https://kehindebademosi.org" target="_blank" class="founder-link">kehindebademosi.org →</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#what">What is HuCon</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#events">Events</a></li>
+        <li><a href="#host">Host a table</a></li>
+        <li><a href="#listen">Listen</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="#">Spotify</a></li>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Sponsor HuCon</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#046c6b7770446c7169656a776d6a676b6a7261767765706d6b6a2a676b69">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Humans in Conversation. All rights reserved.</p>
+    <span class="footer-tagline">Where cities pause to listen.</span>
+  </div>
+</footer>
+
+<script>
+  // Custom cursor (desktop only)
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .event-row, .hero-card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  }
+
+  // Reveal animations with fallback
+  try {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } catch(e) {
+    // Fallback: just show everything if IntersectionObserver fails
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+
+  // Safety net: after 1s make sure nothing is still hidden
+  setTimeout(() => {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 1000);
+
+  // Mission body-text colour fix (dark bg)
+  document.querySelectorAll('.mission .body-text').forEach(el => {
+    el.style.color = 'rgba(245,240,232,0.65)';
+  });
+  document.querySelectorAll('.mission .body-text strong').forEach(el => {
+    el.style.color = '#f5f0e8';
+    el.style.fontWeight = '400';
+  });
+
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+</script>
+</body>
+</html>
