@@ -999,12 +999,12 @@
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
-<div id="google_translate_element"></div>
+<div id="google_translate_element" style="display:none"></div>
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
-      includedLanguages: 'it,es,fr,de,pt,nl,ar,zh-CN,ru,yo,ha,ig,sw',
+      includedLanguages: 'it,es,fr,de,pt,ar,zh-CN,yo,ha,sw',
       autoDisplay: false
     }, 'google_translate_element');
   }
@@ -1012,72 +1012,111 @@
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script>
-// Custom translate UI
 const langs = [
-  { code: 'en',    label: 'English',    flag: '🇬🇧' },
-  { code: 'it',    label: 'Italiano',   flag: '🇮🇹' },
-  { code: 'es',    label: 'Español',    flag: '🇪🇸' },
-  { code: 'fr',    label: 'Français',   flag: '🇫🇷' },
-  { code: 'de',    label: 'Deutsch',    flag: '🇩🇪' },
-  { code: 'pt',    label: 'Português',  flag: '🇵🇹' },
-  { code: 'ar',    label: 'العربية',    flag: '🇸🇦' },
-  { code: 'yo',    label: 'Yorùbá',     flag: '🇳🇬' },
-  { code: 'ha',    label: 'Hausa',      flag: '🇳🇬' },
-  { code: 'sw',    label: 'Kiswahili',  flag: '🌍' },
-  { code: 'zh-CN', label: '中文',        flag: '🇨🇳' },
+  { code: 'en',    label: 'English',   flag: '🇬🇧' },
+  { code: 'it',    label: 'Italiano',  flag: '🇮🇹' },
+  { code: 'es',    label: 'Español',   flag: '🇪🇸' },
+  { code: 'fr',    label: 'Français',  flag: '🇫🇷' },
+  { code: 'de',    label: 'Deutsch',   flag: '🇩🇪' },
+  { code: 'pt',    label: 'Português', flag: '🇵🇹' },
+  { code: 'ar',    label: 'العربية',   flag: '🇸🇦' },
+  { code: 'yo',    label: 'Yorùbá',    flag: '🇳🇬' },
+  { code: 'ha',    label: 'Hausa',     flag: '🇳🇬' },
+  { code: 'sw',    label: 'Kiswahili', flag: '🌍' },
+  { code: 'zh-CN', label: '中文',       flag: '🇨🇳' },
 ];
 
-let currentLang = 'en';
+// Read current lang from cookie
+function getCurrentLang() {
+  const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+  return match ? match[1] : 'en';
+}
 
-// Build button
-const btn = document.createElement('div');
-btn.id = 'translate-btn';
-btn.innerHTML = '<span>🌐</span><span id="current-lang-label">Language</span>';
-document.body.appendChild(btn);
+function setCookie(code) {
+  const val = code === 'en' ? '' : '/en/' + code;
+  document.cookie = 'googtrans=' + val + '; path=/; SameSite=None; Secure';
+  document.cookie = 'googtrans=' + val + '; path=/; domain=.' + location.hostname + '; SameSite=None; Secure';
+}
 
-// Build dropdown
-const drop = document.createElement('div');
-drop.id = 'translate-dropdown';
-langs.forEach(l => {
-  const item = document.createElement('div');
-  item.className = 'lang-option' + (l.code === 'en' ? ' active' : '');
-  item.innerHTML = l.flag + ' ' + l.label;
-  item.dataset.code = l.code;
-  item.onclick = () => selectLanguage(l.code, l.label, item);
-  drop.appendChild(item);
-});
-document.body.appendChild(drop);
-
-btn.onclick = (e) => {
-  e.stopPropagation();
-  drop.classList.toggle('open');
-};
-
-document.addEventListener('click', () => drop.classList.remove('open'));
+function resetToEnglish() {
+  // Clear all googtrans cookies
+  document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  document.cookie = 'googtrans=; path=/; domain=.' + location.hostname + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+  // Use Google's own restore function if available
+  const iframe = document.querySelector('iframe.skiptranslate');
+  if (iframe) {
+    try {
+      iframe.contentWindow.document.querySelector('#:0.restore').click();
+    } catch(e) {}
+  }
+  // Force reload clean
+  const url = window.location.href.replace(/#googtrans\([^)]+\)/, '');
+  window.location.href = url;
+}
 
 function selectLanguage(code, label, el) {
-  drop.classList.remove('open');
+  document.getElementById('translate-dropdown').classList.remove('open');
   document.getElementById('current-lang-label').textContent = label;
   document.querySelectorAll('.lang-option').forEach(i => i.classList.remove('active'));
   el.classList.add('active');
-  currentLang = code;
 
-  // Trigger Google Translate
+  if (code === 'en') {
+    resetToEnglish();
+    return;
+  }
+
+  setCookie(code);
+
+  // Try Google Translate combo select first
   const select = document.querySelector('.goog-te-combo');
   if (select) {
     select.value = code;
     select.dispatchEvent(new Event('change'));
+    // Update label after change
+    setTimeout(() => {
+      document.getElementById('current-lang-label').textContent = label;
+    }, 500);
   } else {
-    // Fallback: use Google Translate URL method
-    const frame = document.querySelector('iframe.goog-te-menu-frame');
-    if (!frame) {
-      // Direct cookie method
-      document.cookie = 'googtrans=/en/' + code + '; path=/';
-      document.cookie = 'googtrans=/en/' + code + '; domain=.' + location.hostname + '; path=/';
-      location.reload();
-    }
+    // Reload with cookie set — Google picks it up on load
+    location.reload();
   }
 }
+
+// Build UI after page loads
+window.addEventListener('load', function() {
+  const currentCode = getCurrentLang();
+  const currentLang = langs.find(l => l.code === currentCode) || langs[0];
+
+  // Button
+  const btn = document.createElement('div');
+  btn.id = 'translate-btn';
+  btn.innerHTML = '<span style="font-size:16px">🌐</span><span id="current-lang-label">' + currentLang.label + '</span>';
+  btn.onclick = (e) => {
+    e.stopPropagation();
+    document.getElementById('translate-dropdown').classList.toggle('open');
+  };
+  document.body.appendChild(btn);
+
+  // Dropdown
+  const drop = document.createElement('div');
+  drop.id = 'translate-dropdown';
+  langs.forEach(l => {
+    const item = document.createElement('div');
+    item.className = 'lang-option' + (l.code === currentCode ? ' active' : '');
+    item.innerHTML = '<span style="font-size:15px">' + l.flag + '</span> ' + l.label;
+    if (l.code === 'en') {
+      item.innerHTML += ' <span style="font-size:10px;opacity:0.5;margin-left:4px;">reset</span>';
+    }
+    item.onclick = () => selectLanguage(l.code, l.label, item);
+    drop.appendChild(item);
+  });
+  document.body.appendChild(drop);
+
+  document.addEventListener('click', () => {
+    const d = document.getElementById('translate-dropdown');
+    if (d) d.classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>
