@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="netlify-email-obfuscation" content="off">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HuCon — Humans in Conversation</title>
 <meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Pittsburgh, Milano, Rome, Madrid and Barcelona.">
@@ -14,6 +15,8 @@
 <meta name="twitter:title" content="HuCon — Humans in Conversation">
 <meta name="twitter:description" content="Where cities pause to listen to how we're really doing.">
 <link rel="canonical" href="https://humansinconversation.com">
+<meta name="netlify-email-obfuscation" content="off">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
@@ -410,13 +413,102 @@
     .founder-img { width: 64px; height: 64px; }
   }
 
-  /* GALLERY */
-  .gallery { padding: 10rem 0 6rem; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-  .postcard { position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1; cursor: none; }
-  .postcard img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s ease; }
-  .postcard:hover img { transform: scale(1.04); }
-  .postcard-label { position: absolute; bottom: 0; left: 0; right: 0; padding: .75rem 1rem; background: linear-gradient(transparent, rgba(17,30,74,.85)); color: var(--cream); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; }
+  
+  /* CITY MAP */
+  .citymap-section { padding: 8rem 0 4rem; }
+  .map-wrap {
+    width: 100%; height: 520px;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border-navy);
+    position: relative;
+  }
+  .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+  @media (max-width:960px) { .map-wrap { height: 360px; } .citymap-section { padding: 5rem 0 2rem; } }
+
+  /* GLOBAL PARTNERS ROW */
+  .partner-global { background: rgba(26,47,107,0.04); border-radius: 4px; padding: .6rem .5rem; }
+  .partner-city.global { color: var(--navy); font-weight: 500; }
+
+
+  /* CITY MAP */
+  .citymap { padding: 10rem 0 6rem; }
+  .map-wrap {
+    width: 100%; height: 480px;
+    border: 1px solid var(--border-navy);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    background: #e8e0d0;
+  }
+  .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+  @media (max-width: 960px) {
+    .citymap { padding: 5rem 0 3rem; }
+    .map-wrap { height: 340px; }
+  }
+
+
+  /* CITY MAP */
+  .citymap { padding: 8rem 0 6rem; }
+  .map-wrap { position: relative; max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+  #hucon-map { width: 100%; aspect-ratio: 2/1; position: relative; }
+  #hucon-map svg { width: 100%; height: 100%; }
+  .map-city-dot { cursor: pointer; transition: r 0.2s; }
+  .map-city-dot:hover circle { r: 9; }
+  #map-tooltip {
+    position: absolute; pointer-events: none;
+    background: var(--navy-deep); border: 1px solid var(--gold);
+    border-radius: 8px; padding: 10px 16px;
+    font-family: 'Outfit', sans-serif; font-size: 13px;
+    color: var(--cream); white-space: nowrap;
+    display: none; z-index: 10;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  #map-tooltip strong { color: var(--gold); display: block; font-size: 14px; margin-bottom: 2px; }
+  @media (max-width: 960px) {
+    .citymap { padding: 4rem 0 3rem; }
+    #hucon-map { aspect-ratio: 1.4/1; }
+  }
+
+
+  /* CITY MAP */
+  .citymap { padding: 10rem 0 6rem; }
+  .map-wrap {
+    width: 100%; height: 480px;
+    background: var(--navy-deep);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 2rem;
+  }
+  .city-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
+  .chip {
+    font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 20px; font-weight: 400;
+  }
+  .chip.done { background: var(--navy); color: var(--gold); border: 1px solid var(--navy-mid); }
+  .chip.upcoming { background: transparent; color: var(--text-muted); border: 1px solid var(--border-navy); }
+  @media (max-width:960px) {
+    .citymap { padding: 5rem 0 3rem; }
+    .map-wrap { height: 320px; }
+  }
+
+
+  /* MAP */
+  .map-section { padding: 10rem 0 6rem; }
+  .map-wrap { position: relative; background: var(--navy-deep); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-navy); overflow: visible; }
+  .city-dot { cursor: pointer; }
+  .city-dot:hover circle:first-child { r: 9; }
+  .pulse-ring { animation: map-pulse 2.5s ease-out infinite; }
+  @keyframes map-pulse {
+    0% { r: 8; opacity: 0.4; }
+    70% { r: 20; opacity: 0; }
+    100% { r: 8; opacity: 0; }
+  }
+  @media (max-width: 960px) {
+    .map-section { padding: 5rem 0 3rem; }
+    .map-wrap { padding: 1rem; }
+  }
 
   /* SIGNUP */
   .signup-section { padding: 9rem 0; background: var(--navy-deep); position: relative; overflow: hidden; }
@@ -555,6 +647,79 @@
     .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; }
   }
 </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+window.addEventListener('load', function() {
+  const mapEl = document.getElementById('hucon-map');
+  if (!mapEl) return;
+
+  const map = L.map('hucon-map', {
+    center: [20, 10],
+    zoom: 2,
+    zoomControl: true,
+    scrollWheelZoom: false,
+    attributionControl: false
+  });
+
+  // Elegant map tiles — CartoDB Voyager (no API key needed)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Custom navy pin
+  const pin = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:14px; height:14px;
+      background:#1a2f6b;
+      border:3px solid #e8c832;
+      border-radius:50%;
+      box-shadow:0 2px 8px rgba(0,0,0,0.35);
+    "></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10]
+  });
+
+  const cities = [
+    { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, host: 'Jennifer Schaupp', date: '13 March 2026' },
+    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, host: 'Unoma Azuah', date: 'Done' },
+    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, host: 'Marvis Chukwudi', date: 'Done' },
+    { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, host: 'Gianni Marsico', date: 'Done' },
+    { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, host: 'Carlo Bobbiesi', date: '20 March 2026' },
+    { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, host: 'Nino', date: '27 March 2026' },
+    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, host: 'TBC', date: '27 May 2026' },
+    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, host: 'Albert Asensio', date: '28 May 2026' },
+  ];
+
+  cities.forEach(city => {
+    const marker = L.marker([city.lat, city.lng], { icon: pin }).addTo(map);
+    marker.bindPopup(`
+      <div style="font-family:'Outfit',sans-serif; min-width:160px; padding:4px;">
+        <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#2a4080; margin-bottom:4px;">${city.country}</div>
+        <div style="font-size:17px; font-family:'Cormorant Garamond',serif; color:#111e4a; font-weight:400; margin-bottom:4px;">${city.name}</div>
+        <div style="font-size:12px; color:#5a6a8a; margin-bottom:2px;">Host: ${city.host}</div>
+        <div style="font-size:11px; color:#e8c832; background:#111e4a; padding:3px 8px; border-radius:10px; display:inline-block; margin-top:4px;">${city.date}</div>
+      </div>
+    `, { maxWidth: 220 });
+  });
+
+  // Add nav link for map
+  const navLinks = document.querySelector('.nav-links');
+  if (navLinks) {
+    const li = document.createElement('li');
+    li.innerHTML = '<a href="#map">Cities</a>';
+    const hostLi = [...navLinks.querySelectorAll('li')].find(l => l.textContent.includes('Host'));
+    if (hostLi) navLinks.insertBefore(li, hostLi);
+  }
+});
+</script>
+  <!-- Disable Netlify email obfuscation -->
+  <meta name="netlify-email-obfuscation" content="off">
 </head>
 <body>
 
@@ -642,44 +807,20 @@
         <div class="partners-block reveal reveal-delay-5">
           <p class="partners-label">Partners &amp; collaborators</p>
           <div class="partners-list">
-            <!-- ADD PARTNERS HERE: copy a <div class="partner-item"> block -->
-            <div class="partner-item">
-              <span class="partner-city">Pittsburgh</span>
-              <span class="partner-name">Jennifer Schaupp</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Valdosta</span>
-              <span class="partner-name">Unoma Azuah</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Lagos</span>
-              <span class="partner-name">Marvis Chukwudi</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Bari</span>
-              <span class="partner-name">Gianni Marsico</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Milano</span>
-              <span class="partner-name">Add partner name</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Rome</span>
-              <span class="partner-name">Add partner name</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Madrid</span>
-              <span class="partner-name">Add partner name</span>
-            </div>
-            <div class="partner-item">
-              <span class="partner-city">Barcelona</span>
-              <span class="partner-name">Add partner name</span>
-            </div>
+            <div class="partner-item"><span class="partner-city">Pittsburgh</span><span class="partner-name">Jennifer Schaupp</span></div>
+            <div class="partner-item"><span class="partner-city">Valdosta</span><span class="partner-name">Unoma Azuah</span></div>
+            <div class="partner-item"><span class="partner-city">Lagos</span><span class="partner-name">Marvis Chukwudi</span></div>
+            <div class="partner-item"><span class="partner-city">Bari</span><span class="partner-name">Gianni Marsico</span></div>
+            <div class="partner-item"><span class="partner-city">Milano</span><span class="partner-name">Carlo Bobbiesi</span></div>
+            <div class="partner-item"><span class="partner-city">Roma</span><span class="partner-name">Nino</span></div>
+            <div class="partner-item"><span class="partner-city">Barcelona</span><span class="partner-name">Albert Asensio</span></div>
+            <div class="partner-item"><span class="partner-city">Madrid</span><span class="partner-name">Add partner name</span></div>
+            <div class="partner-item partner-global"><span class="partner-city global">Global</span><span class="partner-name">Patrick Chaulk · Funke Michaels · Ramien Pierre</span></div>
           </div>
         </div>
       </div>
     </div>
-    <blockquote class="big-quote reveal">"We aim to honor human experiences that are often reduced or misunderstood, so people can feel seen and heard."</blockquote>
+    <blockquote<blockquote class="big-quote reveal">"We aim to honor human experiences that are often reduced or misunderstood, so people can feel seen and heard."</blockquote>
   </div>
 </section>
 
@@ -778,35 +919,46 @@
 </section>
 
 
-<!-- POSTCARD GALLERY -->
-<section class="gallery" id="gallery">
+
+
+<!-- CITY MAP -->
+<section class="citymap-section" id="cities">
   <div class="section-inner">
-    <p class="section-label reveal">Cities</p>
-    <h2 class="section-title reveal reveal-delay-1">HuCon around<br><em>the world.</em></h2>
-    <p class="body-text reveal reveal-delay-2" style="max-width:560px; margin-bottom:3rem;">Each city gets its own postcard — a window into the question that started the conversation there.</p>
-    <div class="gallery-grid reveal reveal-delay-2">
-      <!-- POSTCARDS in date order — add new ones by copying a block below -->
-      <div class="postcard">
-        <img src="postcard-pittsburgh.png" alt="HuCon Pittsburgh">
-        <div class="postcard-label">Pittsburgh · 13 March 2026</div>
-      </div>
-      <div class="postcard">
-        <img src="postcard-milano.png" alt="HuCon Milano">
-        <div class="postcard-label">Milano · 20 March 2026</div>
-      </div>
-      <div class="postcard">
-        <img src="postcard-rome.png" alt="HuCon Rome">
-        <div class="postcard-label">Rome · 27 March 2026</div>
-      </div>
-      <div class="postcard">
-        <img src="postcard-madrid.png" alt="HuCon Madrid">
-        <div class="postcard-label">Madrid · 27 May 2026</div>
-      </div>
-      <div class="postcard">
-        <img src="postcard-barcelona-2.png" alt="HuCon Barcelona">
-        <div class="postcard-label">Barcelona · 28 May 2026</div>
-      </div>
-      <!-- ADD NEW POSTCARDS HERE — copy a block above, change image src and label -->
+    <p class="section-label reveal">Our footprint</p>
+    <h2 class="section-title reveal reveal-delay-1">HuCon has gathered<br><em>across the world.</em></h2>
+    <p class="body-text reveal reveal-delay-2" style="max-width:560px;margin-bottom:2.5rem;">From Pittsburgh to Lagos, Bari to Barcelona — each pin marks a city where people sat down, shared food, and told the truth about how they're really doing.</p>
+    <div class="map-wrap reveal reveal-delay-3" id="hucon-map"></div>
+  </div>
+</section>
+
+
+<!-- CITY MAP -->
+<section class="citymap" id="map">
+  <div class="section-inner">
+    <p class="section-label reveal">Our footprint</p>
+    <h2 class="section-title reveal reveal-delay-1">HuCon has gathered<br><em>around the world.</em></h2>
+    <p class="body-text reveal reveal-delay-2" style="max-width:560px; margin-bottom:2.5rem;">From Pittsburgh to Lagos, Bari to Barcelona — every pin is a city that paused to listen.</p>
+    <div class="map-wrap reveal reveal-delay-2" id="hucon-map"></div>
+  </div>
+</section>
+
+
+<!-- CITY MAP -->
+<section class="citymap" id="map">
+  <div class="section-inner">
+    <p class="section-label reveal">Our footprint</p>
+    <h2 class="section-title reveal reveal-delay-1">HuCon has gathered<br><em>across the world.</em></h2>
+    <p class="body-text reveal reveal-delay-2" style="max-width:560px; margin-bottom:2.5rem;">From Pittsburgh to Lagos, Bari to Barcelona — each pin marks a city where people sat down, shared food, and told the truth.</p>
+    <div class="map-wrap reveal reveal-delay-3" id="hucon-map"></div>
+    <div class="city-chips reveal reveal-delay-4">
+      <span class="chip done">Pittsburgh</span>
+      <span class="chip done">Milano</span>
+      <span class="chip done">Roma</span>
+      <span class="chip done">Bari</span>
+      <span class="chip done">Lagos</span>
+      <span class="chip done">Vadodara</span>
+      <span class="chip upcoming">Madrid</span>
+      <span class="chip upcoming">Barcelona</span>
     </div>
   </div>
 </section>
@@ -989,7 +1141,7 @@
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Sponsor HuCon</a></li>
         <li><a href="#signup">Register for an event</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#056e606d6c6b6160456d7068646b766c6b666a6b7360777664716c6a6b2b666a68">Contact us</a></li>
+        <li><a href="#" onclick="var a='hello',b='humansinconversation.com';window.location='mailto:'+a+'@'+b;return false;">Contact us</a></li>
       </ul>
     </div>
   </div>
@@ -1052,6 +1204,127 @@
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
 <script>
+// ── CONTACT LINK ──
+document.querySelectorAll('.contact-link').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    e.preventDefault();
+    var e1 = el.getAttribute('data-e');
+    var d1 = el.getAttribute('data-d');
+    window.location.href = ['m','a','i','l','t','o',':'].join('') + e1 + '@' + d1;
+  });
+});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// ── MAP ──
+window.addEventListener('load', function() {
+  const mapEl = document.getElementById('hucon-map');
+  if (!mapEl) return;
+
+  const map = L.map('hucon-map', {
+    center: [20, 15],
+    zoom: 2,
+    zoomControl: true,
+    scrollWheelZoom: false,
+    attributionControl: false
+  });
+
+  // Dark styled tiles
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 18
+  }).addTo(map);
+
+  // Custom gold pin
+  const goldIcon = L.divIcon({
+    className: '',
+    html: '<div style="width:14px;height:14px;background:#e8c832;border-radius:50%;border:2px solid #f5f0e8;box-shadow:0 0 8px rgba(232,200,50,0.6)"></div>',
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10]
+  });
+
+  const upcomingIcon = L.divIcon({
+    className: '',
+    html: '<div style="width:12px;height:12px;background:transparent;border-radius:50%;border:2px solid rgba(232,200,50,0.5)"></div>',
+    iconSize: [12, 12],
+    iconAnchor: [6, 6],
+    popupAnchor: [0, -10]
+  });
+
+  const cities = [
+    { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, done: true, host: 'Jennifer Schaupp', date: '13 March 2026' },
+    { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, done: true, host: 'Carlo Bobbiesi', date: '20 March 2026' },
+    { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, done: true, host: 'Nino', date: '27 March 2026' },
+    { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, done: true, host: 'Gianni Marsico', date: '2025' },
+    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, done: true, host: 'Marvis Chukwudi', date: '2025' },
+    { name: 'Vadodara', country: 'India', lat: 22.3072, lng: 73.1812, done: true, host: 'Unoma Azuah', date: '2025' },
+    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, done: false, host: 'TBC', date: '27 May 2026' },
+    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, done: false, host: 'Albert Asensio', date: '28 May 2026' },
+  ];
+
+  cities.forEach(city => {
+    const icon = city.done ? goldIcon : upcomingIcon;
+    const status = city.done ? 'Completed' : 'Upcoming';
+    const popup = L.popup({
+      className: 'hucon-popup',
+      closeButton: false,
+      maxWidth: 200
+    }).setContent(
+      '<div style="font-family:Outfit,sans-serif;padding:4px 2px">' +
+      '<div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#e8c832;margin-bottom:4px">' + status + '</div>' +
+      '<div style="font-size:16px;font-family:Cormorant Garamond,serif;color:#111e4a;font-weight:400;margin-bottom:2px">' + city.name + '</div>' +
+      '<div style="font-size:11px;color:#5a6a8a;margin-bottom:4px">' + city.country + ' · ' + city.date + '</div>' +
+      '<div style="font-size:11px;color:#2a4080">Host: ' + city.host + '</div>' +
+      '</div>'
+    );
+    L.marker([city.lat, city.lng], { icon }).addTo(map).bindPopup(popup);
+  });
+
+  // Add popup CSS
+  const style = document.createElement('style');
+  style.textContent = '.hucon-popup .leaflet-popup-content-wrapper{background:#f5f0e8;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3);border:none}.hucon-popup .leaflet-popup-tip{background:#f5f0e8}.leaflet-control-zoom{border:none!important}.leaflet-control-zoom a{background:#111e4a!important;color:#e8c832!important;border:1px solid rgba(232,200,50,0.3)!important}';
+  document.head.appendChild(style);
+});
+</script>
+
+<script>
+// ── MAP TOOLTIP ──
+document.addEventListener('DOMContentLoaded', function() {
+  const tooltip = document.getElementById('map-tooltip');
+  const mapWrap = document.querySelector('.map-wrap');
+  if (!tooltip || !mapWrap) return;
+
+  document.querySelectorAll('.city-dot').forEach(dot => {
+    dot.addEventListener('mouseenter', function(e) {
+      document.getElementById('tt-city').textContent = this.dataset.city;
+      document.getElementById('tt-date').textContent = this.dataset.date;
+      document.getElementById('tt-host').textContent = 'Host: ' + this.dataset.host;
+      tooltip.style.display = 'block';
+    });
+    dot.addEventListener('mousemove', function(e) {
+      const rect = mapWrap.getBoundingClientRect();
+      tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
+      tooltip.style.top = (e.clientY - rect.top - 40) + 'px';
+    });
+    dot.addEventListener('mouseleave', function() {
+      tooltip.style.display = 'none';
+    });
+    // Touch support for mobile
+    dot.addEventListener('click', function() {
+      document.getElementById('tt-city').textContent = this.dataset.city;
+      document.getElementById('tt-date').textContent = this.dataset.date;
+      document.getElementById('tt-host').textContent = 'Host: ' + this.dataset.host;
+      tooltip.style.display = tooltip.style.display === 'none' ? 'block' : 'none';
+      tooltip.style.left = '50%';
+      tooltip.style.top = '10px';
+      tooltip.style.transform = 'translateX(-50%)';
+    });
+  });
+});
+</script>
+
+<script>
 // ── FORM SUCCESS HANDLER ──
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('signup-form');
@@ -1106,6 +1379,117 @@ function applyLang(code) {
   location.reload();
 }
 
+// ── INTERACTIVE MAP ──
+(function() {
+  var cities = [
+    { name: 'Pittsburgh', lat: 40.4406, lng: -79.9959, done: true },
+    { name: 'Valdosta', lat: 30.8327, lng: -83.2785, done: true },
+    { name: 'Lagos', lat: 6.5244, lng: 3.3792, done: true },
+    { name: 'Bari', lat: 41.1171, lng: 16.8719, done: true },
+    { name: 'Milano', lat: 45.4654, lng: 9.1859, done: true },
+    { name: 'Roma', lat: 41.9028, lng: 12.4964, done: true },
+    { name: 'Barcelona', lat: 41.3851, lng: 2.1734, done: true },
+    { name: 'Madrid', lat: 40.4168, lng: -3.7038, done: false },
+  ];
+
+  var wrap = document.getElementById('hucon-map');
+  if (!wrap) return;
+
+  // Build SVG world map with pins
+  var svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 1000 500');
+  svg.setAttribute('width','100%');
+  svg.setAttribute('height','100%');
+  svg.style.background = '#111e4a';
+
+  // Simple world outline paths (approximate continents)
+  var continents = [
+    // North America
+    'M 120 80 L 80 100 L 60 130 L 70 160 L 90 180 L 120 200 L 160 210 L 180 190 L 200 170 L 220 150 L 240 130 L 230 100 L 200 80 L 160 70 Z',
+    // South America
+    'M 170 220 L 150 250 L 140 290 L 150 330 L 170 360 L 190 370 L 210 350 L 220 310 L 210 270 L 200 240 L 185 220 Z',
+    // Europe
+    'M 440 70 L 420 80 L 410 100 L 420 120 L 440 130 L 470 125 L 490 110 L 480 85 L 460 70 Z',
+    // Africa
+    'M 440 150 L 420 170 L 410 210 L 415 260 L 430 300 L 450 330 L 470 340 L 490 320 L 500 280 L 495 240 L 485 200 L 475 160 L 460 145 Z',
+    // Asia
+    'M 500 60 L 480 80 L 490 110 L 520 130 L 560 140 L 620 130 L 680 110 L 720 90 L 740 70 L 700 50 L 650 45 L 590 50 L 540 55 Z',
+    // Australia
+    'M 720 280 L 700 300 L 705 330 L 730 350 L 760 345 L 775 320 L 765 295 L 740 280 Z',
+  ];
+
+  // Draw continent shapes
+  continents.forEach(function(d) {
+    var path = document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', '#1a2f6b');
+    path.setAttribute('stroke', 'rgba(245,240,232,0.15)');
+    path.setAttribute('stroke-width', '1');
+    svg.appendChild(path);
+  });
+
+  // Convert lat/lng to SVG coordinates (simple equirectangular)
+  function project(lat, lng) {
+    var x = (lng + 180) * (1000 / 360);
+    var y = (90 - lat) * (500 / 180);
+    return { x: x, y: y };
+  }
+
+  // Draw city pins
+  cities.forEach(function(city) {
+    var pos = project(city.lat, city.lng);
+    var g = document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class', 'city-pin');
+    g.style.cursor = 'pointer';
+
+    // Pulse ring
+    var pulse = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    pulse.setAttribute('cx', pos.x);
+    pulse.setAttribute('cy', pos.y);
+    pulse.setAttribute('r', '10');
+    pulse.setAttribute('fill', city.done ? 'rgba(232,200,50,0.2)' : 'rgba(245,240,232,0.1)');
+    pulse.innerHTML = '<animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>';
+
+    // Dot
+    var dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', pos.x);
+    dot.setAttribute('cy', pos.y);
+    dot.setAttribute('r', city.done ? '6' : '4');
+    dot.setAttribute('fill', city.done ? '#e8c832' : 'rgba(245,240,232,0.4)');
+    dot.setAttribute('stroke', '#111e4a');
+    dot.setAttribute('stroke-width', '1.5');
+
+    // Label
+    var text = document.createElementNS('http://www.w3.org/2000/svg','text');
+    text.setAttribute('x', pos.x + 9);
+    text.setAttribute('y', pos.y + 4);
+    text.setAttribute('fill', city.done ? '#f5f0e8' : 'rgba(245,240,232,0.4)');
+    text.setAttribute('font-size', '11');
+    text.setAttribute('font-family', 'Outfit, sans-serif');
+    text.textContent = city.name;
+
+    g.appendChild(pulse);
+    g.appendChild(dot);
+    g.appendChild(text);
+    svg.appendChild(g);
+  });
+
+  // Legend
+  var lg1 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  lg1.setAttribute('cx','30'); lg1.setAttribute('cy','470'); lg1.setAttribute('r','5'); lg1.setAttribute('fill','#e8c832');
+  var lt1 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  lt1.setAttribute('x','40'); lt1.setAttribute('y','474'); lt1.setAttribute('fill','rgba(245,240,232,0.6)'); lt1.setAttribute('font-size','10'); lt1.setAttribute('font-family','Outfit,sans-serif');
+  lt1.textContent = 'Table held';
+  var lg2 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  lg2.setAttribute('cx','120'); lg2.setAttribute('cy','470'); lg2.setAttribute('r','4'); lg2.setAttribute('fill','rgba(245,240,232,0.4)');
+  var lt2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+  lt2.setAttribute('x','130'); lt2.setAttribute('y','474'); lt2.setAttribute('fill','rgba(245,240,232,0.6)'); lt2.setAttribute('font-size','10'); lt2.setAttribute('font-family','Outfit,sans-serif');
+  lt2.textContent = 'Coming soon';
+  [lg1,lt1,lg2,lt2].forEach(function(el){ svg.appendChild(el); });
+
+  wrap.appendChild(svg);
+})();
+
 window.addEventListener('load', function() {
   const active = getActiveLang();
   const activeLang = langs.find(l => l.code === active) || langs[0];
@@ -1129,6 +1513,8 @@ window.addEventListener('load', function() {
   document.body.appendChild(drop);
 
   document.addEventListener('click', () => drop.classList.remove('open'));
+});
+
 });
 </script>
 
