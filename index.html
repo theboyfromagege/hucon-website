@@ -282,6 +282,31 @@
 
 
 
+
+  /* GOOGLE TRANSLATE */
+  #google_translate_element { display: flex; align-items: center; }
+  .goog-te-gadget { font-family: 'Outfit', sans-serif !important; }
+  .goog-te-gadget-simple {
+    background: transparent !important;
+    border: 1px solid rgba(245,240,232,.3) !important;
+    border-radius: 20px !important;
+    padding: 4px 12px !important;
+    font-size: 12px !important;
+    color: var(--cream) !important;
+    cursor: pointer;
+  }
+  .goog-te-gadget-simple span { color: var(--cream) !important; }
+  .goog-te-gadget-simple .goog-te-menu-value span { color: var(--cream) !important; }
+  .goog-te-gadget img { display: none !important; }
+  .goog-logo-link { display: none !important; }
+  .goog-te-gadget > span { display: none !important; }
+  body { top: 0 !important; }
+  .skiptranslate { display: none !important; }
+  @media (max-width: 960px) {
+    #google_translate_element { margin-top: 0.5rem; }
+    .goog-te-gadget-simple { font-size: 11px !important; padding: 3px 10px !important; }
+  }
+
   /* FOUNDER NOTE */
   .founder-note {
     display: flex; gap: 1.5rem; align-items: flex-start;
@@ -507,6 +532,7 @@
     <li><a href="#host">Host</a></li>
     <li><a href="#listen">Listen</a></li>
   </ul>
+  <div id="google_translate_element"></div>
 </nav>
 
 <!-- HERO -->
@@ -591,11 +617,11 @@
             </div>
             <div class="partner-item">
               <span class="partner-city">Milano</span>
-              <span class="partner-name">Carlo Bobbiesi</span>
+              <span class="partner-name">Add partner name</span>
             </div>
             <div class="partner-item">
               <span class="partner-city">Rome</span>
-              <span class="partner-name">Nino</span>
+              <span class="partner-name">Add partner name</span>
             </div>
             <div class="partner-item">
               <span class="partner-city">Madrid</span>
@@ -889,7 +915,7 @@
         <div class="founder-text">
           <p class="founder-label">Convener</p>
           <p class="founder-name">Dr. Kehinde Bademosi</p>
-          <p class="founder-bio">Storytelling strategist, empathy researcher, and author of the forthcoming Bloomsbury book <em>Design in Public Health Crises</em> (2026). Founder of Orange Academy — Africa's first practical school of Integrated Brand Experience. His work spans Africa, the US, and Europe, connecting commerce, public health, and empathy. HuCon is his global lab for understanding how cities and institutions can communicate with more humanity.</p>
+          <p class="founder-bio">Storytelling strategist, empathy researcher, and author of the forthcoming Bloomsbury book <em>Design in Public Health Crises</em> (2026). Founder of Orange Academy — Africa's first practical school of Integrated Brand Experience. His work spans Africa, the US, and Europe, connecting commerce, public health, and human dignity. HuCon is his global lab for understanding how cities and institutions can communicate with more humanity.</p>
           <a href="https://kehindebademosi.org" target="_blank" class="founder-link">kehindebademosi.org →</a>
         </div>
       </div>
@@ -962,5 +988,16 @@
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'it,es,fr,de,pt,nl,ar,zh-CN,ru,ja,ko,sw,yo,ha,ig',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
