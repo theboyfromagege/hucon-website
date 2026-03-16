@@ -283,28 +283,45 @@
 
 
 
-  /* GOOGLE TRANSLATE */
-  #google_translate_element { display: flex; align-items: center; }
+  /* GOOGLE TRANSLATE — fixed floating button bottom right */
+  #google_translate_element {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9997;
+    background: var(--navy-deep);
+    border: 1px solid var(--gold);
+    border-radius: 30px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  }
+  #google_translate_element::before {
+    content: '🌐';
+    font-size: 14px;
+    margin-right: 6px;
+  }
   .goog-te-gadget { font-family: 'Outfit', sans-serif !important; }
   .goog-te-gadget-simple {
     background: transparent !important;
-    border: 1px solid rgba(245,240,232,.3) !important;
-    border-radius: 20px !important;
-    padding: 4px 12px !important;
+    border: none !important;
+    padding: 0 !important;
     font-size: 12px !important;
     color: var(--cream) !important;
     cursor: pointer;
   }
-  .goog-te-gadget-simple span { color: var(--cream) !important; }
+  .goog-te-gadget-simple span,
   .goog-te-gadget-simple .goog-te-menu-value span { color: var(--cream) !important; }
+  .goog-te-gadget-simple .goog-te-menu-value span:last-child { display: none !important; }
   .goog-te-gadget img { display: none !important; }
   .goog-logo-link { display: none !important; }
   .goog-te-gadget > span { display: none !important; }
   body { top: 0 !important; }
   .skiptranslate { display: none !important; }
   @media (max-width: 960px) {
-    #google_translate_element { margin-top: 0.5rem; }
-    .goog-te-gadget-simple { font-size: 11px !important; padding: 3px 10px !important; }
+    #google_translate_element { bottom: 16px; right: 16px; padding: 5px 12px; }
+    .goog-te-gadget-simple { font-size: 11px !important; }
   }
 
   /* FOUNDER NOTE */
@@ -532,8 +549,10 @@
     <li><a href="#host">Host</a></li>
     <li><a href="#listen">Listen</a></li>
   </ul>
-  <div id="google_translate_element"></div>
 </nav>
+
+<!-- FLOATING TRANSLATE BUTTON -->
+<div id="google_translate_element"></div>
 
 <!-- HERO -->
 <section class="hero">
