@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HuCon — Humans in Conversation</title>
+<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Pittsburgh, Milano, Rome, Madrid and Barcelona.">
+<meta name="keywords" content="Humans in Conversation, HuCon, storytelling, wellbeing, urban listening, Kehinde Bademosi">
+<meta property="og:title" content="HuCon — Humans in Conversation">
+<meta property="og:description" content="Where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras.">
+<meta property="og:image" content="postcard-rome.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HuCon — Humans in Conversation">
+<meta name="twitter:description" content="Where cities pause to listen to how we're really doing.">
+<link rel="canonical" href="https://humansinconversation.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
@@ -70,6 +80,27 @@
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: .5; transition: opacity .2s; }
   .nav-links a:hover { opacity: 1; }
+
+  /* HAMBURGER */
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
+  .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  @media (max-width: 960px) {
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--navy-deep);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem; z-index: 150;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 18px; letter-spacing: .14em; opacity: 0.8; }
+    .nav-links a:hover { opacity: 1; }
+  }
 
   /* HERO */
   .hero {
@@ -445,7 +476,6 @@
     body { cursor: auto; }
 
     nav { padding:1.25rem 1.5rem; }
-    .nav-links { display:none; }
 
     /* Logo: the seal PNG has a black bg — show text only on mobile */
     .nav-logo img { display: none; }
@@ -536,14 +566,17 @@
     <img src="Circular_Seal_HIC_LOGO.png" alt="HuCon seal">
     <span class="nav-logo-text">HuCon</span>
   </a>
-  <ul class="nav-links">
-    <li><a href="#what">What is HuCon</a></li>
-    <li><a href="#events">Events</a></li>
-    <li><a href="#gallery">Cities</a></li>
-    <li><a href="#signup">Join a table</a></li>
-    <li><a href="#host">Host</a></li>
-    <li><a href="#listen">Listen</a></li>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#what" onclick="closeMenu()">What is HuCon</a></li>
+    <li><a href="#events" onclick="closeMenu()">Events</a></li>
+    <li><a href="#gallery" onclick="closeMenu()">Cities</a></li>
+    <li><a href="#signup" onclick="closeMenu()">Join a table</a></li>
+    <li><a href="#host" onclick="closeMenu()">Host</a></li>
+    <li><a href="#listen" onclick="closeMenu()">Listen</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -628,11 +661,11 @@
             </div>
             <div class="partner-item">
               <span class="partner-city">Milano</span>
-              <span class="partner-name">Carlo Bobbiesi</span>
+              <span class="partner-name">Add partner name</span>
             </div>
             <div class="partner-item">
-              <span class="partner-city">Roma</span>
-              <span class="partner-name">Nino</span>
+              <span class="partner-city">Rome</span>
+              <span class="partner-name">Add partner name</span>
             </div>
             <div class="partner-item">
               <span class="partner-city">Madrid</span>
@@ -640,7 +673,7 @@
             </div>
             <div class="partner-item">
               <span class="partner-city">Barcelona</span>
-              <span class="partner-name">Albert</span>
+              <span class="partner-name">Add partner name</span>
             </div>
           </div>
         </div>
@@ -880,7 +913,7 @@
           <img class="host-cta-seal" src="Circular_Seal_HIC_LOGO.png" alt="">
           <h3>Ready to host a HuCon in your city?</h3>
           <p>We'll give you the question prompts, the format, and the archive destination. You bring the people, the place, and the food.</p>
-          <a href="/cdn-cgi/l/email-protection#10787f63645078657d717e63797e737f7e667562637164797f7e3e737f7d" class="btn-primary">Get the hosting guide →</a>
+          <a href="/cdn-cgi/l/email-protection#9cf4f3efe8dcf4e9f1fdf2eff5f2fff3f2eaf9eeeffde8f5f3f2b2fff3f1" class="btn-primary">Get the hosting guide →</a>
         </div>
       </div>
     </div>
@@ -955,7 +988,8 @@
         <li><a href="#">Spotify</a></li>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Sponsor HuCon</a></li>
-        <li><a href="/cdn-cgi/l/email-protection#046c6b7770446c7169656a776d6a676b6a7261767765706d6b6a2a676b69">Contact</a></li>
+        <li><a href="#signup">Register for an event</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#056e606d6c6b6160456d7068646b766c6b666a6b7360777664716c6a6b2b666a68">Contact us</a></li>
       </ul>
     </div>
   </div>
@@ -965,7 +999,17 @@
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Hamburger menu
+  function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('open');
+    document.getElementById('hamburger').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('nav-links').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+  }
+
   // Custom cursor (desktop only)
   const cursor = document.getElementById('cursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
@@ -1088,12 +1132,4 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<div id="google_translate_element" style="display:none"></div>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({ pageLanguage:'en', autoDisplay:false }, 'google_translate_element');
-}
-</script>
-</body>
-</html>
+<div id="google_translate_e
