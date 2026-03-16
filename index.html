@@ -283,45 +283,40 @@
 
 
 
-  /* GOOGLE TRANSLATE — fixed floating button bottom right */
-  #google_translate_element {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    z-index: 9997;
-    background: var(--navy-deep);
-    border: 1px solid var(--gold);
-    border-radius: 30px;
-    padding: 6px 14px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  /* TRANSLATE BUTTON */
+  #translate-btn {
+    position: fixed; bottom: 24px; right: 24px; z-index: 9997;
+    background: var(--navy-deep); border: 1.5px solid var(--gold);
+    border-radius: 30px; padding: 8px 18px;
+    display: flex; align-items: center; gap: 8px;
+    cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
-  #google_translate_element::before {
-    content: '🌐';
-    font-size: 14px;
-    margin-right: 6px;
+  #translate-btn span { font-size: 13px; color: var(--cream); font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; }
+  #translate-dropdown {
+    position: fixed; bottom: 68px; right: 24px; z-index: 9998;
+    background: var(--cream); border-radius: 12px;
+    overflow: hidden; min-width: 180px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+    display: none;
   }
-  .goog-te-gadget { font-family: 'Outfit', sans-serif !important; }
-  .goog-te-gadget-simple {
-    background: transparent !important;
-    border: none !important;
-    padding: 0 !important;
-    font-size: 12px !important;
-    color: var(--cream) !important;
-    cursor: pointer;
+  #translate-dropdown.open { display: block; }
+  .lang-option {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; font-size: 13px;
+    color: var(--navy-deep); cursor: pointer;
+    border-bottom: 0.5px solid rgba(26,47,107,0.08);
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.15s;
   }
-  .goog-te-gadget-simple span,
-  .goog-te-gadget-simple .goog-te-menu-value span { color: var(--cream) !important; }
-  .goog-te-gadget-simple .goog-te-menu-value span:last-child { display: none !important; }
-  .goog-te-gadget img { display: none !important; }
-  .goog-logo-link { display: none !important; }
-  .goog-te-gadget > span { display: none !important; }
+  .lang-option:last-child { border-bottom: none; }
+  .lang-option:hover { background: var(--cream-dark); }
+  .lang-option.active { background: var(--navy); color: var(--gold); }
   body { top: 0 !important; }
   .skiptranslate { display: none !important; }
+  #google_translate_element { display: none !important; }
   @media (max-width: 960px) {
-    #google_translate_element { bottom: 16px; right: 16px; padding: 5px 12px; }
-    .goog-te-gadget-simple { font-size: 11px !important; }
+    #translate-btn { bottom: 16px; right: 16px; padding: 7px 14px; }
+    #translate-dropdown { bottom: 60px; right: 16px; }
   }
 
   /* FOUNDER NOTE */
@@ -550,9 +545,6 @@
     <li><a href="#listen">Listen</a></li>
   </ul>
 </nav>
-
-<!-- FLOATING TRANSLATE BUTTON -->
-<div id="google_translate_element"></div>
 
 <!-- HERO -->
 <section class="hero">
@@ -797,7 +789,7 @@
         <p class="signup-sub reveal reveal-delay-2">Small group. Confidential. No cameras. Tell us your name, number, and which city you want to join — we'll be in touch directly.</p>
       </div>
       <div class="reveal reveal-delay-2">
-        <form name="hucon-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="signup-form">
+        <form name="hucon-signup" method="POST" action="/thankyou.html" data-netlify="true" netlify-honeypot="bot-field" class="signup-form">
           <input type="hidden" name="form-name" value="hucon-signup">
           <p style="display:none;"><input name="bot-field"></p>
 
@@ -1007,16 +999,85 @@
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
+<div id="google_translate_element"></div>
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
-      includedLanguages: 'it,es,fr,de,pt,nl,ar,zh-CN,ru,ja,ko,sw,yo,ha,ig',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+      includedLanguages: 'it,es,fr,de,pt,nl,ar,zh-CN,ru,yo,ha,ig,sw',
       autoDisplay: false
     }, 'google_translate_element');
   }
 </script>
 <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script>
+// Custom translate UI
+const langs = [
+  { code: 'en',    label: 'English',    flag: '🇬🇧' },
+  { code: 'it',    label: 'Italiano',   flag: '🇮🇹' },
+  { code: 'es',    label: 'Español',    flag: '🇪🇸' },
+  { code: 'fr',    label: 'Français',   flag: '🇫🇷' },
+  { code: 'de',    label: 'Deutsch',    flag: '🇩🇪' },
+  { code: 'pt',    label: 'Português',  flag: '🇵🇹' },
+  { code: 'ar',    label: 'العربية',    flag: '🇸🇦' },
+  { code: 'yo',    label: 'Yorùbá',     flag: '🇳🇬' },
+  { code: 'ha',    label: 'Hausa',      flag: '🇳🇬' },
+  { code: 'sw',    label: 'Kiswahili',  flag: '🌍' },
+  { code: 'zh-CN', label: '中文',        flag: '🇨🇳' },
+];
+
+let currentLang = 'en';
+
+// Build button
+const btn = document.createElement('div');
+btn.id = 'translate-btn';
+btn.innerHTML = '<span>🌐</span><span id="current-lang-label">Language</span>';
+document.body.appendChild(btn);
+
+// Build dropdown
+const drop = document.createElement('div');
+drop.id = 'translate-dropdown';
+langs.forEach(l => {
+  const item = document.createElement('div');
+  item.className = 'lang-option' + (l.code === 'en' ? ' active' : '');
+  item.innerHTML = l.flag + ' ' + l.label;
+  item.dataset.code = l.code;
+  item.onclick = () => selectLanguage(l.code, l.label, item);
+  drop.appendChild(item);
+});
+document.body.appendChild(drop);
+
+btn.onclick = (e) => {
+  e.stopPropagation();
+  drop.classList.toggle('open');
+};
+
+document.addEventListener('click', () => drop.classList.remove('open'));
+
+function selectLanguage(code, label, el) {
+  drop.classList.remove('open');
+  document.getElementById('current-lang-label').textContent = label;
+  document.querySelectorAll('.lang-option').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+  currentLang = code;
+
+  // Trigger Google Translate
+  const select = document.querySelector('.goog-te-combo');
+  if (select) {
+    select.value = code;
+    select.dispatchEvent(new Event('change'));
+  } else {
+    // Fallback: use Google Translate URL method
+    const frame = document.querySelector('iframe.goog-te-menu-frame');
+    if (!frame) {
+      // Direct cookie method
+      document.cookie = 'googtrans=/en/' + code + '; path=/';
+      document.cookie = 'googtrans=/en/' + code + '; domain=.' + location.hostname + '; path=/';
+      location.reload();
+    }
+  }
+}
+</script>
 </body>
 </html>
