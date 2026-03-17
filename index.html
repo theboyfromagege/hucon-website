@@ -5,7 +5,7 @@
 <meta name="netlify-email-obfuscation" content="off">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HuCon — Humans in Conversation</title>
-<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories about our well-being. No cameras. Join us in Pittsburgh, Milano, Rome, Madrid and Barcelona.">
+<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Pittsburgh, Milano, Rome, Madrid and Barcelona.">
 <meta name="keywords" content="Humans in Conversation, HuCon, storytelling, wellbeing, urban listening, Kehinde Bademosi">
 <meta property="og:title" content="HuCon — Humans in Conversation">
 <meta property="og:description" content="Where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras.">
@@ -649,7 +649,7 @@
 </style>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
 <script>
 window.addEventListener('load', function() {
   const mapEl = document.getElementById('hucon-map');
@@ -708,14 +708,7 @@ window.addEventListener('load', function() {
     `, { maxWidth: 220 });
   });
 
-  // Add nav link for map
-  const navLinks = document.querySelector('.nav-links');
-  if (navLinks) {
-    const li = document.createElement('li');
-    li.innerHTML = '<a href="#map">Cities</a>';
-    const hostLi = [...navLinks.querySelectorAll('li')].find(l => l.textContent.includes('Host'));
-    if (hostLi) navLinks.insertBefore(li, hostLi);
-  }
+
 });
 </script>
   <!-- Disable Netlify email obfuscation -->
@@ -734,7 +727,7 @@ window.addEventListener('load', function() {
   <ul class="nav-links" id="nav-links">
     <li><a href="#what" onclick="closeMenu()">What is HuCon</a></li>
     <li><a href="#events" onclick="closeMenu()">Events</a></li>
-    <li><a href="#gallery" onclick="closeMenu()">Cities</a></li>
+    <li><a href="#map" onclick="closeMenu()">Cities</a></li>
     <li><a href="#signup" onclick="closeMenu()">Join a table</a></li>
     <li><a href="#host" onclick="closeMenu()">Host</a></li>
     <li><a href="#listen" onclick="closeMenu()">Listen</a></li>
@@ -808,7 +801,7 @@ window.addEventListener('load', function() {
         <img class="seal-img reveal reveal-delay-2" src="Circular_Seal_HIC_LOGO.png" alt="Humans in Conversation seal">
       </div>
       <div>
-        <p class="body-text reveal reveal-delay-2">HuCon — <strong>Humans in Conversation</strong> — is a global movement that creates intimate, guided listening tables about our well-being in cities around the world. Each table begins with one question that truly matters to the people in the room — and creates the conditions for genuine empathy.</p>
+        <p class="body-text reveal reveal-delay-2">HuCon — <strong>Humans in Conversation</strong> — is a global movement that creates intimate, guided listening tables in cities around the world. Each table begins with one question that truly matters to the people in the room — and creates the conditions for genuine empathy.</p>
         <p class="body-text reveal reveal-delay-3">Participants share honest, often anonymous stories about how they're really doing. Everything is <strong>audio-recorded</strong> and published on the HuCon Spotify archive — a living document of urban human experience.</p>
         <p class="body-text reveal reveal-delay-4">Ultimately, HuCon is a global storytelling lab that helps us understand and foster <strong>empathy in our cities and institutions</strong> — in an era when authentic human data matters more than ever.</p>
 
@@ -823,7 +816,7 @@ window.addEventListener('load', function() {
             <div class="partner-item"><span class="partner-city">Roma</span><span class="partner-name">Nino</span></div>
             <div class="partner-item"><span class="partner-city">Barcelona</span><span class="partner-name">Albert Asensio</span></div>
             <div class="partner-item"><span class="partner-city">Madrid</span><span class="partner-name">Add partner name</span></div>
-            <div class="partner-item partner-global"><span class="partner-city global">Global</span><span class="partner-name">Patrick Chaulk · Kayla Ingram · Funke Michaels · Ramien Pierre</span></div>
+            <div class="partner-item partner-global"><span class="partner-city global">Global</span><span class="partner-name">Patrick Chaulk · Funke Michaels · Ramien Pierre</span></div>
           </div>
         </div>
       </div>
@@ -1003,8 +996,8 @@ window.addEventListener('load', function() {
       <div class="mission-left">
         <p class="section-label light reveal">The mission</p>
         <h2 class="section-title light reveal reveal-delay-1">Cities that listen<br><em>design with empathy.</em></h2>
-        <p class="body-text mission reveal reveal-delay-2">In a world shaped by curated feeds and performance metrics, people have fewer spaces to speak honestly about <strong>reinvention, loneliness, belonging, and most importantly, our wellbeing.</strong></p>
-        <p class="body-text mission reveal reveal-delay-3">HuCon creates that space — and then sends what it hears back to the cities, healthcare researchers, and AI systems that need to understand <strong>what humans actually experience.</strong> Because empathy is not a soft skill. It is the foundation of every system that works.</p>
+        <p class="body-text mission reveal reveal-delay-2">In a world shaped by curated feeds and performance metrics, people have fewer spaces to speak honestly about <strong>reinvention, loneliness, belonging, and the real cost of change.</strong></p>
+        <p class="body-text mission reveal reveal-delay-3">HuCon creates that space — and then sends what it hears back to the cities, researchers, and AI systems that need to understand <strong>what humans actually experience.</strong> Because empathy is not a soft skill. It is the foundation of every system that works.</p>
       </div>
       <div class="mission-right">
         <div class="stats-grid reveal">
@@ -1039,7 +1032,7 @@ window.addEventListener('load', function() {
           <img class="host-cta-seal" src="Circular_Seal_HIC_LOGO.png" alt="">
           <h3>Ready to host a HuCon in your city?</h3>
           <p>We'll give you the question prompts, the format, and the archive destination. You bring the people, the place, and the food.</p>
-
+          <a href="/cdn-cgi/l/email-protection#9cf4f3efe8dcf4e9f1fdf2eff5f2fff3f2eaf9eeeffde8f5f3f2b2fff3f1" class="btn-primary">Get the hosting guide →</a>
         </div>
       </div>
     </div>
@@ -1112,8 +1105,10 @@ window.addEventListener('load', function() {
       <h4>Connect</h4>
       <ul>
         <li><a href="#">Spotify</a></li>
+        <li><a href="/press.html">Press &amp; Media</a></li>
         <li><a href="#">Instagram</a></li>
         <li><a href="#">Sponsor HuCon</a></li>
+        <li><a href="/press.html">Press &amp; Media</a></li>
         <li><a href="#signup">Register for an event</a></li>
         <li><a href="#" onclick="var a='hello',b='humansinconversation.com';window.location='mailto:'+a+'@'+b;return false;">Contact us</a></li>
       </ul>
@@ -1343,7 +1338,6 @@ function getActiveLang() {
 }
 
 function applyLang(code) {
-  // Clear cookie
   document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   document.cookie = 'googtrans=; domain=.' + location.hostname + '; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
   if (code !== 'en') {
@@ -1353,34 +1347,36 @@ function applyLang(code) {
   location.reload();
 }
 
-// ── INTERACTIVE MAP ──
-  var wrap = document.getElementById('hucon-map');
-  if (!wrap) return;
+// Build translate button UI on load
+window.addEventListener('load', function() {
+  const active = getActiveLang();
+  const activeLang = langs.find(l => l.code === active) || langs[0];
 
-  var cities = [
-    { name:'Pittsburgh', country:'USA', lat:40.44, lng:-79.99, host:'Jennifer Schaupp', date:'Held — 13 March 2026', done:true },
-    { name:'Vadodara', country:'India', lat:22.30, lng:73.19, host:'Unoma Azuah', date:'2026', done:false },
-    { name:'Lagos', country:'Nigeria', lat:6.52, lng:3.38, host:'Marvis Chukwudi', date:'2026', done:false },
-    { name:'Bari', country:'Italy', lat:41.11, lng:16.87, host:'Gianni Marsico', date:'2026', done:false },
-    { name:'Milano', country:'Italy', lat:45.46, lng:9.18, host:'Carlo Bobbiesi', date:'20 March 2026', done:false },
-    { name:'Rome', country:'Italy', lat:41.90, lng:12.49, host:'Nino', date:'27 March 2026', done:false },
-    { name:'Madrid', country:'Spain', lat:40.41, lng:-3.70, host:'TBC', date:'27 May 2026', done:false },
-    { name:'Barcelona', country:'Spain', lat:41.38, lng:2.17, host:'Albert Asensio', date:'28 May 2026', done:false },
-  ];
+  const btn = document.createElement('div');
+  btn.id = 'translate-btn';
+  btn.innerHTML = '<span style="font-size:15px">' + activeLang.flag + '</span><span id="tl-label">' + activeLang.label + '</span>';
+  btn.onclick = function(e) { e.stopPropagation(); drop.classList.toggle('open'); };
+  document.body.appendChild(btn);
 
-  var map = L.map('hucon-map', { zoomControl:true, scrollWheelZoom:false }).setView([25, 15], 2);
+  const drop = document.createElement('div');
+  drop.id = 'translate-dropdown';
+  langs.forEach(function(l) {
+    const item = document.createElement('div');
+    item.className = 'lang-option' + (l.code === active ? ' active' : '');
+    item.innerHTML = '<span style="font-size:15px">' + l.flag + '</span><span>' + l.label + '</span>';
+    if (l.code === 'en') item.innerHTML += '<span style="font-size:10px;opacity:0.4;margin-left:auto">original</span>';
+    item.onclick = function() { applyLang(l.code); };
+    drop.appendChild(item);
+  });
+  document.body.appendChild(drop);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution:'&copy; OpenStreetMap &copy; CARTO', maxZoom:18
-  }).addTo(map);
+  document.addEventListener('click', function() {
+    const d = document.getElementById('translate-dropdown');
+    if (d) d.classList.remove('open');
+  });
+});
 
-  cities.forEach(function(city) {
-    var color = city.done ? '#888' : '#e8c832';
-    var icon = L.divIcon({
-      className:'',
-      html:'<div style="width:14px;height:14px;background:'+color+';border-radius:50%;border:2px solid '+(city.done?'#555':'#f5e27a')+';box-shadow:0 0 8px '+color+'88;"></div>',
-      iconSize:[14,14], iconAnchor:[7,7]
-    });
+
     var marker = L.marker([city.lat, city.lng], {icon:icon}).addTo(map);
     marker.bindPopup(
       '<strong style="font-size:15px;color:#111e4a;">'+city.name+'</strong><br>'+
