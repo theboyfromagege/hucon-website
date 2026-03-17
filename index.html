@@ -317,41 +317,7 @@
 
 
 
-  /* TRANSLATE BUTTON */
-  #translate-btn {
-    position: fixed; bottom: 24px; right: 24px; z-index: 9997;
-    background: var(--navy-deep); border: 1.5px solid var(--gold);
-    border-radius: 30px; padding: 8px 18px;
-    display: flex; align-items: center; gap: 8px;
-    cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
-  #translate-btn span { font-size: 13px; color: var(--cream); font-family: 'Outfit', sans-serif; letter-spacing: 0.05em; }
-  #translate-dropdown {
-    position: fixed; bottom: 68px; right: 24px; z-index: 9998;
-    background: var(--cream); border-radius: 12px;
-    overflow: hidden; min-width: 180px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.35);
-    display: none;
-  }
-  #translate-dropdown.open { display: block; }
-  .lang-option {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 16px; font-size: 13px;
-    color: var(--navy-deep); cursor: pointer;
-    border-bottom: 0.5px solid rgba(26,47,107,0.08);
-    font-family: 'Outfit', sans-serif;
-    transition: background 0.15s;
-  }
-  .lang-option:last-child { border-bottom: none; }
-  .lang-option:hover { background: var(--cream-dark); }
-  .lang-option.active { background: var(--navy); color: var(--gold); }
-  body { top: 0 !important; }
-  .skiptranslate { display: none !important; }
-  #google_translate_element { display: none !important; }
-  @media (max-width: 960px) {
-    #translate-btn { bottom: 16px; right: 16px; padding: 7px 14px; }
-    #translate-dropdown { bottom: 60px; right: 16px; }
-  }
+  
 
   /* FOUNDER NOTE */
   .founder-note {
@@ -1101,19 +1067,7 @@ window.addEventListener('load', function() {
         <li><a href="#listen">Listen</a></li>
       </ul>
     </div>
-    <div class="footer-col">
-      <h4>Connect</h4>
-      <ul>
-        <li><a href="#">Spotify</a></li>
-        <li><a href="/press.html">Press &amp; Media</a></li>
-        <li><a href="#">Instagram</a></li>
-        <li><a href="#">Sponsor HuCon</a></li>
-        <li><a href="/press.html">Press &amp; Media</a></li>
-        <li><a href="#signup">Register for an event</a></li>
-        <li><a href="#" onclick="var a='hello',b='humansinconversation.com';window.location='mailto:'+a+'@'+b;return false;">Contact us</a></li>
-      </ul>
     </div>
-  </div>
   <div class="footer-bottom">
     <p>© 2026 Humans in Conversation. All rights reserved.</p>
     <span class="footer-tagline">Where cities pause to listen.</span>
@@ -1347,27 +1301,7 @@ function applyLang(code) {
   location.reload();
 }
 
-// Build translate button UI on load
-window.addEventListener('load', function() {
-  const active = getActiveLang();
-  const activeLang = langs.find(l => l.code === active) || langs[0];
 
-  const btn = document.createElement('div');
-  btn.id = 'translate-btn';
-  btn.innerHTML = '<span style="font-size:15px">' + activeLang.flag + '</span><span id="tl-label">' + activeLang.label + '</span>';
-  btn.onclick = function(e) { e.stopPropagation(); drop.classList.toggle('open'); };
-  document.body.appendChild(btn);
-
-  const drop = document.createElement('div');
-  drop.id = 'translate-dropdown';
-  langs.forEach(function(l) {
-    const item = document.createElement('div');
-    item.className = 'lang-option' + (l.code === active ? ' active' : '');
-    item.innerHTML = '<span style="font-size:15px">' + l.flag + '</span><span>' + l.label + '</span>';
-    if (l.code === 'en') item.innerHTML += '<span style="font-size:10px;opacity:0.4;margin-left:auto">original</span>';
-    item.onclick = function() { applyLang(l.code); };
-    drop.appendChild(item);
-  });
   document.body.appendChild(drop);
 
   document.addEventListener('click', function() {
@@ -1388,13 +1322,7 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<div id="google_translate_element" style="display:none"></div>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({ pageLanguage:'en', autoDisplay:false }, 'google_translate_element');
-}
-</script>
+
 
 </body>
 </html>
