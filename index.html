@@ -687,7 +687,7 @@ window.addEventListener('load', function() {
 
   const cities = [
     { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, host: 'Jennifer Schaupp', date: '13 March 2026' },
-    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, host: 'Unoma Azuah', date: 'Done' },
+    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
     { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, host: 'Marvis Chukwudi', date: 'Done' },
     { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, host: 'Gianni Marsico', date: 'Done' },
     { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, host: 'Carlo Bobbiesi', date: '20 March 2026' },
@@ -809,7 +809,7 @@ window.addEventListener('load', function() {
           <p class="partners-label">Partners &amp; collaborators</p>
           <div class="partners-list">
             <div class="partner-item"><span class="partner-city">Pittsburgh</span><span class="partner-name">Jennifer Schaupp</span></div>
-            <div class="partner-item"><span class="partner-city">Valdosta</span><span class="partner-name">Unoma Azuah</span></div>
+            <div class="partner-item"><span class="partner-city">Valdosta, GA</span><span class="partner-name">Unoma Azuah</span></div>
             <div class="partner-item"><span class="partner-city">Lagos</span><span class="partner-name">Marvis Chukwudi</span></div>
             <div class="partner-item"><span class="partner-city">Bari</span><span class="partner-name">Gianni Marsico</span></div>
             <div class="partner-item"><span class="partner-city">Milano</span><span class="partner-name">Carlo Bobbiesi</span></div>
@@ -821,7 +821,7 @@ window.addEventListener('load', function() {
         </div>
       </div>
     </div>
-    <blockquote<blockquote class="big-quote reveal" style="margin-top:5rem;">"We aim to honor human experiences that are often reduced or misunderstood. When people feel seen and heard, empathy becomes possible — and cities become more human."</blockquote>
+    <blockquote class="big-quote reveal" style="margin-top:5rem;">"We aim to honor human experiences that are often reduced or misunderstood. When people feel seen and heard, empathy becomes possible — and cities become more human."</blockquote>
   </div>
 </section>
 
@@ -922,7 +922,7 @@ window.addEventListener('load', function() {
     <div class="map-wrap reveal reveal-delay-3" id="hucon-map-wrap">
       <div id="hucon-map" style="width:100%;height:420px;border-radius:8px;overflow:hidden;"></div>
       <div style="display:flex;gap:3rem;margin-top:1.5rem;flex-wrap:wrap;">
-        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">8</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 1 held</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">8</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 4 held</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">3</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Continents</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">1</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Question</div></div>
       </div>
@@ -1120,7 +1120,7 @@ window.addEventListener('load', function() {
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Hamburger menu
   function toggleMenu() {
     document.getElementById('nav-links').classList.toggle('open');
@@ -1227,7 +1227,7 @@ window.addEventListener('load', function() {
     { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, done: true, host: 'Nino', date: '27 March 2026' },
     { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, done: true, host: 'Gianni Marsico', date: '2025' },
     { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, done: true, host: 'Marvis Chukwudi', date: '2025' },
-    { name: 'Vadodara', country: 'India', lat: 22.3072, lng: 73.1812, done: true, host: 'Unoma Azuah', date: '2025' },
+    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
     { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, done: false, host: 'TBC', date: '27 May 2026' },
     { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, done: false, host: 'Albert Asensio', date: '28 May 2026' },
   ];
@@ -1388,4 +1388,13 @@ window.addEventListener('load', function() {
 });
 </script>
 
-<div id="google_translate_e
+<div id="google_translate_element" style="display:none"></div>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({ pageLanguage:'en', autoDisplay:false }, 'google_translate_element');
+}
+</script>
+
+</body>
+</html>
