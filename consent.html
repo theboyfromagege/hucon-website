@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HuCon Participant Consent — Human in Conversation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1B2A6B;
+    --navy-deep:  #111d4a;
+    --yellow:     #F5C800;
+    --yellow-pale:#FFFBEA;
+    --ink:        #1C1C1C;
+    --muted:      #6B7280;
+    --rule:       #E4E6EF;
+    --white:      #FAFAFA;
+    --warm:       #FDFCF8;
+    --error:      #8B1A1A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #F2F1EE;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 20px 80px;
+  }
+
+  .form-shell { width: 100%; max-width: 680px; }
+
+  /* ── HEADER ── */
+  .form-header {
+    background: var(--navy);
+    padding: 44px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--yellow);
+  }
+  .form-header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(245,200,0,.05);
+    pointer-events: none;
+  }
+  .header-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 16px;
+  }
+  .header-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,.60);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 460px;
+  }
+
+  /* ── BODY ── */
+  .form-body { background: var(--white); padding: 44px 48px; }
+
+  /* ── WHAT HUCON IS ── */
+  .what-is {
+    background: var(--navy);
+    padding: 24px 26px;
+    margin-bottom: 32px;
+  }
+  .what-is-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 10px;
+  }
+  .what-is p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: rgba(255,255,255,.88);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  /* ── PROMISE ── */
+  .promise {
+    background: var(--yellow-pale);
+    border-left: 4px solid var(--yellow);
+    padding: 18px 22px;
+    margin-bottom: 36px;
+  }
+  .promise-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--navy);
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .promise p { font-size: 13px; color: var(--ink); line-height: 1.6; }
+
+  /* ── FIELDS ── */
+  .field-group { margin-bottom: 28px; }
+
+  label.field-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+    letter-spacing: .01em;
+    cursor: default;
+  }
+  label.field-label .req { color: var(--yellow); margin-left: 2px; }
+  label.field-label .sub {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid var(--rule);
+    background: #FDFCFA;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    border-radius: 0;
+    appearance: none;
+  }
+  input:focus, select:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(27,42,107,.08);
+  }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231B2A6B' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .field-error {
+    font-size: 11.5px;
+    color: var(--error);
+    margin-top: 6px;
+    display: none;
+  }
+  .field-group.has-error input,
+  .field-group.has-error select { border-color: var(--error); }
+  .field-group.has-error .field-error { display: block; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 36px 0 24px;
+  }
+  .section-divider-line { flex: 1; height: 1px; background: var(--rule); }
+  .section-divider-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  /* ── CONSENT LIST ── */
+  .consent-list {
+    display: flex;
+    flex-direction: column;
+    border: 1.5px solid var(--rule);
+  }
+  .consent-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: stretch;
+    border-bottom: 1px solid var(--rule);
+  }
+  .consent-item:last-child { border-bottom: none; }
+  .consent-item.is-optional { cursor: pointer; transition: background .15s; }
+  .consent-item.is-optional:hover { background: #F8F7F4; }
+  .consent-item.is-required { background: #F8F9FD; }
+
+  .consent-check-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--rule);
+    padding: 18px 0;
+  }
+
+  input[type="checkbox"] {
+    width: 18px; height: 18px;
+    border: 2px solid #C5C9D6;
+    background: white;
+    appearance: none;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    transition: border-color .15s, background .15s;
+  }
+  input[type="checkbox"]:checked { background: var(--navy); border-color: var(--navy); }
+  input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 5px;
+    width: 5px; height: 9px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+  input[type="checkbox"]:disabled { background: var(--navy); border-color: var(--navy); opacity: .55; cursor: not-allowed; }
+  input[type="checkbox"]:disabled::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 5px;
+    width: 5px; height: 9px;
+    border: 2px solid white;
+    border-top: none; border-left: none;
+    transform: rotate(45deg);
+  }
+
+  .consent-text-col { padding: 18px 20px; }
+  .consent-title { font-size: 13.5px; font-weight: 600; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+  .consent-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+  .consent-badge {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .badge-required { background: var(--navy); color: var(--yellow); }
+  .badge-optional { background: var(--rule); color: var(--muted); }
+
+  .required-group-note {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-top: 10px;
+    padding: 12px 16px;
+    background: #F5F5F7;
+    border-left: 3px solid var(--rule);
+  }
+  .required-group-note strong { color: var(--ink); }
+
+  /* ── ATTRIBUTION ── */
+  .anon-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .anon-option {
+    border: 1.5px solid var(--rule);
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    position: relative;
+  }
+  .anon-option input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .anon-option:has(input:checked) { border-color: var(--navy); background: #F0F2F9; }
+  .anon-option-title { font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .anon-option-desc { font-size: 11.5px; color: var(--muted); line-height: 1.4; }
+  .anon-indicator {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 2px solid #C5C9D6;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 6px;
+    position: relative;
+    transition: border-color .15s;
+  }
+  .anon-option:has(input:checked) .anon-indicator { border-color: var(--navy); background: var(--navy); }
+  .anon-option:has(input:checked) .anon-indicator::after {
+    content: '';
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: white;
+  }
+
+  /* ── WITHDRAWAL ── */
+  .withdrawal-note {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.65;
+    padding: 16px 20px;
+    border: 1.5px solid var(--rule);
+    background: var(--warm);
+  }
+  .withdrawal-note a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── FINAL CONFIRM ── */
+  .final-confirm { margin-top: 32px; border: 1.5px solid var(--rule); }
+  .final-confirm-inner {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    align-items: stretch;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .final-confirm-inner:hover { background: #F8F7F4; }
+  .final-confirm .consent-check-col { border-right: 1px solid var(--rule); }
+
+  /* ── GDPR NOTICE ── */
+  .gdpr-notice {
+    background: #F5F5F7;
+    border-top: 2px solid var(--rule);
+    padding: 22px 24px;
+    margin: 36px -48px -44px;
+  }
+  .gdpr-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .gdpr-text { font-size: 11.5px; color: var(--muted); line-height: 1.7; }
+  .gdpr-text strong { color: var(--ink); }
+  .gdpr-text a { color: var(--navy); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* ── SUBMIT ── */
+  .submit-area { margin-top: 28px; }
+  .submit-note { font-size: 12px; color: var(--muted); margin-bottom: 16px; line-height: 1.55; }
+  .submit-btn {
+    width: 100%;
+    padding: 17px 32px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: background .2s, transform .1s;
+    position: relative;
+    overflow: hidden;
+  }
+  .submit-btn:hover { background: var(--navy-deep); }
+  .submit-btn:active { transform: scale(.99); }
+  .submit-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--yellow);
+  }
+
+  /* ── SUCCESS ── */
+  .success-screen {
+    display: none;
+    background: var(--white);
+    padding: 64px 48px;
+    text-align: center;
+  }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+  }
+  .success-icon svg { width: 28px; height: 28px; }
+  .success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  .success-sub {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.65;
+    max-width: 400px;
+    margin: 0 auto 28px;
+  }
+  .success-ref {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .1em;
+    color: var(--muted);
+    background: #F5F5F7;
+    padding: 10px 20px;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .success-withdraw { font-size: 12px; color: var(--muted); margin-top: 16px; }
+  .success-withdraw a { color: var(--navy); }
+
+  @media (max-width: 580px) {
+    body { padding: 0 0 60px; }
+    .form-header, .form-body { padding: 32px 24px; }
+    .two-col { grid-template-columns: 1fr; }
+    .anon-options { grid-template-columns: 1fr; }
+    .gdpr-notice { margin: 36px -24px -32px; padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="form-shell">
+
+  <div class="form-header">
+    <div class="header-label">Human in Conversation · Participant Consent</div>
+    <div class="header-title">Before we sit<br>at the table.</div>
+    <div class="header-sub">This form takes two minutes. It tells you exactly what HuCon does with what you share — and gives you full clarity before you choose to participate.</div>
+  </div>
+
+  <div id="formBody" class="form-body">
+
+    <div class="what-is">
+      <div class="what-is-label">What HuCon is</div>
+      <p>Human in Conversation is a global civic listening infrastructure. Every conversation you contribute to becomes part of a permanent public record — a podcast episode, a research transcript, and an S4E field report that informs how cities understand the lives of the people inside them. This is not a private gathering. It is a contribution to a body of work. We want you to know that before you walk in.</p>
+    </div>
+
+    <div class="promise">
+      <div class="promise-label">Our commitment to you</div>
+      <p>You are anonymous by default. Your name will never appear without your explicit permission. You can withdraw your consent at any time. But please read what follows carefully — some things, by the nature of what HuCon is, cannot be undone once published.</p>
+    </div>
+
+    <!-- NETLIFY FORM — data-netlify="true" enables Netlify Forms -->
+    <form
+      id="consentForm"
+      name="hucon-consent"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      novalidate
+    >
+      <!-- Netlify required hidden fields -->
+      <input type="hidden" name="form-name" value="hucon-consent">
+
+      <!-- Honeypot spam filter — hidden from real users -->
+      <p style="display:none;">
+        <label>Don't fill this out: <input name="bot-field"></label>
+      </p>
+
+      <!-- PERSONAL DETAILS -->
+      <div class="two-col">
+        <div class="field-group" id="fg-firstname">
+          <label class="field-label" for="firstname">First name <span class="req">*</span></label>
+          <input type="text" id="firstname" name="firstname" placeholder="Your first name" autocomplete="given-name">
+          <div class="field-error">Please enter your first name.</div>
+        </div>
+        <div class="field-group" id="fg-lastname">
+          <label class="field-label" for="lastname">Last name <span class="req">*</span></label>
+          <input type="text" id="lastname" name="lastname" placeholder="Your last name" autocomplete="family-name">
+          <div class="field-error">Please enter your last name.</div>
+        </div>
+      </div>
+
+      <div class="field-group" id="fg-email">
+        <label class="field-label" for="email">
+          Email address <span class="req">*</span>
+          <span class="sub">Used only to send you a copy of this consent record. Never shared with third parties.</span>
+        </label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email">
+        <div class="field-error">Please enter a valid email address.</div>
+      </div>
+
+      <div class="field-group" id="fg-event">
+        <label class="field-label" for="event">Which event are you attending? <span class="req">*</span></label>
+        <select id="event" name="event">
+          <option value="" disabled selected>Select your event</option>
+          <option value="rome-27-mar-2026">HuCon Roma — 27 March 2026</option>
+          <option value="milan-2026">HuCon Milano — 2026</option>
+          <option value="other">Other / future event</option>
+        </select>
+        <div class="field-error">Please select your event.</div>
+      </div>
+
+      <!-- REQUIRED CONSENTS -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">Required to participate</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:18px;">The following three things are conditions of participation. HuCon cannot function as a listening infrastructure without them. If you are not comfortable with any of these, we would ask you not to attend — and we respect that choice completely.</p>
+
+      <!-- Hidden fields so Netlify captures the required consents -->
+      <input type="hidden" name="consent-audio" value="yes">
+      <input type="hidden" name="consent-transcript" value="yes">
+      <input type="hidden" name="consent-whitepaper" value="yes">
+
+      <div class="consent-list">
+        <div class="consent-item is-required">
+          <div class="consent-check-col">
+            <input type="checkbox" checked disabled aria-label="Audio recording consent — required">
+          </div>
+          <div class="consent-text-col">
+            <div class="consent-title">
+              Audio recording — permanent public archive
+              <span class="consent-badge badge-required">Required</span>
+            </div>
+            <div class="consent-desc">The conversation will be recorded and published as a HuCon podcast episode. This recording is part of HuCon's permanent public archive and remains available indefinitely. Your voice will be heard, though your name will not be used unless you choose otherwise below. Once an episode is published, the audio cannot be fully retracted.</div>
+          </div>
+        </div>
+
+        <div class="consent-item is-required">
+          <div class="consent-check-col">
+            <input type="checkbox" checked disabled aria-label="Transcript consent — required">
+          </div>
+          <div class="consent-text-col">
+            <div class="consent-title">
+              Written transcript
+              <span class="consent-badge badge-required">Required</span>
+            </div>
+            <div class="consent-desc">Your contribution will be transcribed and cleaned for readability. Transcripts form part of HuCon's permanent research archive. They are stripped of identifying details before any use unless you choose to be named.</div>
+          </div>
+        </div>
+
+        <div class="consent-item is-required">
+          <div class="consent-check-col">
+            <input type="checkbox" checked disabled aria-label="White paper consent — required">
+          </div>
+          <div class="consent-text-col">
+            <div class="consent-title">
+              Use in S4E white papers and research reports
+              <span class="consent-badge badge-required">Required</span>
+            </div>
+            <div class="consent-desc">Your contribution — including quotes and paraphrased content — will be used in HuCon's published S4E field reports, white papers, and research outputs. This is the core purpose of HuCon as a listening infrastructure. Content is always anonymised by default. Your name will never appear without your explicit permission below.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="required-group-note">
+        <strong>Why these three are required:</strong> HuCon exists to surface the lived experience of people in cities and bring it into the rooms where decisions are made. The audio, transcript, and research report are not separate products — they are the same act of listening, in three forms. Without all three, HuCon cannot fulfil its purpose as a civic listening infrastructure.
+      </div>
+
+      <!-- OPTIONAL CONSENTS -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">Optional — your choice</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="consent-list">
+        <label class="consent-item is-optional" for="c-comms">
+          <div class="consent-check-col">
+            <input type="checkbox" id="c-comms" name="consent-social-media" value="yes">
+          </div>
+          <div class="consent-text-col">
+            <div class="consent-title">
+              Quotes in public communications and social media
+              <span class="consent-badge badge-optional">Optional</span>
+            </div>
+            <div class="consent-desc">A quote from your contribution may be used in HuCon's social media, newsletter, or public-facing communications. Always anonymised unless you choose to be named below. You can withdraw this consent at any time for future use.</div>
+          </div>
+        </label>
+      </div>
+
+      <!-- ATTRIBUTION -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">How you want to appear</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">
+          Attribution preference
+          <span class="sub">Applies to all uses of your contribution — podcast, transcript, reports, and communications.</span>
+        </label>
+        <div class="anon-options">
+          <label class="anon-option">
+            <input type="radio" name="attribution" value="anonymous" checked>
+            <div class="anon-option-title"><span class="anon-indicator"></span>Anonymous</div>
+            <div class="anon-option-desc">Your voice and words appear without your name. We may use a brief descriptor for context — e.g. "Participant, Rome" or "Professional, Milan."</div>
+          </label>
+          <label class="anon-option">
+            <input type="radio" name="attribution" value="named">
+            <div class="anon-option-title"><span class="anon-indicator"></span>Use my name</div>
+            <div class="anon-option-desc">Your first name and a descriptor of your choice may appear alongside your contribution. Specify below.</div>
+          </label>
+        </div>
+      </div>
+
+      <div class="field-group" id="named-descriptor-group" style="display:none;">
+        <label class="field-label" for="descriptor">
+          How would you like to be described?
+          <span class="sub">Keep it as general as you are comfortable with — e.g. "Designer, Rome" or "Healthcare worker, Milan."</span>
+        </label>
+        <input type="text" id="descriptor" name="descriptor" placeholder="Your role or descriptor">
+      </div>
+
+      <!-- WITHDRAWAL -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">Your right to withdraw</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="withdrawal-note">
+        You may withdraw your consent at any time by writing to <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a> with your consent reference number. We will remove your contribution from any unpublished material within 14 days. <strong>Please note:</strong> because the HuCon podcast is a permanent public archive, audio that has already been published cannot be fully retracted — but we will remove or anonymise your contribution in all future uses and in any material not yet in the public domain. Withdrawal does not affect the lawfulness of processing carried out before withdrawal.
+      </div>
+
+      <!-- FINAL CONFIRM -->
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <div class="section-divider-label">Confirmation</div>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <div class="field-group" id="fg-gdpr">
+        <div class="final-confirm">
+          <label class="final-confirm-inner" for="c-gdpr">
+            <div class="consent-check-col">
+              <input type="checkbox" id="c-gdpr" name="gdpr-confirmed" value="yes">
+            </div>
+            <div class="consent-text-col">
+              <div class="consent-title">
+                I have read and understood this consent form <span class="req">*</span>
+              </div>
+              <div class="consent-desc">I understand that my voice will be part of a permanent public podcast, that my contribution will be used in HuCon research reports, and that I am participating voluntarily and of my own free will. I understand my right to withdraw and its limitations with respect to already-published audio.</div>
+            </div>
+          </label>
+        </div>
+        <div class="field-error" id="gdpr-error" style="margin-top:8px;">You must confirm that you have read and understood this form before submitting.</div>
+      </div>
+
+      <!-- GDPR NOTICE -->
+      <div class="gdpr-notice">
+        <div class="gdpr-label">GDPR Privacy Notice — EU Regulation 2016/679</div>
+        <div class="gdpr-text">
+          <strong>Data controller:</strong> Human in Conversation (HuCon), Italy.
+          <strong>Contact:</strong> <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a><br><br>
+          <strong>What we collect:</strong> Your name, email address, and the audio recording and written transcript of your contribution to the HuCon conversation.<br><br>
+          <strong>Why we collect it:</strong> To fulfil HuCon's purpose as a civic listening infrastructure — producing podcast episodes, transcripts, and S4E field reports that inform how cities understand the lives of the people inside them. With your additional permission, to use selected quotes in public communications.<br><br>
+          <strong>Legal basis:</strong> Your explicit, informed consent given through this form (Article 6(1)(a), GDPR). For the podcast and research archive, processing is also carried out in the public interest (Article 6(1)(e)).<br><br>
+          <strong>Retention:</strong> Published podcast audio is retained indefinitely as part of HuCon's permanent public archive. Transcripts and anonymised research content are retained indefinitely. Your personal data (name and email) is retained for 3 years from the date of this consent, after which it is securely deleted.<br><br>
+          <strong>Your rights:</strong> You have the right to access, correct, or request deletion of your personal data. You may withdraw consent, restrict processing, or object to processing at any time. You may also lodge a complaint with Italy's data protection authority: <a href="https://www.garanteprivacy.it" target="_blank">Garante per la Protezione dei Dati Personali — garanteprivacy.it</a>.<br><br>
+          <strong>Data sharing:</strong> Your personal data is never sold or shared with third parties. Anonymised contributions appear in published research outputs and the public podcast as described above. HuCon may share anonymised, aggregated findings with city governments, research institutions, and funders.
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+        <div class="submit-note">By submitting this form you confirm that you are 18 years of age or older, that you have read and understood the consent terms above including the permanent nature of the HuCon podcast archive, and that you are participating voluntarily.</div>
+        <button type="submit" class="submit-btn">Submit Consent &amp; Confirm Participation →</button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- SUCCESS — shown after JS validation passes and form submits -->
+  <div id="successScreen" class="success-screen">
+    <div class="success-icon">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 14l7 7L23 7" stroke="#F5C800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="success-title">Thank you.<br>See you at the table.</div>
+    <div class="success-sub">Your consent has been recorded. A copy will be sent to your email address. Keep your reference number — you will need it if you ever want to withdraw.</div>
+    <div class="success-ref" id="successRef"></div>
+    <div class="success-withdraw">To withdraw consent at any time: <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a></div>
+  </div>
+
+</div>
+
+<script>
+  // Show named descriptor field when "Use my name" is selected
+  document.querySelectorAll('input[name="attribution"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      document.getElementById('named-descriptor-group').style.display =
+        radio.value === 'named' ? 'block' : 'none';
+    });
+  });
+
+  // Validate before allowing Netlify to submit
+  document.getElementById('consentForm').addEventListener('submit', function(e) {
+    let valid = true;
+
+    const fields = [
+      { id: 'firstname', fg: 'fg-firstname', test: v => v.trim().length > 0 },
+      { id: 'lastname',  fg: 'fg-lastname',  test: v => v.trim().length > 0 },
+      { id: 'email',     fg: 'fg-email',     test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+      { id: 'event',     fg: 'fg-event',     test: v => v !== '' },
+    ];
+
+    fields.forEach(({ id, fg, test }) => {
+      const el  = document.getElementById(id);
+      const fgEl = document.getElementById(fg);
+      if (!test(el.value)) { fgEl.classList.add('has-error'); valid = false; }
+      else                  { fgEl.classList.remove('has-error'); }
+    });
+
+    const gdpr    = document.getElementById('c-gdpr');
+    const gdprErr = document.getElementById('gdpr-error');
+    if (!gdpr.checked) { gdprErr.style.display = 'block'; valid = false; }
+    else               { gdprErr.style.display = 'none'; }
+
+    if (!valid) {
+      e.preventDefault();
+      document.querySelector('.has-error')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Generate reference number and show success screen
+    // Netlify handles the actual POST — we just show the thank-you state
+    e.preventDefault();
+
+    const ref = 'HUCON-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2,7).toUpperCase();
+    document.getElementById('successRef').textContent = 'Consent reference: ' + ref;
+
+    // Submit to Netlify silently via fetch
+    const formData = new FormData(document.getElementById('consentForm'));
+    formData.set('consent-reference', ref);
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(formData).toString()
+    }).catch(() => {}); // fail silently — submission is best-effort
+
+    document.getElementById('formBody').style.display = 'none';
+    const success = document.getElementById('successScreen');
+    success.style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
