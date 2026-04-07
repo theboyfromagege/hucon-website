@@ -468,6 +468,75 @@
     .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; }
   }
 </style>
+<<<<<<< HEAD
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+
+<script>
+window.addEventListener('load', function() {
+  const mapEl = document.getElementById('hucon-map');
+  if (!mapEl) return;
+
+  const map = L.map('hucon-map', {
+    center: [20, 10],
+    zoom: 2,
+    zoomControl: true,
+    scrollWheelZoom: false,
+    attributionControl: false
+  });
+
+  // Elegant map tiles — CartoDB Voyager (no API key needed)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OpenStreetMap &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Custom navy pin
+  const pin = L.divIcon({
+    className: '',
+    html: `<div style="
+      width:14px; height:14px;
+      background:#1a2f6b;
+      border:3px solid #e8c832;
+      border-radius:50%;
+      box-shadow:0 2px 8px rgba(0,0,0,0.35);
+    "></div>`,
+    iconSize: [14, 14],
+    iconAnchor: [7, 7],
+    popupAnchor: [0, -10]
+  });
+
+  const cities = [
+    { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, host: 'Jennifer Schaupp', date: '13 March 2026' },
+    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
+    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, host: 'Marvis Chukwudi', date: 'Done' },
+    { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, host: 'Gianni Marsico', date: 'Done' },
+    { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, host: 'Carlo Bobbiesi', date: '20 March 2026' },
+    { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, host: 'Nino', date: '27 March 2026' },
+    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, host: 'Matías González Galvis Mykonos', date: '28 May 2026' },
+    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, host: 'Albert Asensio', date: '29 May 2026' },
+  ];
+
+  cities.forEach(city => {
+    const marker = L.marker([city.lat, city.lng], { icon: pin }).addTo(map);
+    marker.bindPopup(`
+      <div style="font-family:'Outfit',sans-serif; min-width:160px; padding:4px;">
+        <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#2a4080; margin-bottom:4px;">${city.country}</div>
+        <div style="font-size:17px; font-family:'Cormorant Garamond',serif; color:#111e4a; font-weight:400; margin-bottom:4px;">${city.name}</div>
+        <div style="font-size:12px; color:#5a6a8a; margin-bottom:2px;">Host: ${city.host}</div>
+        <div style="font-size:11px; color:#e8c832; background:#111e4a; padding:3px 8px; border-radius:10px; display:inline-block; margin-top:4px;">${city.date}</div>
+      </div>
+    `, { maxWidth: 220 });
+  });
+
+
+});
+</script>
+  <!-- Disable Netlify email obfuscation -->
+  <meta name="netlify-email-obfuscation" content="off">
+=======
+>>>>>>> 77f8b9188aef68ea9c2079b1e0776ce1ede918aa
 </head>
 <body>
 
