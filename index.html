@@ -5,7 +5,7 @@
 <meta name="netlify-email-obfuscation" content="off">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HuCon — Humans in Conversation</title>
-<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Pittsburgh, Milano, Rome, Madrid and Barcelona.">
+<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Madrid and Barcelona — May 2026.">
 <meta name="keywords" content="Humans in Conversation, HuCon, storytelling, wellbeing, urban listening, Kehinde Bademosi">
 <meta property="og:title" content="HuCon — Humans in Conversation">
 <meta property="og:description" content="Where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras.">
@@ -67,7 +67,6 @@
     pointer-events: none;
   }
 
-  /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     padding: 1.5rem 3.5rem;
@@ -84,7 +83,6 @@
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: .5; transition: opacity .2s; }
   .nav-links a:hover { opacity: 1; }
 
-  /* HAMBURGER */
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
   .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
@@ -105,7 +103,6 @@
     .nav-links a:hover { opacity: 1; }
   }
 
-  /* HERO */
   .hero {
     min-height: 100vh; background: var(--navy-deep);
     display: grid; grid-template-columns: 1fr 1fr;
@@ -187,14 +184,12 @@
   .hero-card-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; color:var(--cream); line-height:1.35; margin-bottom:.75rem; font-style:italic; }
   .hero-card-meta { font-size:12px; color:rgba(245,240,232,.32); letter-spacing:.07em; }
 
-  /* MARQUEE */
   .marquee-wrap { background: var(--navy); overflow: hidden; padding: .9rem 0; border-top: 1px solid rgba(245,240,232,.07); border-bottom: 1px solid rgba(245,240,232,.07); }
   .marquee-track { display:flex; animation: marquee 32s linear infinite; white-space:nowrap; }
   .marquee-item { font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic; color:rgba(245,240,232,.32); padding:0 2.5rem; flex-shrink:0; }
   .marquee-item .dot { color:var(--gold); font-style:normal; font-size:20px; margin:0 .6rem; vertical-align:middle; }
   @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-  /* SHARED */
   .section-inner { max-width:1200px; margin:0 auto; padding:0 5rem; }
 
   .section-label {
@@ -211,7 +206,6 @@
   .section-title.light { color:var(--cream); }
   .section-title.light em { color:var(--gold); }
 
-  /* WHAT */
   .what { padding:10rem 0 8rem; }
   .what-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:7rem; align-items:start; }
   .what-left { position:sticky; top:6rem; }
@@ -227,7 +221,6 @@
     background:rgba(26,47,107,.04); max-width:780px;
   }
 
-  /* HOW */
   .how { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
 
   .steps-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:5rem; position:relative; }
@@ -238,7 +231,6 @@
   .step h3 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:var(--cream); margin-bottom:.75rem; line-height:1.3; }
   .step p { font-size:13px; line-height:1.85; color:rgba(232,200,50,.75); }
 
-  /* BOWL */
   .bowl-section { display:grid; grid-template-columns:1fr 1fr; background:var(--navy); min-height:500px; }
   .bowl-img-wrap { position:relative; overflow:hidden; }
   .bowl-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; opacity:.88; }
@@ -249,7 +241,6 @@
   .bowl-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,2.6vw,34px); font-weight:300; font-style:italic; color:var(--cream); line-height:1.35; margin-bottom:1.75rem; }
   .bowl-body { font-size:15px; line-height:1.85; color:var(--text-on-navy); }
 
-  /* EVENTS */
   .events { padding:10rem 0; }
   .events-list { margin-top:4rem; border-top:1px solid var(--border-navy); }
   .event-row { display:grid; grid-template-columns:110px 1fr 1.2fr auto; align-items:center; gap:3rem; padding:2.25rem 0; border-bottom:1px solid var(--border-navy); cursor:none; transition:padding .2s, background .2s; }
@@ -262,7 +253,6 @@
   .event-tag { font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 18px; border:1px solid var(--border-navy); color:var(--text-muted); white-space:nowrap; }
   .event-tag.live { background:var(--navy); border-color:var(--navy); color:var(--gold); }
 
-  /* MISSION */
   .mission { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
   .mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
   .mission-left { padding-right:7rem; border-right:1px solid var(--border-cream); }
@@ -277,7 +267,6 @@
   .stat-big { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:8px; }
   .stat-desc { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.28); line-height:1.6; }
 
-  /* HOST */
   .host { padding:10rem 0; }
   .host-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:8rem; align-items:start; }
 
@@ -292,15 +281,13 @@
   .host-cta h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; line-height:1.25; color:var(--cream); margin-bottom:1.25rem; position:relative; z-index:1; }
   .host-cta p { font-size:15px; line-height:1.8; color:var(--text-on-navy); margin-bottom:2rem; position:relative; z-index:1; }
 
-  /* SPOTIFY */
-.spotify { padding:9rem 0; background:var(--navy-deep); text-align:center; position:relative; overflow:hidden; }
-.spotify-sub { font-size:17px; line-height:1.85; color:var(--text-on-navy); max-width:520px; margin:1.5rem auto 1.5rem; }
-.spotify-embed-wrap { max-width:1200px; margin:0 auto; width:100%; }
-.spotify-embed-wrap > div { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
-.spotify-btn { display:inline-flex; align-items:center; gap:12px; background:#1DB954; color:white; font-family:'Outfit',sans-serif; font-size:14px; font-weight:500; letter-spacing:.06em; padding:16px 36px; text-decoration:none; border-radius:100px; transition:transform .2s, background .2s; cursor:none; }
-.spotify-btn:hover { transform:scale(1.04); background:#1ed760; }
+  .spotify { padding:9rem 0; background:var(--navy-deep); text-align:center; position:relative; overflow:hidden; }
+  .spotify-sub { font-size:17px; line-height:1.85; color:var(--text-on-navy); max-width:520px; margin:1.5rem auto 1.5rem; }
+  .spotify-embed-wrap { max-width:1200px; margin:0 auto; width:100%; }
+  .spotify-embed-wrap > div { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+  .spotify-btn { display:inline-flex; align-items:center; gap:12px; background:#1DB954; color:white; font-family:'Outfit',sans-serif; font-size:14px; font-weight:500; letter-spacing:.06em; padding:16px 36px; text-decoration:none; border-radius:100px; transition:transform .2s, background .2s; cursor:none; }
+  .spotify-btn:hover { transform:scale(1.04); background:#1ed760; }
 
-  /* FOOTER */
   footer { background:var(--navy-deep); border-top:1px solid var(--border-cream); padding:5rem 5rem 3rem; }
   .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:6rem; margin-bottom:4rem; }
   .footer-brand-logo { display:flex; align-items:center; gap:12px; margin-bottom:1.25rem; }
@@ -315,12 +302,6 @@
   .footer-bottom p { font-size:12px; color:rgba(245,240,232,.28); }
   .footer-tagline { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:rgba(245,240,232,.32); }
 
-
-
-
-  
-
-  /* FOUNDER NOTE */
   .founder-note {
     display: flex; gap: 1.5rem; align-items: flex-start;
     margin-top: 2.5rem; padding-top: 2rem;
@@ -353,7 +334,6 @@
   }
   .founder-link:hover { opacity: .7; }
 
-  /* PARTNERS */
   .partners-block {
     margin-top: 2.5rem; padding-top: 2rem;
     border-top: 1px solid var(--border-navy);
@@ -374,110 +354,12 @@
     color: var(--navy-mid); min-width: 90px; flex-shrink: 0;
   }
   .partner-name { color: var(--navy-deep); font-weight: 400; }
-
-  @media (max-width: 960px) {
-    .founder-note { flex-direction: column; gap: 1.25rem; }
-    .founder-img { width: 64px; height: 64px; }
-  }
-
-  
-  /* CITY MAP */
-  .citymap-section { padding: 8rem 0 4rem; }
-  .map-wrap {
-    width: 100%; height: 520px;
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--border-navy);
-    position: relative;
-  }
-  .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
-  @media (max-width:960px) { .map-wrap { height: 360px; } .citymap-section { padding: 5rem 0 2rem; }.spotify-embed-wrap > div { grid-template-columns:1fr; } }
-
-  /* GLOBAL PARTNERS ROW */
   .partner-global { background: rgba(26,47,107,0.04); border-radius: 4px; padding: .6rem .5rem; }
   .partner-city.global { color: var(--navy); font-weight: 500; }
 
-
-  /* CITY MAP */
-  .citymap { padding: 10rem 0 6rem; }
-  .map-wrap {
-    width: 100%; height: 480px;
-    border: 1px solid var(--border-navy);
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    background: #e8e0d0;
-  }
-  .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
-  @media (max-width: 960px) {
-    .citymap { padding: 5rem 0 3rem; }
-    .map-wrap { height: 340px; }
-  }
-
-
-  /* CITY MAP */
-  .citymap { padding: 8rem 0 6rem; }
-  .map-wrap { position: relative; max-width: 960px; margin: 0 auto; padding: 0 2rem; }
-  #hucon-map { width: 100%; aspect-ratio: 2/1; position: relative; }
-  #hucon-map svg { width: 100%; height: 100%; }
-  .map-city-dot { cursor: pointer; transition: r 0.2s; }
-  .map-city-dot:hover circle { r: 9; }
-  #map-tooltip {
-    position: absolute; pointer-events: none;
-    background: var(--navy-deep); border: 1px solid var(--gold);
-    border-radius: 8px; padding: 10px 16px;
-    font-family: 'Outfit', sans-serif; font-size: 13px;
-    color: var(--cream); white-space: nowrap;
-    display: none; z-index: 10;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  }
-  #map-tooltip strong { color: var(--gold); display: block; font-size: 14px; margin-bottom: 2px; }
-  @media (max-width: 960px) {
-    .citymap { padding: 4rem 0 3rem; }
-    #hucon-map { aspect-ratio: 1.4/1; }
-  }
-
-
-  /* CITY MAP */
-  .citymap { padding: 10rem 0 6rem; }
-  .map-wrap {
-    width: 100%; height: 480px;
-    background: var(--navy-deep);
-    border-radius: var(--border-radius-lg);
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 2rem;
-  }
-  .city-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 1.5rem; }
-  .chip {
-    font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
-    padding: 6px 16px; border-radius: 20px; font-weight: 400;
-  }
-  .chip.done { background: var(--navy); color: var(--gold); border: 1px solid var(--navy-mid); }
-  .chip.upcoming { background: transparent; color: var(--text-muted); border: 1px solid var(--border-navy); }
-  @media (max-width:960px) {
-    .citymap { padding: 5rem 0 3rem; }
-    .map-wrap { height: 320px; }
-  }
-
-
-  /* MAP */
   .map-section { padding: 10rem 0 6rem; }
   .map-wrap { position: relative; background: var(--navy-deep); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-navy); overflow: visible; }
-  .city-dot { cursor: pointer; }
-  .city-dot:hover circle:first-child { r: 9; }
-  .pulse-ring { animation: map-pulse 2.5s ease-out infinite; }
-  @keyframes map-pulse {
-    0% { r: 8; opacity: 0.4; }
-    70% { r: 20; opacity: 0; }
-    100% { r: 8; opacity: 0; }
-  }
-  @media (max-width: 960px) {
-    .map-section { padding: 5rem 0 3rem; }
-    .map-wrap { padding: 1rem; }
-  }
 
-  /* SIGNUP */
   .signup-section { padding: 9rem 0; background: var(--navy-deep); position: relative; overflow: hidden; }
   .signup-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start; }
   .signup-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 380px; margin-top: 1.5rem; }
@@ -508,18 +390,6 @@
   .form-group select option { background: var(--navy-deep); color: var(--cream); }
   .form-group textarea { resize: vertical; min-height: 90px; }
 
-  @media (max-width:960px) {
-    .gallery { padding: 5rem 0 3rem; }
-    .gallery-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
-    .signup-section { padding: 5rem 0; }
-    .signup-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .signup-sub { max-width: 100%; }
-  }
-  @media (max-width:480px) {
-    .gallery-grid { grid-template-columns: 1fr; }
-  }
-
-  /* REVEAL */
   .reveal { opacity:0; transform:translateY(28px); transition:opacity .85s ease, transform .85s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
   .reveal-delay-1 { transition-delay:.1s; }
@@ -528,18 +398,12 @@
   .reveal-delay-4 { transition-delay:.4s; }
   .reveal-delay-5 { transition-delay:.5s; }
 
-  /* RESPONSIVE */
   @media (max-width:960px) {
-    /* Hide custom cursor on touch devices */
     .cursor { display: none; }
     body { cursor: auto; }
-
     nav { padding:1.25rem 1.5rem; }
-
-    /* Logo: the seal PNG has a black bg — show text only on mobile */
     .nav-logo img { display: none; }
     .nav-logo-text { font-size: 22px; }
-
     .hero { grid-template-columns:1fr; min-height: auto; }
     .hero-left { padding:7rem 1.5rem 2.5rem; }
     .hero-headline { font-size: clamp(38px, 10vw, 56px); }
@@ -547,10 +411,7 @@
     .hero-right { border-left:none; border-top:1px solid var(--border-cream); padding:2rem 1.5rem 2.5rem; gap: 1rem; }
     .hero-card-title { font-size: 19px; }
     .hero-mandala { display:none; }
-
     .section-inner { padding:0 1.5rem; }
-
-    /* What section */
     .what { padding: 5rem 0 4rem; }
     .what-grid { grid-template-columns:1fr; gap:2rem; }
     .what-left { position:static; }
@@ -558,8 +419,6 @@
     .section-title { font-size: clamp(30px, 8vw, 44px); }
     .body-text { font-size: 15px; line-height: 1.8; }
     .big-quote { font-size: clamp(20px, 5.5vw, 28px); padding: 1.5rem 1.5rem; margin: 3rem 0; }
-
-    /* How it works — single column on mobile */
     .how { padding: 5rem 0; }
     .steps-grid { grid-template-columns: 1fr; gap: 0; margin-top: 3rem; }
     .steps-grid::before { display:none; }
@@ -568,118 +427,47 @@
     .step-num { width: 48px; height: 48px; font-size: 18px; margin-bottom: 1rem; }
     .step h3 { font-size: 20px; color: var(--cream); }
     .step p { font-size: 15px; color: var(--gold) !important; opacity: 1; line-height: 1.75; }
-
-    /* Bowl */
     .bowl-section { grid-template-columns:1fr; }
     .bowl-img-wrap { min-height:260px; }
     .bowl-text { padding:2.5rem 1.5rem; border-left:none; border-top:1px solid var(--border-cream); }
     .bowl-quote { font-size: clamp(18px, 5vw, 26px); }
     .bowl-body { font-size: 14px; }
-
-    /* Events */
     .events { padding: 5rem 0; }
     .event-row { grid-template-columns: 70px 1fr; gap: 1rem; padding: 1.5rem 0; }
     .event-date { font-size: 28px; }
     .event-city { font-size: 22px; }
     .event-theme { display: none; }
     .event-tag { display: inline-block; font-size: 11px; padding: 5px 12px; grid-column: 2; }
-
-    /* Mission */
     .mission { padding: 5rem 0; }
     .mission-grid { grid-template-columns: 1fr; }
     .mission-left { padding-right:0; border-right:none; border-bottom:1px solid var(--border-cream); padding-bottom:3rem; margin-bottom:3rem; padding-top: 0; }
     .mission-right { padding-left:0; }
     .stat-big { font-size: 40px; }
     .stat-cell { padding: 1.5rem; }
-
-    /* Host */
     .host { padding: 5rem 0; }
     .host-grid { grid-template-columns:1fr; gap:3rem; }
     .host-cta { padding: 2.5rem 1.5rem; }
     .host-cta h3 { font-size: 26px; }
-
-    /* Spotify */
     .spotify { padding: 5rem 0; }
     .spotify-sub { font-size: 15px; padding: 0 1rem; }
-
-    /* Footer */
+    .spotify-embed-wrap > div { grid-template-columns:1fr; }
     footer { padding: 3.5rem 1.5rem 2rem; }
     .footer-inner { grid-template-columns:1fr; gap:2.5rem; margin-bottom: 2.5rem; }
     .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
+    .map-section { padding: 5rem 0 3rem; }
+    .map-wrap { padding: 1rem; }
+    .signup-section { padding: 5rem 0; }
+    .signup-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .signup-sub { max-width: 100%; }
+    .founder-note { flex-direction: column; gap: 1.25rem; }
+    .founder-img { width: 64px; height: 64px; }
   }
 
-  /* Extra small phones */
   @media (max-width: 380px) {
     .hero-headline { font-size: 34px; }
     .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; }
   }
 </style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-
-<script>
-window.addEventListener('load', function() {
-  const mapEl = document.getElementById('hucon-map');
-  if (!mapEl) return;
-
-  const map = L.map('hucon-map', {
-    center: [20, 10],
-    zoom: 2,
-    zoomControl: true,
-    scrollWheelZoom: false,
-    attributionControl: false
-  });
-
-  // Elegant map tiles — CartoDB Voyager (no API key needed)
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
-
-  // Custom navy pin
-  const pin = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:14px; height:14px;
-      background:#1a2f6b;
-      border:3px solid #e8c832;
-      border-radius:50%;
-      box-shadow:0 2px 8px rgba(0,0,0,0.35);
-    "></div>`,
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-    popupAnchor: [0, -10]
-  });
-
-  const cities = [
-    { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, host: 'Jennifer Schaupp', date: '13 March 2026' },
-    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
-    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, host: 'Marvis Chukwudi', date: 'Done' },
-    { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, host: 'Gianni Marsico', date: 'Done' },
-    { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, host: 'Carlo Bobbiesi', date: '20 March 2026' },
-    { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, host: 'Nino', date: '27 March 2026' },
-    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, host: 'TBC', date: '27 May 2026' },
-    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, host: 'Albert Asensio', date: '28 May 2026' },
-  ];
-
-  cities.forEach(city => {
-    const marker = L.marker([city.lat, city.lng], { icon: pin }).addTo(map);
-    marker.bindPopup(`
-      <div style="font-family:'Outfit',sans-serif; min-width:160px; padding:4px;">
-        <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#2a4080; margin-bottom:4px;">${city.country}</div>
-        <div style="font-size:17px; font-family:'Cormorant Garamond',serif; color:#111e4a; font-weight:400; margin-bottom:4px;">${city.name}</div>
-        <div style="font-size:12px; color:#5a6a8a; margin-bottom:2px;">Host: ${city.host}</div>
-        <div style="font-size:11px; color:#e8c832; background:#111e4a; padding:3px 8px; border-radius:10px; display:inline-block; margin-top:4px;">${city.date}</div>
-      </div>
-    `, { maxWidth: 220 });
-  });
-
-
-});
-</script>
-  <!-- Disable Netlify email obfuscation -->
-  <meta name="netlify-email-obfuscation" content="off">
 </head>
 <body>
 
@@ -704,7 +492,7 @@ window.addEventListener('load', function() {
   </button>
 </nav>
 
-<!-- HERO -->
+<!-- HERO — Updated: Madrid & Barcelona as upcoming -->
 <section class="hero">
   <div class="lace-bg"></div>
   <img class="hero-mandala" src="Circular_Seal_HIC_LOGO.png" alt="">
@@ -722,25 +510,25 @@ window.addEventListener('load', function() {
   <div class="hero-right">
     <div class="hero-card">
       <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
-      <p class="hero-card-label">Milano · 20 March 2026</p>
-      <p class="hero-card-title">"In a city of non-stop performance, how do you show up for you?"</p>
+      <p class="hero-card-label">Madrid · 27 May 2026</p>
+      <p class="hero-card-title">"In a city full of light, life, and ambition, how is your wellbeing?"</p>
       <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
     </div>
     <div class="hero-card">
       <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
-      <p class="hero-card-label">Rome · 27 March 2026</p>
-      <p class="hero-card-title">"You came to Rome to begin again. How is that going for you?"</p>
+      <p class="hero-card-label">Barcelona · 28 May 2026</p>
+      <p class="hero-card-title">"Where do you go when you feel like a tourist in your own city?"</p>
       <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
     </div>
     <p style="font-size:12px;color:rgba(245,240,232,.28);letter-spacing:.06em;margin-top:.5rem;">These are the stories we don't usually tell.</p>
   </div>
 </section>
 
-<!-- MARQUEE -->
+<!-- MARQUEE — Updated city list -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> New York <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
-    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> New York <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
   </div>
 </div>
 
@@ -828,9 +616,7 @@ window.addEventListener('load', function() {
   </div>
 </section>
 
-
-
-<!-- EVENTS -->
+<!-- EVENTS — Updated: Milano & Rome now "Held ✓" -->
 <section class="events" id="events">
   <div class="section-inner">
     <p class="section-label reveal">Upcoming tables</p>
@@ -842,17 +628,17 @@ window.addEventListener('load', function() {
         <div class="event-theme">"When the cost of care keeps rising, how do you protect your wellbeing?"</div>
         <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
-      <div class="event-row reveal reveal-delay-1">
+      <div class="event-row reveal reveal-delay-1" style="opacity:0.45;">
         <div class="event-date">20<span>March 2026</span></div>
-        <div class="event-city">Milano</div>
+        <div class="event-city" style="text-decoration:line-through; opacity:0.6;">Milano</div>
         <div class="event-theme">"In a city of non-stop performance, how do you show up for you?"</div>
-        <a href="#signup" class="event-tag live">Register →</a>
+        <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
-      <div class="event-row reveal reveal-delay-2">
+      <div class="event-row reveal reveal-delay-2" style="opacity:0.45;">
         <div class="event-date">27<span>March 2026</span></div>
-        <div class="event-city">Rome</div>
+        <div class="event-city" style="text-decoration:line-through; opacity:0.6;">Rome</div>
         <div class="event-theme">"You came to Rome to begin again. How is that going for you?"</div>
-        <a href="#signup" class="event-tag live">Register →</a>
+        <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
       <div class="event-row reveal reveal-delay-3">
         <div class="event-date">27<span>May 2026</span></div>
@@ -874,13 +660,7 @@ window.addEventListener('load', function() {
   </div>
 </section>
 
-
-
-
-<!-- CITY MAP -->
-<!-- CITY MAP -->
-<!-- CITY MAP -->
-<!-- INTERACTIVE MAP -->
+<!-- INTERACTIVE MAP — Updated: 6 held -->
 <section class="map-section" id="map">
   <div class="section-inner">
     <p class="section-label reveal">Our footprint</p>
@@ -889,7 +669,7 @@ window.addEventListener('load', function() {
     <div class="map-wrap reveal reveal-delay-3" id="hucon-map-wrap">
       <div id="hucon-map" style="width:100%;height:420px;border-radius:8px;overflow:hidden;"></div>
       <div style="display:flex;gap:3rem;margin-top:1.5rem;flex-wrap:wrap;">
-        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">8</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 4 held</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">8</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 6 held</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">3</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Continents</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">1</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Question</div></div>
       </div>
@@ -897,7 +677,7 @@ window.addEventListener('load', function() {
   </div>
 </section>
 
-<!-- SIGN UP -->
+<!-- SIGN UP — Updated: only Madrid, Barcelona, Other -->
 <section class="signup-section" id="signup">
   <div class="lace-bg"></div>
   <div class="section-inner" style="position:relative;z-index:2;">
@@ -920,16 +700,13 @@ window.addEventListener('load', function() {
 
           <div class="form-group">
             <label>Phone number</label>
-            <input type="tel" name="phone" placeholder="+39 or your country code" required>
+            <input type="tel" name="phone" placeholder="+34 or your country code" required>
           </div>
 
           <div class="form-group">
             <label>Which city are you interested in?</label>
             <select name="city" required>
               <option value="" disabled selected>Select a city</option>
-              <option value="Pittsburgh — 13 March 2026">Pittsburgh — 13 March 2026</option>
-              <option value="Milano — 20 March 2026">Milano — 20 March 2026</option>
-              <option value="Rome — 27 March 2026">Rome — 27 March 2026</option>
               <option value="Madrid — 27 May 2026">Madrid — 27 May 2026</option>
               <option value="Barcelona — 28 May 2026">Barcelona — 28 May 2026</option>
               <option value="Other / notify me">Other — notify me when my city is added</option>
@@ -1083,7 +860,6 @@ window.addEventListener('load', function() {
 </footer>
 
 <script>
-  // Hamburger menu
   function toggleMenu() {
     document.getElementById('nav-links').classList.toggle('open');
     document.getElementById('hamburger').classList.toggle('open');
@@ -1093,7 +869,6 @@ window.addEventListener('load', function() {
     document.getElementById('hamburger').classList.remove('open');
   }
 
-  // Custom cursor (desktop only)
   const cursor = document.getElementById('cursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
     document.addEventListener('mousemove', e => {
@@ -1106,23 +881,19 @@ window.addEventListener('load', function() {
     });
   }
 
-  // Reveal animations with fallback
   try {
     const obs = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
   } catch(e) {
-    // Fallback: just show everything if IntersectionObserver fails
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
   }
 
-  // Safety net: after 1s make sure nothing is still hidden
   setTimeout(() => {
     document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
   }, 1000);
 
-  // Mission body-text colour fix (dark bg)
   document.querySelectorAll('.mission .body-text').forEach(el => {
     el.style.color = 'rgba(245,240,232,0.65)';
   });
@@ -1134,21 +905,9 @@ window.addEventListener('load', function() {
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
-<script>
-// ── CONTACT LINK ──
-document.querySelectorAll('.contact-link').forEach(function(el) {
-  el.addEventListener('click', function(e) {
-    e.preventDefault();
-    var e1 = el.getAttribute('data-e');
-    var d1 = el.getAttribute('data-d');
-    window.location.href = ['m','a','i','l','t','o',':'].join('') + e1 + '@' + d1;
-  });
-});
-</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
-// ── MAP ──
 window.addEventListener('load', function() {
   const mapEl = document.getElementById('hucon-map');
   if (!mapEl) return;
@@ -1161,12 +920,10 @@ window.addEventListener('load', function() {
     attributionControl: false
   });
 
-  // Dark styled tiles
   L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
     maxZoom: 18
   }).addTo(map);
 
-  // Custom gold pin
   const goldIcon = L.divIcon({
     className: '',
     html: '<div style="width:14px;height:14px;background:#e8c832;border-radius:50%;border:2px solid #f5f0e8;box-shadow:0 0 8px rgba(232,200,50,0.6)"></div>',
@@ -1212,7 +969,6 @@ window.addEventListener('load', function() {
     L.marker([city.lat, city.lng], { icon }).addTo(map).bindPopup(popup);
   });
 
-  // Add popup CSS
   const style = document.createElement('style');
   style.textContent = '.hucon-popup .leaflet-popup-content-wrapper{background:#f5f0e8;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3);border:none}.hucon-popup .leaflet-popup-tip{background:#f5f0e8}.leaflet-control-zoom{border:none!important}.leaflet-control-zoom a{background:#111e4a!important;color:#e8c832!important;border:1px solid rgba(232,200,50,0.3)!important}';
   document.head.appendChild(style);
@@ -1220,43 +976,6 @@ window.addEventListener('load', function() {
 </script>
 
 <script>
-// ── MAP TOOLTIP ──
-document.addEventListener('DOMContentLoaded', function() {
-  const tooltip = document.getElementById('map-tooltip');
-  const mapWrap = document.querySelector('.map-wrap');
-  if (!tooltip || !mapWrap) return;
-
-  document.querySelectorAll('.city-dot').forEach(dot => {
-    dot.addEventListener('mouseenter', function(e) {
-      document.getElementById('tt-city').textContent = this.dataset.city;
-      document.getElementById('tt-date').textContent = this.dataset.date;
-      document.getElementById('tt-host').textContent = 'Host: ' + this.dataset.host;
-      tooltip.style.display = 'block';
-    });
-    dot.addEventListener('mousemove', function(e) {
-      const rect = mapWrap.getBoundingClientRect();
-      tooltip.style.left = (e.clientX - rect.left + 12) + 'px';
-      tooltip.style.top = (e.clientY - rect.top - 40) + 'px';
-    });
-    dot.addEventListener('mouseleave', function() {
-      tooltip.style.display = 'none';
-    });
-    // Touch support for mobile
-    dot.addEventListener('click', function() {
-      document.getElementById('tt-city').textContent = this.dataset.city;
-      document.getElementById('tt-date').textContent = this.dataset.date;
-      document.getElementById('tt-host').textContent = 'Host: ' + this.dataset.host;
-      tooltip.style.display = tooltip.style.display === 'none' ? 'block' : 'none';
-      tooltip.style.left = '50%';
-      tooltip.style.top = '10px';
-      tooltip.style.transform = 'translateX(-50%)';
-    });
-  });
-});
-</script>
-
-<script>
-// ── FORM SUCCESS HANDLER ──
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('signup-form');
   if (!form) return;
@@ -1280,57 +999,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
-
-// ── LANGUAGE SWITCHER ──
-const langs = [
-  { code: 'en',    label: 'English',   flag: '🇬🇧' },
-  { code: 'it',    label: 'Italiano',  flag: '🇮🇹' },
-  { code: 'es',    label: 'Español',   flag: '🇪🇸' },
-  { code: 'fr',    label: 'Français',  flag: '🇫🇷' },
-  { code: 'de',    label: 'Deutsch',   flag: '🇩🇪' },
-  { code: 'pt',    label: 'Português', flag: '🇵🇹' },
-  { code: 'ar',    label: 'العربية',   flag: '🇸🇦' },
-  { code: 'yo',    label: 'Yorùbá',    flag: '🇳🇬' },
-  { code: 'sw',    label: 'Kiswahili', flag: '🌍' },
-];
-
-function getActiveLang() {
-  const m = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-  return m ? m[1] : 'en';
-}
-
-function applyLang(code) {
-  document.cookie = 'googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  document.cookie = 'googtrans=; domain=.' + location.hostname + '; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-  if (code !== 'en') {
-    document.cookie = 'googtrans=/en/' + code + '; path=/';
-    document.cookie = 'googtrans=/en/' + code + '; domain=.' + location.hostname + '; path=/';
-  }
-  location.reload();
-}
-
-
-  document.body.appendChild(drop);
-
-  document.addEventListener('click', function() {
-    const d = document.getElementById('translate-dropdown');
-    if (d) d.classList.remove('open');
-  });
-});
-
-
-    var marker = L.marker([city.lat, city.lng], {icon:icon}).addTo(map);
-    marker.bindPopup(
-      '<strong style="font-size:15px;color:#111e4a;">'+city.name+'</strong><br>'+
-      '<span style="font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:#5a6a8a;">'+city.date+'</span><br>'+
-      '<span style="font-size:12px;color:#3a4a6a;">Host: '+city.host+'</span>',
-      { maxWidth:180 }
-    );
-  });
-});
 </script>
-
-
 
 </body>
 </html>
