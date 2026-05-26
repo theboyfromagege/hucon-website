@@ -82,6 +82,31 @@
     max-width: 460px;
   }
 
+  /* ── LANGUAGE TOGGLE ── */
+  .lang-toggle {
+    position: absolute;
+    top: 24px; right: 24px;
+    display: flex;
+    border: 1px solid rgba(245,200,0,.4);
+    z-index: 2;
+  }
+  .lang-toggle button {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    padding: 6px 12px;
+    background: transparent;
+    color: rgba(255,255,255,.65);
+    border: none;
+    cursor: pointer;
+    transition: background .15s, color .15s;
+  }
+  .lang-toggle button.active {
+    background: var(--yellow);
+    color: var(--navy);
+  }
+
   /* ── BODY ── */
   .form-body { background: var(--white); padding: 44px 48px; }
 
@@ -434,34 +459,58 @@
   .success-withdraw { font-size: 12px; color: var(--muted); margin-top: 16px; }
   .success-withdraw a { color: var(--navy); }
 
+  /* ── LANGUAGE VISIBILITY ── */
+  [data-lang-es] { display: none; }
+  body.lang-es [data-lang-en] { display: none; }
+  body.lang-es [data-lang-es] { display: revert; }
+  /* keep grid/flex display modes correct when ES is shown */
+  body.lang-es .what-is[data-lang-es],
+  body.lang-es .promise[data-lang-es] { display: block; }
+
   @media (max-width: 580px) {
     body { padding: 0 0 60px; }
     .form-header, .form-body { padding: 32px 24px; }
     .two-col { grid-template-columns: 1fr; }
     .anon-options { grid-template-columns: 1fr; }
     .gdpr-notice { margin: 36px -24px -32px; padding: 18px; }
+    .lang-toggle { top: 16px; right: 16px; }
   }
 </style>
 </head>
-<body>
+<body class="lang-en">
 <div class="form-shell">
 
   <div class="form-header">
-    <div class="header-label">Human in Conversation · Participant Consent</div>
-    <div class="header-title">Before we sit<br>at the table.</div>
-    <div class="header-sub">This form takes two minutes. It tells you exactly what HuCon does with what you share — and gives you full clarity before you choose to participate.</div>
+    <div class="lang-toggle">
+      <button type="button" id="btn-en" class="active" onclick="setLang('en')">EN</button>
+      <button type="button" id="btn-es" onclick="setLang('es')">ES</button>
+    </div>
+    <div class="header-label" data-lang-en>Human in Conversation · Participant Consent</div>
+    <div class="header-label" data-lang-es>Human in Conversation · Consentimiento del participante</div>
+    <div class="header-title" data-lang-en>Before we sit<br>at the table.</div>
+    <div class="header-title" data-lang-es>Antes de sentarnos<br>a la mesa.</div>
+    <div class="header-sub" data-lang-en>This form takes two minutes. It tells you exactly what HuCon does with what you share — and gives you full clarity before you choose to participate.</div>
+    <div class="header-sub" data-lang-es>Este formulario lleva dos minutos. Te explica exactamente qué hace HuCon con lo que compartes, para que tengas total claridad antes de decidir participar.</div>
   </div>
 
   <div id="formBody" class="form-body">
 
-    <div class="what-is">
+    <div class="what-is" data-lang-en>
       <div class="what-is-label">What HuCon is</div>
       <p>Human in Conversation is a global civic listening infrastructure. Every conversation you contribute to becomes part of a permanent public record — a podcast episode, a research transcript, and an S4E field report that informs how cities understand the lives of the people inside them. This is not a private gathering. It is a contribution to a body of work. We want you to know that before you walk in.</p>
     </div>
+    <div class="what-is" data-lang-es>
+      <div class="what-is-label">Qué es HuCon</div>
+      <p>Human in Conversation es una infraestructura cívica de escucha de alcance global. Cada conversación en la que participas pasa a formar parte de un registro público permanente: un episodio de pódcast, una transcripción de investigación y un informe de campo S4E que ayuda a las ciudades a entender la vida de las personas que las habitan. Esto no es un encuentro privado. Es una aportación a un cuerpo de trabajo. Queremos que lo sepas antes de entrar por la puerta.</p>
+    </div>
 
-    <div class="promise">
+    <div class="promise" data-lang-en>
       <div class="promise-label">Our commitment to you</div>
       <p>You are anonymous by default. Your name will never appear without your explicit permission. You can withdraw your consent at any time.</p>
+    </div>
+    <div class="promise" data-lang-es>
+      <div class="promise-label">Nuestro compromiso contigo</div>
+      <p>Eres anónimo por defecto. Tu nombre nunca aparecerá sin tu permiso explícito. Puedes retirar tu consentimiento en cualquier momento.</p>
     </div>
 
     <!-- NETLIFY FORM — data-netlify="true" enables Netlify Forms -->
@@ -484,49 +533,64 @@
       <!-- PERSONAL DETAILS -->
       <div class="two-col">
         <div class="field-group" id="fg-firstname">
-          <label class="field-label" for="firstname">First name <span class="req">*</span></label>
-          <input type="text" id="firstname" name="firstname" placeholder="Your first name" autocomplete="given-name">
-          <div class="field-error">Please enter your first name.</div>
+          <label class="field-label" for="firstname" data-lang-en>First name <span class="req">*</span></label>
+          <label class="field-label" for="firstname" data-lang-es>Nombre <span class="req">*</span></label>
+          <input type="text" id="firstname" name="firstname" placeholder="Your first name" data-ph-en="Your first name" data-ph-es="Tu nombre" autocomplete="given-name">
+          <div class="field-error" data-lang-en>Please enter your first name.</div>
+          <div class="field-error" data-lang-es>Por favor, introduce tu nombre.</div>
         </div>
         <div class="field-group" id="fg-lastname">
-          <label class="field-label" for="lastname">Last name <span class="req">*</span></label>
-          <input type="text" id="lastname" name="lastname" placeholder="Your last name" autocomplete="family-name">
-          <div class="field-error">Please enter your last name.</div>
+          <label class="field-label" for="lastname" data-lang-en>Last name <span class="req">*</span></label>
+          <label class="field-label" for="lastname" data-lang-es>Apellidos <span class="req">*</span></label>
+          <input type="text" id="lastname" name="lastname" placeholder="Your last name" data-ph-en="Your last name" data-ph-es="Tus apellidos" autocomplete="family-name">
+          <div class="field-error" data-lang-en>Please enter your last name.</div>
+          <div class="field-error" data-lang-es>Por favor, introduce tus apellidos.</div>
         </div>
       </div>
 
       <div class="field-group" id="fg-email">
-        <label class="field-label" for="email">
+        <label class="field-label" for="email" data-lang-en>
           Email address <span class="req">*</span>
           <span class="sub">Used only to send you a copy of this consent record. Never shared with third parties.</span>
         </label>
-        <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="email">
-        <div class="field-error">Please enter a valid email address.</div>
+        <label class="field-label" for="email" data-lang-es>
+          Correo electrónico <span class="req">*</span>
+          <span class="sub">Se usa únicamente para enviarte una copia de este registro de consentimiento. Nunca se comparte con terceros.</span>
+        </label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" data-ph-en="your@email.com" data-ph-es="tu@correo.com" autocomplete="email">
+        <div class="field-error" data-lang-en>Please enter a valid email address.</div>
+        <div class="field-error" data-lang-es>Por favor, introduce un correo electrónico válido.</div>
       </div>
 
       <div class="field-group" id="fg-event">
-        <label class="field-label" for="event">Which event are you attending? <span class="req">*</span></label>
+        <label class="field-label" for="event" data-lang-en>Which event are you attending? <span class="req">*</span></label>
+        <label class="field-label" for="event" data-lang-es>¿A qué evento vas a asistir? <span class="req">*</span></label>
         <select id="event" name="event">
-          <option value="" disabled selected>Select your event</option>
-<option value="bari-2025">HuCon Bari — 2025</option>
-<option value="lagos-2025">HuCon Lagos — 2025</option>
-<option value="pittsburgh-2025">HuCon Pittsburgh — 2025</option>
-<option value="valdosta-2026">HuCon Valdosta — 2026</option>
-<option value="milan-2026">HuCon Milan — 2026</option>
-<option value="rome-2026">HuCon Rome — 2026</option>
-<option value="other">Other / future event</option>
+          <option value="" disabled selected data-lang-en-text="Select your event" data-lang-es-text="Selecciona tu evento">Select your event</option>
+          <option value="bari-2025">HuCon Bari — 2025</option>
+          <option value="lagos-2025">HuCon Lagos — 2025</option>
+          <option value="pittsburgh-2025">HuCon Pittsburgh — 2025</option>
+          <option value="valdosta-2026">HuCon Valdosta — 2026</option>
+          <option value="milan-2026">HuCon Milan — 2026</option>
+          <option value="rome-2026">HuCon Rome — 2026</option>
+          <option value="madrid-2026">HuCon Madrid — 28 May 2026</option>
+          <option value="barcelona-2026">HuCon Barcelona — 29 May 2026</option>
+          <option value="other" data-lang-en-text="Other / future event" data-lang-es-text="Otro / evento futuro">Other / future event</option>
         </select>
-        <div class="field-error">Please select your event.</div>
+        <div class="field-error" data-lang-en>Please select your event.</div>
+        <div class="field-error" data-lang-es>Por favor, selecciona tu evento.</div>
       </div>
 
       <!-- REQUIRED CONSENTS -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="section-divider-label">Required to participate</div>
+        <div class="section-divider-label" data-lang-en>Required to participate</div>
+        <div class="section-divider-label" data-lang-es>Requisitos para participar</div>
         <div class="section-divider-line"></div>
       </div>
 
-      <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:18px;">The following three things are conditions of participation. HuCon cannot function as a listening infrastructure without them. If you are not comfortable with any of these, we would ask you not to attend — and we respect that choice completely.</p>
+      <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:18px;" data-lang-en>The following three things are conditions of participation. HuCon cannot function as a listening infrastructure without them. If you are not comfortable with any of these, we would ask you not to attend — and we respect that choice completely.</p>
+      <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:18px;" data-lang-es>Las tres cosas siguientes son condiciones para participar. HuCon no puede funcionar como infraestructura de escucha sin ellas. Si alguna no te resulta cómoda, te pedimos que no asistas, y respetamos por completo esa decisión.</p>
 
       <!-- Hidden fields so Netlify captures the required consents -->
       <input type="hidden" name="consent-audio" value="yes">
@@ -539,11 +603,16 @@
             <input type="checkbox" checked disabled aria-label="Audio recording consent — required">
           </div>
           <div class="consent-text-col">
-            <div class="consent-title">
+            <div class="consent-title" data-lang-en>
               Audio recording — permanent public archive
               <span class="consent-badge badge-required">Required</span>
             </div>
-            <div class="consent-desc">The conversation will be recorded and published as a HuCon podcast episode. This recording is part of HuCon's permanent public archive and remains available indefinitely. Your voice will be heard, though your name will not be used unless you choose otherwise below. Once an episode is published, the audio cannot be fully retracted.</div>
+            <div class="consent-title" data-lang-es>
+              Grabación de audio — archivo público permanente
+              <span class="consent-badge badge-required">Obligatorio</span>
+            </div>
+            <div class="consent-desc" data-lang-en>The conversation will be recorded and published as a HuCon podcast episode. This recording is part of HuCon's permanent public archive and remains available indefinitely. Your voice will be heard, though your name will not be used unless you choose otherwise below. Once an episode is published, the audio cannot be fully retracted.</div>
+            <div class="consent-desc" data-lang-es>La conversación se grabará y se publicará como un episodio del pódcast de HuCon. Esta grabación forma parte del archivo público permanente de HuCon y permanece disponible de forma indefinida. Se escuchará tu voz, aunque tu nombre no se utilizará salvo que elijas lo contrario más abajo. Una vez publicado un episodio, el audio no puede retirarse por completo.</div>
           </div>
         </div>
 
@@ -552,11 +621,16 @@
             <input type="checkbox" checked disabled aria-label="Transcript consent — required">
           </div>
           <div class="consent-text-col">
-            <div class="consent-title">
+            <div class="consent-title" data-lang-en>
               Written transcript
               <span class="consent-badge badge-required">Required</span>
             </div>
-            <div class="consent-desc">Your contribution will be transcribed and cleaned for readability. Transcripts form part of HuCon's permanent research archive. They are stripped of identifying details before any use unless you choose to be named.</div>
+            <div class="consent-title" data-lang-es>
+              Transcripción escrita
+              <span class="consent-badge badge-required">Obligatorio</span>
+            </div>
+            <div class="consent-desc" data-lang-en>Your contribution will be transcribed and cleaned for readability. Transcripts form part of HuCon's permanent research archive. They are stripped of identifying details before any use unless you choose to be named.</div>
+            <div class="consent-desc" data-lang-es>Tu aportación se transcribirá y se editará para facilitar su lectura. Las transcripciones forman parte del archivo de investigación permanente de HuCon. Se eliminan los datos identificativos antes de cualquier uso, salvo que elijas aparecer con tu nombre.</div>
           </div>
         </div>
 
@@ -565,23 +639,32 @@
             <input type="checkbox" checked disabled aria-label="White paper consent — required">
           </div>
           <div class="consent-text-col">
-            <div class="consent-title">
+            <div class="consent-title" data-lang-en>
               Use in S4E white papers and research reports
               <span class="consent-badge badge-required">Required</span>
             </div>
-            <div class="consent-desc">Your contribution — including quotes and paraphrased content — will be used in HuCon's published S4E field reports, white papers, and research outputs. This is the core purpose of HuCon as a listening infrastructure. Content is always anonymised by default. Your name will never appear without your explicit permission below.</div>
+            <div class="consent-title" data-lang-es>
+              Uso en informes técnicos S4E y de investigación
+              <span class="consent-badge badge-required">Obligatorio</span>
+            </div>
+            <div class="consent-desc" data-lang-en>Your contribution — including quotes and paraphrased content — will be used in HuCon's published S4E field reports, white papers, and research outputs. This is the core purpose of HuCon as a listening infrastructure. Content is always anonymised by default. Your name will never appear without your explicit permission below.</div>
+            <div class="consent-desc" data-lang-es>Tu aportación —incluidas citas y contenido parafraseado— se utilizará en los informes de campo S4E, los informes técnicos y los resultados de investigación publicados por HuCon. Este es el propósito central de HuCon como infraestructura de escucha. El contenido se anonimiza siempre por defecto. Tu nombre nunca aparecerá sin tu permiso explícito más abajo.</div>
           </div>
         </div>
       </div>
 
-      <div class="required-group-note">
+      <div class="required-group-note" data-lang-en>
         <strong>Why these three are required:</strong> HuCon exists to surface the lived experience of people in cities and bring it into the rooms where decisions are made. The audio, transcript, and research report are not separate products — they are the same act of listening, in three forms. Without all three, HuCon cannot fulfil its purpose as a civic listening infrastructure.
+      </div>
+      <div class="required-group-note" data-lang-es>
+        <strong>Por qué estas tres son obligatorias:</strong> HuCon existe para hacer visible la experiencia vivida de las personas en las ciudades y llevarla a las salas donde se toman las decisiones. El audio, la transcripción y el informe de investigación no son productos separados: son el mismo acto de escucha, en tres formas. Sin las tres, HuCon no puede cumplir su propósito como infraestructura cívica de escucha.
       </div>
 
       <!-- OPTIONAL CONSENTS -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="section-divider-label">Optional — your choice</div>
+        <div class="section-divider-label" data-lang-en>Optional — your choice</div>
+        <div class="section-divider-label" data-lang-es>Opcional — tú decides</div>
         <div class="section-divider-line"></div>
       </div>
 
@@ -591,11 +674,16 @@
             <input type="checkbox" id="c-comms" name="consent-social-media" value="yes">
           </div>
           <div class="consent-text-col">
-            <div class="consent-title">
+            <div class="consent-title" data-lang-en>
               Quotes in public communications and social media
               <span class="consent-badge badge-optional">Optional</span>
             </div>
-            <div class="consent-desc">A quote from your contribution may be used in HuCon's social media, newsletter, or public-facing communications. Always anonymised unless you choose to be named below. You can withdraw this consent at any time for future use.</div>
+            <div class="consent-title" data-lang-es>
+              Citas en comunicaciones públicas y redes sociales
+              <span class="consent-badge badge-optional">Opcional</span>
+            </div>
+            <div class="consent-desc" data-lang-en>A quote from your contribution may be used in HuCon's social media, newsletter, or public-facing communications. Always anonymised unless you choose to be named below. You can withdraw this consent at any time for future use.</div>
+            <div class="consent-desc" data-lang-es>Una cita de tu aportación podría utilizarse en las redes sociales, el boletín o las comunicaciones públicas de HuCon. Siempre de forma anónima, salvo que elijas aparecer con tu nombre más abajo. Puedes retirar este consentimiento en cualquier momento para usos futuros.</div>
           </div>
         </label>
       </div>
@@ -603,52 +691,68 @@
       <!-- ATTRIBUTION -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="section-divider-label">How you want to appear</div>
+        <div class="section-divider-label" data-lang-en>How you want to appear</div>
+        <div class="section-divider-label" data-lang-es>Cómo quieres aparecer</div>
         <div class="section-divider-line"></div>
       </div>
 
       <div class="field-group">
-        <label class="field-label">
+        <label class="field-label" data-lang-en>
           Attribution preference
           <span class="sub">Applies to all uses of your contribution — podcast, transcript, reports, and communications.</span>
+        </label>
+        <label class="field-label" data-lang-es>
+          Preferencia de atribución
+          <span class="sub">Se aplica a todos los usos de tu aportación: pódcast, transcripción, informes y comunicaciones.</span>
         </label>
         <div class="anon-options">
           <label class="anon-option">
             <input type="radio" name="attribution" value="anonymous" checked>
-            <div class="anon-option-title"><span class="anon-indicator"></span>Anonymous</div>
-            <div class="anon-option-desc">Your voice and words appear without your name. We may use a brief descriptor for context — e.g. "Participant, Rome" or "Professional, Milan."</div>
+            <div class="anon-option-title"><span class="anon-indicator"></span><span data-lang-en>Anonymous</span><span data-lang-es>Anónimo</span></div>
+            <div class="anon-option-desc" data-lang-en>Your voice and words appear without your name. We may use a brief descriptor for context — e.g. "Participant, Madrid" or "Professional, Barcelona."</div>
+            <div class="anon-option-desc" data-lang-es>Tu voz y tus palabras aparecen sin tu nombre. Podemos usar una breve descripción para dar contexto, p. ej. "Participante, Madrid" o "Profesional, Barcelona".</div>
           </label>
           <label class="anon-option">
             <input type="radio" name="attribution" value="named">
-            <div class="anon-option-title"><span class="anon-indicator"></span>Use my name</div>
-            <div class="anon-option-desc">Your first name and a descriptor of your choice may appear alongside your contribution. Specify below.</div>
+            <div class="anon-option-title"><span class="anon-indicator"></span><span data-lang-en>Use my name</span><span data-lang-es>Usar mi nombre</span></div>
+            <div class="anon-option-desc" data-lang-en>Your first name and a descriptor of your choice may appear alongside your contribution. Specify below.</div>
+            <div class="anon-option-desc" data-lang-es>Tu nombre de pila y una descripción que tú elijas pueden aparecer junto a tu aportación. Especifícalo más abajo.</div>
           </label>
         </div>
       </div>
 
       <div class="field-group" id="named-descriptor-group" style="display:none;">
-        <label class="field-label" for="descriptor">
+        <label class="field-label" for="descriptor" data-lang-en>
           How would you like to be described?
-          <span class="sub">Keep it as general as you are comfortable with — e.g. "Designer, Rome" or "Healthcare worker, Milan."</span>
+          <span class="sub">Keep it as general as you are comfortable with — e.g. "Designer, Madrid" or "Healthcare worker, Barcelona."</span>
         </label>
-        <input type="text" id="descriptor" name="descriptor" placeholder="Your role or descriptor">
+        <label class="field-label" for="descriptor" data-lang-es>
+          ¿Cómo te gustaría que te describiéramos?
+          <span class="sub">Mantenlo tan general como te resulte cómodo, p. ej. "Diseñador, Madrid" o "Personal sanitario, Barcelona".</span>
+        </label>
+        <input type="text" id="descriptor" name="descriptor" placeholder="Your role or descriptor" data-ph-en="Your role or descriptor" data-ph-es="Tu rol o descripción">
       </div>
 
       <!-- WITHDRAWAL -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="section-divider-label">Your right to withdraw</div>
+        <div class="section-divider-label" data-lang-en>Your right to withdraw</div>
+        <div class="section-divider-label" data-lang-es>Tu derecho a retirar el consentimiento</div>
         <div class="section-divider-line"></div>
       </div>
 
-      <div class="withdrawal-note">
+      <div class="withdrawal-note" data-lang-en>
         You may withdraw your consent at any time by writing to <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a> with your consent reference number. We will remove your contribution from any unpublished material within 14 days. <strong>Please note:</strong> because the HuCon podcast is a permanent public archive, audio that has already been published cannot be fully retracted — but we will remove or anonymise your contribution in all future uses and in any material not yet in the public domain. Withdrawal does not affect the lawfulness of processing carried out before withdrawal.
+      </div>
+      <div class="withdrawal-note" data-lang-es>
+        Puedes retirar tu consentimiento en cualquier momento escribiendo a <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a> con tu número de referencia de consentimiento. Retiraremos tu aportación de cualquier material no publicado en un plazo de 14 días. <strong>Ten en cuenta:</strong> dado que el pódcast de HuCon es un archivo público permanente, el audio que ya se ha publicado no puede retirarse por completo, pero eliminaremos o anonimizaremos tu aportación en todos los usos futuros y en cualquier material que aún no sea de dominio público. La retirada no afecta a la licitud del tratamiento realizado antes de la retirada.
       </div>
 
       <!-- FINAL CONFIRM -->
       <div class="section-divider">
         <div class="section-divider-line"></div>
-        <div class="section-divider-label">Confirmation</div>
+        <div class="section-divider-label" data-lang-en>Confirmation</div>
+        <div class="section-divider-label" data-lang-es>Confirmación</div>
         <div class="section-divider-line"></div>
       </div>
 
@@ -659,35 +763,54 @@
               <input type="checkbox" id="c-gdpr" name="gdpr-confirmed" value="yes">
             </div>
             <div class="consent-text-col">
-              <div class="consent-title">
+              <div class="consent-title" data-lang-en>
                 I have read and understood this consent form <span class="req">*</span>
               </div>
-              <div class="consent-desc">I understand that my voice will be part of a permanent public podcast, that my contribution will be used in HuCon research reports, and that I am participating voluntarily and of my own free will. I understand my right to withdraw and its limitations with respect to already-published audio.</div>
+              <div class="consent-title" data-lang-es>
+                He leído y comprendido este formulario de consentimiento <span class="req">*</span>
+              </div>
+              <div class="consent-desc" data-lang-en>I understand that my voice will be part of a permanent public podcast, that my contribution will be used in HuCon research reports, and that I am participating voluntarily and of my own free will. I understand my right to withdraw and its limitations with respect to already-published audio.</div>
+              <div class="consent-desc" data-lang-es>Entiendo que mi voz formará parte de un pódcast público permanente, que mi aportación se utilizará en los informes de investigación de HuCon y que participo de forma voluntaria y por mi propia voluntad. Comprendo mi derecho a retirar el consentimiento y sus límites respecto al audio ya publicado.</div>
             </div>
           </label>
         </div>
-        <div class="field-error" id="gdpr-error" style="margin-top:8px;">You must confirm that you have read and understood this form before submitting.</div>
+        <div class="field-error" id="gdpr-error" style="margin-top:8px;" data-lang-en>You must confirm that you have read and understood this form before submitting.</div>
+        <div class="field-error" id="gdpr-error-es" style="margin-top:8px;" data-lang-es>Debes confirmar que has leído y comprendido este formulario antes de enviarlo.</div>
       </div>
 
       <!-- GDPR NOTICE -->
-      <div class="gdpr-notice">
+      <div class="gdpr-notice" data-lang-en>
         <div class="gdpr-label">GDPR Privacy Notice — EU Regulation 2016/679</div>
         <div class="gdpr-text">
-          <strong>Data controller:</strong> Human in Conversation (HuCon), Italy.
+          <strong>Data controller:</strong> Kehinde Bademosi, independent researcher, operating as Human in Conversation (HuCon).
           <strong>Contact:</strong> <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a><br><br>
           <strong>What we collect:</strong> Your name, email address, and the audio recording and written transcript of your contribution to the HuCon conversation.<br><br>
           <strong>Why we collect it:</strong> To fulfil HuCon's purpose as a civic listening infrastructure — producing podcast episodes, transcripts, and S4E field reports that inform how cities understand the lives of the people inside them. With your additional permission, to use selected quotes in public communications.<br><br>
           <strong>Legal basis:</strong> Your explicit, informed consent given through this form (Article 6(1)(a), GDPR). For the podcast and research archive, processing is also carried out in the public interest (Article 6(1)(e)).<br><br>
           <strong>Retention:</strong> Published podcast audio is retained indefinitely as part of HuCon's permanent public archive. Transcripts and anonymised research content are retained indefinitely. Your personal data (name and email) is retained for 3 years from the date of this consent, after which it is securely deleted.<br><br>
-          <strong>Your rights:</strong> You have the right to access, correct, or request deletion of your personal data. You may withdraw consent, restrict processing, or object to processing at any time. You may also lodge a complaint with Italy's data protection authority: <a href="https://www.garanteprivacy.it" target="_blank">Garante per la Protezione dei Dati Personali — garanteprivacy.it</a>.<br><br>
+          <strong>Your rights:</strong> You have the right to access, correct, or request deletion of your personal data. You may withdraw consent, restrict processing, or object to processing at any time. You also have the right to lodge a complaint with your national data protection authority. A list of all EU/EEA supervisory authorities is available via the European Data Protection Board: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank">edpb.europa.eu</a>.<br><br>
           <strong>Data sharing:</strong> Your personal data is never sold or shared with third parties. Anonymised contributions appear in published research outputs and the public podcast as described above. HuCon may share anonymised, aggregated findings with city governments, research institutions, and funders.
+        </div>
+      </div>
+      <div class="gdpr-notice" data-lang-es>
+        <div class="gdpr-label">Aviso de privacidad RGPD — Reglamento UE 2016/679</div>
+        <div class="gdpr-text">
+          <strong>Responsable del tratamiento:</strong> Kehinde Bademosi, investigador independiente, que opera bajo el nombre de Human in Conversation (HuCon).
+          <strong>Contacto:</strong> <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a><br><br>
+          <strong>Qué recogemos:</strong> Tu nombre, tu correo electrónico y la grabación de audio y la transcripción escrita de tu aportación a la conversación de HuCon.<br><br>
+          <strong>Por qué lo recogemos:</strong> Para cumplir el propósito de HuCon como infraestructura cívica de escucha: producir episodios de pódcast, transcripciones e informes de campo S4E que ayudan a las ciudades a entender la vida de las personas que las habitan. Con tu permiso adicional, para usar citas seleccionadas en comunicaciones públicas.<br><br>
+          <strong>Base jurídica:</strong> Tu consentimiento explícito e informado, otorgado mediante este formulario (artículo 6(1)(a) del RGPD). Para el pódcast y el archivo de investigación, el tratamiento también se realiza por interés público (artículo 6(1)(e)).<br><br>
+          <strong>Conservación:</strong> El audio del pódcast publicado se conserva de forma indefinida como parte del archivo público permanente de HuCon. Las transcripciones y el contenido de investigación anonimizado se conservan de forma indefinida. Tus datos personales (nombre y correo electrónico) se conservan durante 3 años desde la fecha de este consentimiento, tras lo cual se eliminan de forma segura.<br><br>
+          <strong>Tus derechos:</strong> Tienes derecho a acceder, rectificar o solicitar la supresión de tus datos personales. Puedes retirar el consentimiento, limitar el tratamiento u oponerte a él en cualquier momento. También tienes derecho a presentar una reclamación ante la autoridad de protección de datos de tu país. Puedes consultar la lista de todas las autoridades de control de la UE/EEE a través del Comité Europeo de Protección de Datos: <a href="https://www.edpb.europa.eu/about-edpb/about-edpb/members_en" target="_blank">edpb.europa.eu</a>.<br><br>
+          <strong>Cesión de datos:</strong> Tus datos personales nunca se venden ni se comparten con terceros. Las aportaciones anonimizadas aparecen en los resultados de investigación publicados y en el pódcast público, tal como se describe arriba. HuCon puede compartir conclusiones anonimizadas y agregadas con administraciones municipales, instituciones de investigación y entidades financiadoras.
         </div>
       </div>
 
       <!-- SUBMIT -->
       <div class="submit-area">
-        <div class="submit-note">By submitting this form you confirm that you are 18 years of age or older, that you have read and understood the consent terms above including the permanent nature of the HuCon podcast archive, and that you are participating voluntarily.</div>
-        <button type="submit" class="submit-btn">Submit Consent &amp; Confirm Participation →</button>
+        <div class="submit-note" data-lang-en>By submitting this form you confirm that you are 18 years of age or older, that you have read and understood the consent terms above including the permanent nature of the HuCon podcast archive, and that you are participating voluntarily.</div>
+        <div class="submit-note" data-lang-es>Al enviar este formulario confirmas que tienes 18 años o más, que has leído y comprendido los términos de consentimiento anteriores —incluido el carácter permanente del archivo del pódcast de HuCon— y que participas de forma voluntaria.</div>
+        <button type="submit" class="submit-btn"><span data-lang-en>Submit Consent &amp; Confirm Participation →</span><span data-lang-es>Enviar consentimiento y confirmar participación →</span></button>
       </div>
 
     </form>
@@ -700,15 +823,34 @@
         <path d="M5 14l7 7L23 7" stroke="#F5C800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-    <div class="success-title">Thank you.<br>See you at the table.</div>
-    <div class="success-sub">Your consent has been recorded. A copy will be sent to your email address. Keep your reference number — you will need it if you ever want to withdraw.</div>
+    <div class="success-title" data-lang-en>Thank you.<br>See you at the table.</div>
+    <div class="success-title" data-lang-es>Gracias.<br>Nos vemos en la mesa.</div>
+    <div class="success-sub" data-lang-en>Your consent has been recorded. A copy will be sent to your email address. Keep your reference number — you will need it if you ever want to withdraw.</div>
+    <div class="success-sub" data-lang-es>Tu consentimiento ha quedado registrado. Se enviará una copia a tu correo electrónico. Guarda tu número de referencia: lo necesitarás si alguna vez quieres retirar tu consentimiento.</div>
     <div class="success-ref" id="successRef"></div>
-    <div class="success-withdraw">To withdraw consent at any time: <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a></div>
+    <div class="success-withdraw" data-lang-en>To withdraw consent at any time: <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a></div>
+    <div class="success-withdraw" data-lang-es>Para retirar el consentimiento en cualquier momento: <a href="mailto:hello@humansinconversation.com">hello@humansinconversation.com</a></div>
   </div>
 
 </div>
 
 <script>
+  // ── LANGUAGE TOGGLE ──
+  function setLang(lang) {
+    document.body.className = 'lang-' + lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+    document.documentElement.lang = lang;
+    // swap placeholders
+    document.querySelectorAll('[data-ph-en]').forEach(el => {
+      el.placeholder = lang === 'es' ? el.getAttribute('data-ph-es') : el.getAttribute('data-ph-en');
+    });
+    // swap select option text that needs translating
+    document.querySelectorAll('[data-lang-en-text]').forEach(el => {
+      el.textContent = lang === 'es' ? el.getAttribute('data-lang-es-text') : el.getAttribute('data-lang-en-text');
+    });
+  }
+
   // Show named descriptor field when "Use my name" is selected
   document.querySelectorAll('input[name="attribution"]').forEach(radio => {
     radio.addEventListener('change', () => {
@@ -737,8 +879,9 @@
 
     const gdpr    = document.getElementById('c-gdpr');
     const gdprErr = document.getElementById('gdpr-error');
-    if (!gdpr.checked) { gdprErr.style.display = 'block'; valid = false; }
-    else               { gdprErr.style.display = 'none'; }
+    const gdprErrEs = document.getElementById('gdpr-error-es');
+    if (!gdpr.checked) { gdprErr.style.display = 'block'; if(gdprErrEs) gdprErrEs.style.display = 'block'; valid = false; }
+    else               { gdprErr.style.display = 'none'; if(gdprErrEs) gdprErrEs.style.display = 'none'; }
 
     if (!valid) {
       e.preventDefault();
