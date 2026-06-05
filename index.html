@@ -5,7 +5,7 @@
 <meta name="netlify-email-obfuscation" content="off">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HuCon — Humans in Conversation</title>
-<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in Madrid and Barcelona — May 2026.">
+<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in London — 27 June 2026.">
 <meta name="keywords" content="Humans in Conversation, HuCon, storytelling, wellbeing, urban listening, Kehinde Bademosi">
 <meta property="og:title" content="HuCon — Humans in Conversation">
 <meta property="og:description" content="Where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras.">
@@ -15,7 +15,6 @@
 <meta name="twitter:title" content="HuCon — Humans in Conversation">
 <meta name="twitter:description" content="Where cities pause to listen to how we're really doing.">
 <link rel="canonical" href="https://humansinconversation.com">
-<meta name="netlify-email-obfuscation" content="off">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,260 +33,128 @@
     --border-navy: rgba(26,47,107,0.14);
     --border-cream: rgba(245,240,232,0.14);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--cream);
-    color: var(--navy-deep);
-    font-family: 'Outfit', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-    cursor: none;
-  }
-
-  .cursor {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: var(--navy);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: width .25s, height .25s, background .2s;
-    mix-blend-mode: multiply;
-  }
+  body { background: var(--cream); color: var(--navy-deep); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+  .cursor { position: fixed; width: 10px; height: 10px; background: var(--navy); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s, background .2s; mix-blend-mode: multiply; }
   .cursor.grow { width: 42px; height: 42px; background: var(--gold); opacity: .7; }
-
-  .lace-bg {
-    position: absolute; inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(245,240,232,0.055)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='rgba(245,240,232,0.04)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='9' fill='none' stroke='rgba(245,240,232,0.05)' stroke-width='.4'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='rgba(245,240,232,0.03)' stroke-width='.4'/%3E%3C/svg%3E");
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    padding: 1.5rem 3.5rem;
-    display: flex; align-items: center; justify-content: space-between;
-    transition: background .4s, backdrop-filter .4s;
-  }
+  .lace-bg { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(245,240,232,0.055)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='rgba(245,240,232,0.04)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='9' fill='none' stroke='rgba(245,240,232,0.05)' stroke-width='.4'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='rgba(245,240,232,0.03)' stroke-width='.4'/%3E%3C/svg%3E"); background-size: 60px 60px; pointer-events: none; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3.5rem; display: flex; align-items: center; justify-content: space-between; transition: background .4s, backdrop-filter .4s; }
   nav.scrolled { background: rgba(17,30,74,.96); backdrop-filter: blur(14px); }
-
   .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
   .nav-logo img { width: 36px; height: 36px; object-fit: contain; filter: brightness(0) invert(1); opacity: .9; }
   .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: .06em; color: var(--cream); }
-
   .nav-links { display: flex; gap: 2.5rem; list-style: none; }
   .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: .5; transition: opacity .2s; }
   .nav-links a:hover { opacity: 1; }
-
   .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
   .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
   .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
   .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
   @media (max-width: 960px) {
     .hamburger { display: flex; }
-    .nav-links {
-      display: none;
-      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--navy-deep);
-      flex-direction: column; align-items: center; justify-content: center;
-      gap: 2.5rem; z-index: 150;
-    }
+    .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--navy-deep); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; z-index: 150; }
     .nav-links.open { display: flex; }
     .nav-links a { font-size: 18px; letter-spacing: .14em; opacity: 0.8; }
     .nav-links a:hover { opacity: 1; }
   }
-
-  .hero {
-    min-height: 100vh; background: var(--navy-deep);
-    display: grid; grid-template-columns: 1fr 1fr;
-    position: relative; overflow: hidden;
-  }
-
-  .hero-mandala {
-    position: absolute; right: -80px; top: 50%; transform: translateY(-50%);
-    width: 660px; height: 660px; opacity: .065; pointer-events: none; z-index: 0;
-  }
-
-  .hero-left {
-    padding: 11rem 4rem 6rem 6rem;
-    display: flex; flex-direction: column; justify-content: center;
-    position: relative; z-index: 2;
-  }
-
-  .hero-eyebrow {
-    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 2rem; font-weight: 400;
-    display: flex; align-items: center; gap: 1rem;
-  }
+  .hero { min-height: 100vh; background: var(--navy-deep); display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-mandala { position: absolute; right: -80px; top: 50%; transform: translateY(-50%); width: 660px; height: 660px; opacity: .065; pointer-events: none; z-index: 0; }
+  .hero-left { padding: 11rem 4rem 6rem 6rem; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+  .hero-eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 2rem; font-weight: 400; display: flex; align-items: center; gap: 1rem; }
   .hero-eyebrow::before { content:''; display:block; width:36px; height:1px; background:var(--gold); }
-
-  h1.hero-headline {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(50px,5.5vw,78px); font-weight: 300;
-    line-height: 1.06; color: var(--cream); margin-bottom: 2rem;
-  }
+  h1.hero-headline { font-family: 'Cormorant Garamond', serif; font-size: clamp(50px,5.5vw,78px); font-weight: 300; line-height: 1.06; color: var(--cream); margin-bottom: 2rem; }
   h1.hero-headline em { font-style: italic; color: var(--gold); }
-
   .hero-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 380px; margin-bottom: 3rem; }
-
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 12px;
-    font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--navy-deep); background: var(--gold);
-    padding: 15px 32px; text-decoration: none; border: none; cursor: none;
-    transition: background .25s, transform .2s;
-  }
+  .btn-primary { display: inline-flex; align-items: center; gap: 12px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--navy-deep); background: var(--gold); padding: 15px 32px; text-decoration: none; border: none; cursor: none; transition: background .25s, transform .2s; }
   .btn-primary:hover { background: var(--gold-pale); transform: translateY(-2px); }
-
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 12px;
-    font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400;
-    letter-spacing: .14em; text-transform: uppercase;
-    color: var(--cream); background: transparent;
-    padding: 14px 32px; text-decoration: none;
-    border: 1px solid rgba(245,240,232,.3); cursor: none;
-    transition: border-color .25s, background .25s;
-  }
+  .btn-outline { display: inline-flex; align-items: center; gap: 12px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--cream); background: transparent; padding: 14px 32px; text-decoration: none; border: 1px solid rgba(245,240,232,.3); cursor: none; transition: border-color .25s, background .25s; }
   .btn-outline:hover { border-color: var(--cream); background: rgba(245,240,232,.07); }
-
-  .hero-right {
-    position: relative; z-index: 2;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 8rem 5rem 6rem 3rem; gap: 1.5rem;
-    border-left: 1px solid var(--border-cream);
-  }
-
-  .hero-card {
-    background: rgba(245,240,232,.05); border: 1px solid rgba(245,240,232,.11);
-    padding: 2rem 2.25rem; cursor: none;
-    transition: background .25s, border-color .25s;
-  }
+  .hero-right { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; padding: 8rem 5rem 6rem 3rem; gap: 1.5rem; border-left: 1px solid var(--border-cream); }
+  .hero-card { background: rgba(245,240,232,.05); border: 1px solid rgba(245,240,232,.11); padding: 2rem 2.25rem; cursor: none; transition: background .25s, border-color .25s; }
   .hero-card:hover { background: rgba(245,240,232,.09); border-color: rgba(245,240,232,.22); }
-
-  .event-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--gold); color: var(--navy-deep);
-    font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-    padding: 5px 12px; margin-bottom: 1rem;
-  }
+  .event-pill { display: inline-flex; align-items: center; gap: 7px; background: var(--gold); color: var(--navy-deep); font-size: 10px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 5px 12px; margin-bottom: 1rem; }
   .event-dot { width:5px; height:5px; background:var(--navy-deep); border-radius:50%; animation: pulse 1.8s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
-
   .hero-card-label { font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:var(--gold); margin-bottom:.75rem; font-weight:400; }
   .hero-card-title { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:400; color:var(--cream); line-height:1.35; margin-bottom:.75rem; font-style:italic; }
   .hero-card-meta { font-size:12px; color:rgba(245,240,232,.32); letter-spacing:.07em; }
-
   .marquee-wrap { background: var(--navy); overflow: hidden; padding: .9rem 0; border-top: 1px solid rgba(245,240,232,.07); border-bottom: 1px solid rgba(245,240,232,.07); }
-  .marquee-track { display:flex; animation: marquee 32s linear infinite; white-space:nowrap; }
+  .marquee-track { display:flex; animation: marquee 36s linear infinite; white-space:nowrap; }
   .marquee-item { font-family:'Cormorant Garamond',serif; font-size:15px; font-style:italic; color:rgba(245,240,232,.32); padding:0 2.5rem; flex-shrink:0; }
   .marquee-item .dot { color:var(--gold); font-style:normal; font-size:20px; margin:0 .6rem; vertical-align:middle; }
   @keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-
   .section-inner { max-width:1200px; margin:0 auto; padding:0 5rem; }
-
-  .section-label {
-    font-size:10px; letter-spacing:.25em; text-transform:uppercase;
-    color:var(--navy-mid); margin-bottom:1.75rem; font-weight:400;
-    display:flex; align-items:center; gap:1rem;
-  }
+  .section-label { font-size:10px; letter-spacing:.25em; text-transform:uppercase; color:var(--navy-mid); margin-bottom:1.75rem; font-weight:400; display:flex; align-items:center; gap:1rem; }
   .section-label::before { content:''; display:block; width:28px; height:1px; background:var(--navy-mid); }
   .section-label.light { color:var(--gold); }
   .section-label.light::before { background:var(--gold); }
-
   .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(36px,4vw,54px); font-weight:300; line-height:1.1; color:var(--navy-deep); margin-bottom:2rem; }
   .section-title em { font-style:italic; color:var(--navy-mid); }
   .section-title.light { color:var(--cream); }
   .section-title.light em { color:var(--gold); }
-
   .what { padding:10rem 0 8rem; }
   .what-grid { display:grid; grid-template-columns:1fr 1.6fr; gap:7rem; align-items:start; }
   .what-left { position:sticky; top:6rem; }
   .seal-img { width:150px; height:150px; object-fit:contain; opacity:.16; margin-top:2.5rem; filter:saturate(0); }
-
   .body-text { font-size:17px; line-height:1.9; color:#3a4a6a; margin-bottom:1.5rem; }
   .body-text strong { color:var(--navy-deep); font-weight:500; }
-
-  .big-quote {
-    font-family:'Cormorant Garamond',serif; font-size:clamp(26px,3.2vw,42px); font-weight:300; font-style:italic;
-    line-height:1.3; color:var(--navy-deep); margin:6rem 0;
-    padding:2.5rem 3rem; border-left:3px solid var(--navy);
-    background:rgba(26,47,107,.04); max-width:780px;
-  }
-
+  .big-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(26px,3.2vw,42px); font-weight:300; font-style:italic; line-height:1.3; color:var(--navy-deep); margin:6rem 0; padding:2.5rem 3rem; border-left:3px solid var(--navy); background:rgba(26,47,107,.04); max-width:780px; }
   .how { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
-
   .steps-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:0; margin-top:5rem; position:relative; }
   .steps-grid::before { content:''; position:absolute; top:31px; left:8%; right:8%; height:1px; background:rgba(245,240,232,.1); }
-
   .step { padding:0 1.75rem; position:relative; }
   .step-num { width:62px; height:62px; border:1px solid rgba(245,240,232,.18); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--gold); margin-bottom:2rem; background:var(--navy-deep); position:relative; z-index:1; }
   .step h3 { font-family:'Cormorant Garamond',serif; font-size:19px; font-weight:400; color:var(--cream); margin-bottom:.75rem; line-height:1.3; }
   .step p { font-size:13px; line-height:1.85; color:rgba(232,200,50,.75); }
-
   .bowl-section { display:grid; grid-template-columns:1fr 1fr; background:var(--navy); min-height:500px; }
   .bowl-img-wrap { position:relative; overflow:hidden; }
   .bowl-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; opacity:.88; }
-
   .bowl-text { padding:6rem 5rem; display:flex; flex-direction:column; justify-content:center; position:relative; z-index:2; border-left:1px solid var(--border-cream); }
   .bowl-text .section-label { color:var(--gold); }
   .bowl-text .section-label::before { background:var(--gold); }
   .bowl-quote { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,2.6vw,34px); font-weight:300; font-style:italic; color:var(--cream); line-height:1.35; margin-bottom:1.75rem; }
   .bowl-body { font-size:15px; line-height:1.85; color:var(--text-on-navy); }
-
   .events { padding:10rem 0; }
   .events-list { margin-top:4rem; border-top:1px solid var(--border-navy); }
   .event-row { display:grid; grid-template-columns:110px 1fr 1.2fr auto; align-items:center; gap:3rem; padding:2.25rem 0; border-bottom:1px solid var(--border-navy); cursor:none; transition:padding .2s, background .2s; }
   .event-row:hover { background:rgba(26,47,107,.04); padding-left:1.25rem; padding-right:1.25rem; margin:0 -1.25rem; }
-
   .event-date { font-family:'Cormorant Garamond',serif; font-size:36px; font-weight:300; color:var(--navy); line-height:1; }
   .event-date span { display:block; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); font-family:'Outfit',sans-serif; margin-top:4px; }
   .event-city { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:var(--navy-deep); }
   .event-theme { font-size:14px; color:var(--text-muted); line-height:1.65; font-style:italic; }
   .event-tag { font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 18px; border:1px solid var(--border-navy); color:var(--text-muted); white-space:nowrap; }
   .event-tag.live { background:var(--navy); border-color:var(--navy); color:var(--gold); }
-
   .mission { padding:9rem 0; background:var(--navy-deep); position:relative; overflow:hidden; }
   .mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:0; }
   .mission-left { padding-right:7rem; border-right:1px solid var(--border-cream); }
   .mission-right { padding-left:7rem; display:flex; flex-direction:column; justify-content:center; }
   .mission .body-text { color:var(--text-on-navy); }
   .mission .body-text strong { color:var(--cream); font-weight:400; }
-
   .stats-grid { display:grid; grid-template-columns:1fr 1fr; border:1px solid var(--border-cream); }
   .stat-cell { padding:2.25rem; border-right:1px solid var(--border-cream); border-bottom:1px solid var(--border-cream); }
   .stat-cell:nth-child(2n) { border-right:none; }
   .stat-cell:nth-child(3), .stat-cell:nth-child(4) { border-bottom:none; }
   .stat-big { font-family:'Cormorant Garamond',serif; font-size:52px; font-weight:300; color:var(--gold); line-height:1; margin-bottom:8px; }
   .stat-desc { font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(245,240,232,.28); line-height:1.6; }
-
   .host { padding:10rem 0; }
   .host-grid { display:grid; grid-template-columns:1.2fr 1fr; gap:8rem; align-items:start; }
-
   .host-steps { margin-top:3rem; }
   .host-step { display:flex; gap:2rem; padding:1.75rem 0; border-bottom:1px solid var(--border-navy); }
   .host-step-num { font-family:'Cormorant Garamond',serif; font-size:30px; font-weight:300; color:var(--navy-mid); opacity:.35; line-height:1; flex-shrink:0; width:36px; }
   .host-step h4 { font-size:14px; font-weight:500; color:var(--navy-deep); margin-bottom:5px; }
   .host-step p { font-size:13px; line-height:1.75; color:var(--text-muted); }
-
   .host-cta { background:var(--navy); padding:3.5rem; position:relative; overflow:hidden; }
   .host-cta-seal { position:absolute; bottom:-30px; right:-30px; width:180px; opacity:.12; pointer-events:none; }
   .host-cta h3 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; line-height:1.25; color:var(--cream); margin-bottom:1.25rem; position:relative; z-index:1; }
   .host-cta p { font-size:15px; line-height:1.8; color:var(--text-on-navy); margin-bottom:2rem; position:relative; z-index:1; }
-
   .spotify { padding:9rem 0; background:var(--navy-deep); text-align:center; position:relative; overflow:hidden; }
   .spotify-sub { font-size:17px; line-height:1.85; color:var(--text-on-navy); max-width:520px; margin:1.5rem auto 1.5rem; }
   .spotify-embed-wrap { max-width:1200px; margin:0 auto; width:100%; }
   .spotify-embed-wrap > div { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
   .spotify-btn { display:inline-flex; align-items:center; gap:12px; background:#1DB954; color:white; font-family:'Outfit',sans-serif; font-size:14px; font-weight:500; letter-spacing:.06em; padding:16px 36px; text-decoration:none; border-radius:100px; transition:transform .2s, background .2s; cursor:none; }
   .spotify-btn:hover { transform:scale(1.04); background:#1ed760; }
-
   footer { background:var(--navy-deep); border-top:1px solid var(--border-cream); padding:5rem 5rem 3rem; }
   .footer-inner { max-width:1200px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr; gap:6rem; margin-bottom:4rem; }
   .footer-brand-logo { display:flex; align-items:center; gap:12px; margin-bottom:1.25rem; }
@@ -301,95 +168,37 @@
   .footer-bottom { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; padding-top:2rem; border-top:1px solid var(--border-cream); }
   .footer-bottom p { font-size:12px; color:rgba(245,240,232,.28); }
   .footer-tagline { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:rgba(245,240,232,.32); }
-
-  .founder-note {
-    display: flex; gap: 1.5rem; align-items: flex-start;
-    margin-top: 2.5rem; padding-top: 2rem;
-    border-top: 1px solid var(--border-cream);
-  }
+  .founder-note { display: flex; gap: 1.5rem; align-items: flex-start; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-cream); }
   .founder-img-wrap { flex-shrink: 0; }
-  .founder-img {
-    width: 80px; height: 80px; border-radius: 50%;
-    object-fit: cover; object-position: top;
-    border: 2px solid rgba(245,240,232,.2);
-    display: block;
-  }
-  .founder-label {
-    font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 4px; font-weight: 400;
-  }
-  .founder-name {
-    font-family: 'Cormorant Garamond', serif; font-size: 20px;
-    font-weight: 400; color: var(--cream); margin-bottom: .6rem; line-height: 1.2;
-  }
-  .founder-bio {
-    font-size: 13px; line-height: 1.8;
-    color: rgba(245,240,232,.5); margin-bottom: .75rem;
-  }
+  .founder-img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; object-position: top; border: 2px solid rgba(245,240,232,.2); display: block; }
+  .founder-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; font-weight: 400; }
+  .founder-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; color: var(--cream); margin-bottom: .6rem; line-height: 1.2; }
+  .founder-bio { font-size: 13px; line-height: 1.8; color: rgba(245,240,232,.5); margin-bottom: .75rem; }
   .founder-bio em { font-style: italic; color: rgba(245,240,232,.65); }
-  .founder-link {
-    font-size: 12px; letter-spacing: .08em; color: var(--gold);
-    text-decoration: none; text-transform: uppercase;
-    transition: opacity .2s;
-  }
+  .founder-link { font-size: 12px; letter-spacing: .08em; color: var(--gold); text-decoration: none; text-transform: uppercase; transition: opacity .2s; }
   .founder-link:hover { opacity: .7; }
-
-  .partners-block {
-    margin-top: 2.5rem; padding-top: 2rem;
-    border-top: 1px solid var(--border-navy);
-  }
-  .partners-label {
-    font-size: 10px; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--navy-mid); margin-bottom: 1.25rem; font-weight: 400;
-  }
+  .partners-block { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-navy); }
+  .partners-label { font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: var(--navy-mid); margin-bottom: 1.25rem; font-weight: 400; }
   .partners-list { display: flex; flex-direction: column; gap: 0; }
-  .partner-item {
-    display: flex; align-items: baseline; gap: 1rem;
-    padding: .6rem 0; border-bottom: 1px solid var(--border-navy);
-    font-size: 14px;
-  }
+  .partner-item { display: flex; align-items: baseline; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--border-navy); font-size: 14px; }
   .partner-item:last-child { border-bottom: none; }
-  .partner-city {
-    font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--navy-mid); min-width: 90px; flex-shrink: 0;
-  }
+  .partner-city { font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--navy-mid); min-width: 90px; flex-shrink: 0; }
   .partner-name { color: var(--navy-deep); font-weight: 400; }
   .partner-global { background: rgba(26,47,107,0.04); border-radius: 4px; padding: .6rem .5rem; }
   .partner-city.global { color: var(--navy); font-weight: 500; }
-
   .map-section { padding: 10rem 0 6rem; }
   .map-wrap { position: relative; background: var(--navy-deep); border-radius: 12px; padding: 2rem; border: 1px solid var(--border-navy); overflow: visible; }
-
   .signup-section { padding: 9rem 0; background: var(--navy-deep); position: relative; overflow: hidden; }
   .signup-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 7rem; align-items: start; }
   .signup-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 380px; margin-top: 1.5rem; }
-
   .signup-form { display: flex; flex-direction: column; gap: 1.25rem; }
   .form-group { display: flex; flex-direction: column; gap: .5rem; }
   .form-group label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); font-weight: 400; }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    background: rgba(245,240,232,.06);
-    border: 1px solid rgba(245,240,232,.15);
-    color: var(--cream);
-    font-family: 'Outfit', sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    padding: 14px 16px;
-    border-radius: 4px;
-    outline: none;
-    transition: border-color .2s;
-    width: 100%;
-  }
-  .form-group input::placeholder,
-  .form-group textarea::placeholder { color: rgba(245,240,232,.3); }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus { border-color: var(--gold); }
+  .form-group input, .form-group select, .form-group textarea { background: rgba(245,240,232,.06); border: 1px solid rgba(245,240,232,.15); color: var(--cream); font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 300; padding: 14px 16px; border-radius: 4px; outline: none; transition: border-color .2s; width: 100%; }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(245,240,232,.3); }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
   .form-group select option { background: var(--navy-deep); color: var(--cream); }
   .form-group textarea { resize: vertical; min-height: 90px; }
-
   .reveal { opacity:0; transform:translateY(28px); transition:opacity .85s ease, transform .85s ease; }
   .reveal.visible { opacity:1; transform:translateY(0); }
   .reveal-delay-1 { transition-delay:.1s; }
@@ -397,143 +206,11 @@
   .reveal-delay-3 { transition-delay:.3s; }
   .reveal-delay-4 { transition-delay:.4s; }
   .reveal-delay-5 { transition-delay:.5s; }
-
   @media (max-width:960px) {
-    .cursor { display: none; }
-    body { cursor: auto; }
-    nav { padding:1.25rem 1.5rem; }
-    .nav-logo img { display: none; }
-    .nav-logo-text { font-size: 22px; }
-    .hero { grid-template-columns:1fr; min-height: auto; }
-    .hero-left { padding:7rem 1.5rem 2.5rem; }
-    .hero-headline { font-size: clamp(38px, 10vw, 56px); }
-    .hero-sub { font-size: 15px; max-width: 100%; }
-    .hero-right { border-left:none; border-top:1px solid var(--border-cream); padding:2rem 1.5rem 2.5rem; gap: 1rem; }
-    .hero-card-title { font-size: 19px; }
-    .hero-mandala { display:none; }
-    .section-inner { padding:0 1.5rem; }
-    .what { padding: 5rem 0 4rem; }
-    .what-grid { grid-template-columns:1fr; gap:2rem; }
-    .what-left { position:static; }
-    .seal-img { display: none; }
-    .section-title { font-size: clamp(30px, 8vw, 44px); }
-    .body-text { font-size: 15px; line-height: 1.8; }
-    .big-quote { font-size: clamp(20px, 5.5vw, 28px); padding: 1.5rem 1.5rem; margin: 3rem 0; }
-    .how { padding: 5rem 0; }
-    .steps-grid { grid-template-columns: 1fr; gap: 0; margin-top: 3rem; }
-    .steps-grid::before { display:none; }
-    .step { padding: 1.75rem 0; border-bottom: 1px solid rgba(245,240,232,0.1); }
-    .step:last-child { border-bottom: none; }
-    .step-num { width: 48px; height: 48px; font-size: 18px; margin-bottom: 1rem; }
-    .step h3 { font-size: 20px; color: var(--cream); }
-    .step p { font-size: 15px; color: var(--gold) !important; opacity: 1; line-height: 1.75; }
-    .bowl-section { grid-template-columns:1fr; }
-    .bowl-img-wrap { min-height:260px; }
-    .bowl-text { padding:2.5rem 1.5rem; border-left:none; border-top:1px solid var(--border-cream); }
-    .bowl-quote { font-size: clamp(18px, 5vw, 26px); }
-    .bowl-body { font-size: 14px; }
-    .events { padding: 5rem 0; }
-    .event-row { grid-template-columns: 70px 1fr; gap: 1rem; padding: 1.5rem 0; }
-    .event-date { font-size: 28px; }
-    .event-city { font-size: 22px; }
-    .event-theme { display: none; }
-    .event-tag { display: inline-block; font-size: 11px; padding: 5px 12px; grid-column: 2; }
-    .mission { padding: 5rem 0; }
-    .mission-grid { grid-template-columns: 1fr; }
-    .mission-left { padding-right:0; border-right:none; border-bottom:1px solid var(--border-cream); padding-bottom:3rem; margin-bottom:3rem; padding-top: 0; }
-    .mission-right { padding-left:0; }
-    .stat-big { font-size: 40px; }
-    .stat-cell { padding: 1.5rem; }
-    .host { padding: 5rem 0; }
-    .host-grid { grid-template-columns:1fr; gap:3rem; }
-    .host-cta { padding: 2.5rem 1.5rem; }
-    .host-cta h3 { font-size: 26px; }
-    .spotify { padding: 5rem 0; }
-    .spotify-sub { font-size: 15px; padding: 0 1rem; }
-    .spotify-embed-wrap > div { grid-template-columns:1fr; }
-    footer { padding: 3.5rem 1.5rem 2rem; }
-    .footer-inner { grid-template-columns:1fr; gap:2.5rem; margin-bottom: 2.5rem; }
-    .footer-bottom { flex-direction:column; gap:1rem; text-align:center; }
-    .map-section { padding: 5rem 0 3rem; }
-    .map-wrap { padding: 1rem; }
-    .signup-section { padding: 5rem 0; }
-    .signup-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .signup-sub { max-width: 100%; }
-    .founder-note { flex-direction: column; gap: 1.25rem; }
-    .founder-img { width: 64px; height: 64px; }
+    .cursor { display: none; } body { cursor: auto; } nav { padding:1.25rem 1.5rem; } .nav-logo img { display: none; } .nav-logo-text { font-size: 22px; } .hero { grid-template-columns:1fr; min-height: auto; } .hero-left { padding:7rem 1.5rem 2.5rem; } .hero-headline { font-size: clamp(38px, 10vw, 56px); } .hero-sub { font-size: 15px; max-width: 100%; } .hero-right { border-left:none; border-top:1px solid var(--border-cream); padding:2rem 1.5rem 2.5rem; gap: 1rem; } .hero-card-title { font-size: 19px; } .hero-mandala { display:none; } .section-inner { padding:0 1.5rem; } .what { padding: 5rem 0 4rem; } .what-grid { grid-template-columns:1fr; gap:2rem; } .what-left { position:static; } .seal-img { display: none; } .section-title { font-size: clamp(30px, 8vw, 44px); } .body-text { font-size: 15px; line-height: 1.8; } .big-quote { font-size: clamp(20px, 5.5vw, 28px); padding: 1.5rem 1.5rem; margin: 3rem 0; } .how { padding: 5rem 0; } .steps-grid { grid-template-columns: 1fr; gap: 0; margin-top: 3rem; } .steps-grid::before { display:none; } .step { padding: 1.75rem 0; border-bottom: 1px solid rgba(245,240,232,0.1); } .step:last-child { border-bottom: none; } .step-num { width: 48px; height: 48px; font-size: 18px; margin-bottom: 1rem; } .step h3 { font-size: 20px; color: var(--cream); } .step p { font-size: 15px; color: var(--gold) !important; opacity: 1; line-height: 1.75; } .bowl-section { grid-template-columns:1fr; } .bowl-img-wrap { min-height:260px; } .bowl-text { padding:2.5rem 1.5rem; border-left:none; border-top:1px solid var(--border-cream); } .bowl-quote { font-size: clamp(18px, 5vw, 26px); } .bowl-body { font-size: 14px; } .events { padding: 5rem 0; } .event-row { grid-template-columns: 70px 1fr; gap: 1rem; padding: 1.5rem 0; } .event-date { font-size: 28px; } .event-city { font-size: 22px; } .event-theme { display: none; } .event-tag { display: inline-block; font-size: 11px; padding: 5px 12px; grid-column: 2; } .mission { padding: 5rem 0; } .mission-grid { grid-template-columns: 1fr; } .mission-left { padding-right:0; border-right:none; border-bottom:1px solid var(--border-cream); padding-bottom:3rem; margin-bottom:3rem; padding-top: 0; } .mission-right { padding-left:0; } .stat-big { font-size: 40px; } .stat-cell { padding: 1.5rem; } .host { padding: 5rem 0; } .host-grid { grid-template-columns:1fr; gap:3rem; } .host-cta { padding: 2.5rem 1.5rem; } .host-cta h3 { font-size: 26px; } .spotify { padding: 5rem 0; } .spotify-sub { font-size: 15px; padding: 0 1rem; } .spotify-embed-wrap > div { grid-template-columns:1fr; } footer { padding: 3.5rem 1.5rem 2rem; } .footer-inner { grid-template-columns:1fr; gap:2.5rem; margin-bottom: 2.5rem; } .footer-bottom { flex-direction:column; gap:1rem; text-align:center; } .map-section { padding: 5rem 0 3rem; } .map-wrap { padding: 1rem; } .signup-section { padding: 5rem 0; } .signup-grid { grid-template-columns: 1fr; gap: 3rem; } .signup-sub { max-width: 100%; } .founder-note { flex-direction: column; gap: 1.25rem; } .founder-img { width: 64px; height: 64px; }
   }
-
-  @media (max-width: 380px) {
-    .hero-headline { font-size: 34px; }
-    .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; }
-  }
+  @media (max-width: 380px) { .hero-headline { font-size: 34px; } .btn-primary, .btn-outline { padding: 13px 22px; font-size: 11px; } }
 </style>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
-
-<script>
-window.addEventListener('load', function() {
-  const mapEl = document.getElementById('hucon-map');
-  if (!mapEl) return;
-
-  const map = L.map('hucon-map', {
-    center: [20, 10],
-    zoom: 2,
-    zoomControl: true,
-    scrollWheelZoom: false,
-    attributionControl: false
-  });
-
-  // Elegant map tiles — CartoDB Voyager (no API key needed)
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; OpenStreetMap &copy; CARTO',
-    subdomains: 'abcd',
-    maxZoom: 19
-  }).addTo(map);
-
-  // Custom navy pin
-  const pin = L.divIcon({
-    className: '',
-    html: `<div style="
-      width:14px; height:14px;
-      background:#1a2f6b;
-      border:3px solid #e8c832;
-      border-radius:50%;
-      box-shadow:0 2px 8px rgba(0,0,0,0.35);
-    "></div>`,
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-    popupAnchor: [0, -10]
-  });
-
-  const cities = [
-    { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, host: 'Jennifer Schaupp', date: '13 March 2026' },
-    { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
-    { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, host: 'Marvis Chukwudi', date: 'Done' },
-    { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, host: 'Gianni Marsico', date: 'Done' },
-    { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, host: 'Carlo Bobbiesi', date: '20 March 2026' },
-    { name: 'Roma', country: 'Italy', lat: 41.9028, lng: 12.4964, host: 'Nino', date: '27 March 2026' },
-    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, host: 'Matías González Galvis', date: '28 May 2026' },
-    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, host: 'Albert Asensio', date: '29 May 2026' },
-  ];
-
-  cities.forEach(city => {
-    const marker = L.marker([city.lat, city.lng], { icon: pin }).addTo(map);
-    marker.bindPopup(`
-      <div style="font-family:'Outfit',sans-serif; min-width:160px; padding:4px;">
-        <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#2a4080; margin-bottom:4px;">${city.country}</div>
-        <div style="font-size:17px; font-family:'Cormorant Garamond',serif; color:#111e4a; font-weight:400; margin-bottom:4px;">${city.name}</div>
-        <div style="font-size:12px; color:#5a6a8a; margin-bottom:2px;">Host: ${city.host}</div>
-        <div style="font-size:11px; color:#e8c832; background:#111e4a; padding:3px 8px; border-radius:10px; display:inline-block; margin-top:4px;">${city.date}</div>
-      </div>
-    `, { maxWidth: 220 });
-  });
-
-
-});
-</script>
-  <!-- Disable Netlify email obfuscation -->
-  <meta name="netlify-email-obfuscation" content="off">
 </head>
 <body>
 
@@ -558,7 +235,7 @@ window.addEventListener('load', function() {
   </button>
 </nav>
 
-<!-- HERO — Updated: Madrid & Barcelona as upcoming -->
+<!-- HERO -->
 <section class="hero">
   <div class="lace-bg"></div>
   <img class="hero-mandala" src="Circular_Seal_HIC_LOGO.png" alt="">
@@ -574,27 +251,31 @@ window.addEventListener('load', function() {
   </div>
 
   <div class="hero-right">
-    <div class="hero-card">
-      <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
-      <p class="hero-card-label">Madrid · 28 May 2026</p>
-      <p class="hero-card-title">"In a city full of light, life, and ambition, how is your wellbeing?"</p>
-      <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
+    <div class="hero-card" style="opacity:0.45;">
+      <p class="hero-card-label" style="text-decoration:line-through;">Madrid · 28 May 2026</p>
+      <p class="hero-card-title" style="opacity:0.6;">"In a city full of light, life, and ambition, how is your wellbeing?"</p>
+      <p class="hero-card-meta" style="color:var(--gold);opacity:0.8;">Held ✓</p>
+    </div>
+    <div class="hero-card" style="opacity:0.45;">
+      <p class="hero-card-label" style="text-decoration:line-through;">Barcelona · 29 May 2026</p>
+      <p class="hero-card-title" style="opacity:0.6;">"Where do you go when you feel like a tourist in your own city?"</p>
+      <p class="hero-card-meta" style="color:var(--gold);opacity:0.8;">Held ✓</p>
     </div>
     <div class="hero-card">
       <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
-      <p class="hero-card-label">Barcelona · 29 May 2026</p>
-      <p class="hero-card-title">"Where do you go when you feel like a tourist in your own city?"</p>
+      <p class="hero-card-label">London · 27 June 2026 · 10:00</p>
+      <p class="hero-card-title">"This city doesn't stop. But how are you really doing inside it?"</p>
       <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
     </div>
     <p style="font-size:12px;color:rgba(245,240,232,.28);letter-spacing:.06em;margin-top:.5rem;">These are the stories we don't usually tell.</p>
   </div>
 </section>
 
-<!-- MARQUEE — Updated city list -->
+<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
-    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
-    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
+    <span class="marquee-item">Milano <span class="dot">·</span> Roma <span class="dot">·</span> Madrid <span class="dot">·</span> Barcelona <span class="dot">·</span> London <span class="dot">·</span> Lagos <span class="dot">·</span> These are the stories we don't usually tell <span class="dot">·</span> Small group. Confidential. No cameras. <span class="dot">·</span></span>
   </div>
 </div>
 
@@ -636,8 +317,9 @@ window.addEventListener('load', function() {
             <div class="partner-item"><span class="partner-city">Milano</span><span class="partner-name">Carlo Bobbiesi</span></div>
             <div class="partner-item"><span class="partner-city">Roma</span><span class="partner-name">Nino</span></div>
             <div class="partner-item"><span class="partner-city">Barcelona</span><span class="partner-name">Albert Asensio</span></div>
-            <div class="partner-item"><span class="partner-city">Madrid</span><span class="partner-name">Matías G</span></div>
-            <div class="partner-item partner-global"><span class="partner-city global">Global</span><span class="partner-name">Patrick Chaulk · Funke Michaels · Ramien Pierre . Kayla Ingram</span></div>
+            <div class="partner-item"><span class="partner-city">Madrid</span><span class="partner-name">Matías González</span></div>
+            <div class="partner-item"><span class="partner-city">London</span><span class="partner-name">Susan Obehioye</span></div>
+            <div class="partner-item partner-global"><span class="partner-city global">Global</span><span class="partner-name">Patrick Chaulk · Funke Michaels · Ramien Pierre · Kayla Ingram</span></div>
           </div>
         </div>
       </div>
@@ -653,36 +335,16 @@ window.addEventListener('load', function() {
     <p class="section-label light reveal">How it works</p>
     <h2 class="section-title light reveal reveal-delay-1">Five steps.<br><em>One honest evening.</em></h2>
     <div class="steps-grid">
-      <div class="step reveal reveal-delay-1">
-        <div class="step-num">01</div>
-        <h3>Pick a date &amp; question</h3>
-        <p>Choose a theme rooted in your city's reality — reinvention, identity, belonging, pressure. The question should matter to everyone at the table.</p>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-num">02</div>
-        <h3>Find your tribe</h3>
-        <p>Invite 3 to 10 people who agree to share their stories. It's a conversation, not a panel. Find people who'll be honest.</p>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-num">03</div>
-        <h3>Choose a safe space</h3>
-        <p>Somewhere guests can speak freely. A home, a quiet room, a trusted community space. You guide — that's all.</p>
-      </div>
-      <div class="step reveal reveal-delay-4">
-        <div class="step-num">04</div>
-        <h3>Press record</h3>
-        <p>Audio only. No cameras. Ever. Participants may choose to share anonymously. Record and send to the global archive.</p>
-      </div>
-      <div class="step reveal reveal-delay-5">
-        <div class="step-num">05</div>
-        <h3>Share food &amp; send</h3>
-        <p>Bring a dish meaningful to your community. Tell the global audience its significance. Send your stories. You've hosted a HuCon.</p>
-      </div>
+      <div class="step reveal reveal-delay-1"><div class="step-num">01</div><h3>Pick a date &amp; question</h3><p>Choose a theme rooted in your city's reality — reinvention, identity, belonging, pressure. The question should matter to everyone at the table.</p></div>
+      <div class="step reveal reveal-delay-2"><div class="step-num">02</div><h3>Find your tribe</h3><p>Invite 3 to 10 people who agree to share their stories. It's a conversation, not a panel. Find people who'll be honest.</p></div>
+      <div class="step reveal reveal-delay-3"><div class="step-num">03</div><h3>Choose a safe space</h3><p>Somewhere guests can speak freely. A home, a quiet room, a trusted community space. You guide — that's all.</p></div>
+      <div class="step reveal reveal-delay-4"><div class="step-num">04</div><h3>Press record</h3><p>Audio only. No cameras. Ever. Participants may choose to share anonymously. Record and send to the global archive.</p></div>
+      <div class="step reveal reveal-delay-5"><div class="step-num">05</div><h3>Share food &amp; send</h3><p>Bring a dish meaningful to your community. Tell the global audience its significance. Send your stories. You've hosted a HuCon.</p></div>
     </div>
   </div>
 </section>
 
-<!-- EVENTS — Updated: Milano & Rome now "Held ✓" -->
+<!-- EVENTS -->
 <section class="events" id="events">
   <div class="section-inner">
     <p class="section-label reveal">Upcoming tables</p>
@@ -706,16 +368,22 @@ window.addEventListener('load', function() {
         <div class="event-theme">"You came to Rome to begin again. How is that going for you?"</div>
         <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
-      <div class="event-row reveal reveal-delay-3">
+      <div class="event-row reveal reveal-delay-3" style="opacity:0.45;">
         <div class="event-date">28<span>May 2026</span></div>
-        <div class="event-city">Madrid</div>
+        <div class="event-city" style="text-decoration:line-through; opacity:0.6;">Madrid</div>
         <div class="event-theme">"In a city full of light, life, and ambition, how is your wellbeing?"</div>
-        <a href="#signup" class="event-tag live">Register →</a>
+        <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
-      <div class="event-row reveal reveal-delay-4">
+      <div class="event-row reveal reveal-delay-4" style="opacity:0.45;">
         <div class="event-date">29<span>May 2026</span></div>
-        <div class="event-city">Barcelona</div>
+        <div class="event-city" style="text-decoration:line-through; opacity:0.6;">Barcelona</div>
         <div class="event-theme">"Where do you go when you feel like a tourist in your own city?"</div>
+        <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
+      </div>
+      <div class="event-row reveal reveal-delay-5">
+        <div class="event-date">27<span>June 2026</span></div>
+        <div class="event-city">London</div>
+        <div class="event-theme">"This city doesn't stop. But how are you really doing inside it?"</div>
         <a href="#signup" class="event-tag live">Register →</a>
       </div>
     </div>
@@ -726,7 +394,7 @@ window.addEventListener('load', function() {
   </div>
 </section>
 
-<!-- INTERACTIVE MAP — Updated: 6 held -->
+<!-- INTERACTIVE MAP -->
 <section class="map-section" id="map">
   <div class="section-inner">
     <p class="section-label reveal">Our footprint</p>
@@ -735,7 +403,7 @@ window.addEventListener('load', function() {
     <div class="map-wrap reveal reveal-delay-3" id="hucon-map-wrap">
       <div id="hucon-map" style="width:100%;height:420px;border-radius:8px;overflow:hidden;"></div>
       <div style="display:flex;gap:3rem;margin-top:1.5rem;flex-wrap:wrap;">
-        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">8</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 6 held</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">9</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 8 held</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">3</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Continents</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">1</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Question</div></div>
       </div>
@@ -743,7 +411,7 @@ window.addEventListener('load', function() {
   </div>
 </section>
 
-<!-- SIGN UP — Updated: only Madrid, Barcelona, Other -->
+<!-- SIGN UP -->
 <section class="signup-section" id="signup">
   <div class="lace-bg"></div>
   <div class="section-inner" style="position:relative;z-index:2;">
@@ -751,7 +419,7 @@ window.addEventListener('load', function() {
       <div>
         <p class="section-label light reveal">Join a table</p>
         <h2 class="section-title light reveal reveal-delay-1">Reserve your<br><em>seat.</em></h2>
-        <p class="signup-sub reveal reveal-delay-2">Small group. Confidential. No cameras. Tell us your name, number, and which city you want to join — we'll be in touch directly.</p>
+        <p class="signup-sub reveal reveal-delay-2">Small group. Confidential. No cameras. Tell us your name, email, and which city you want to join — we'll be in touch directly.</p>
       </div>
       <div class="reveal reveal-delay-2">
         <form name="hucon-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="signup-form" id="signup-form">
@@ -765,16 +433,20 @@ window.addEventListener('load', function() {
           </div>
 
           <div class="form-group">
+            <label>Email address</label>
+            <input type="email" name="email" placeholder="your@email.com" required>
+          </div>
+
+          <div class="form-group">
             <label>Phone number</label>
-            <input type="tel" name="phone" placeholder="+34 or your country code" required>
+            <input type="tel" name="phone" placeholder="+44 or your country code" required>
           </div>
 
           <div class="form-group">
             <label>Which city are you interested in?</label>
             <select name="city" required>
               <option value="" disabled selected>Select a city</option>
-              <option value="Madrid — 27 May 2026">Madrid — 28 May 2026</option>
-              <option value="Barcelona — 28 May 2026">Barcelona — 29 May 2026</option>
+              <option value="London — 27 June 2026">London — 27 June 2026</option>
               <option value="Other / notify me">Other — notify me when my city is added</option>
             </select>
           </div>
@@ -790,7 +462,7 @@ window.addEventListener('load', function() {
         <div id="signup-success" style="display:none; padding:2.5rem; background:rgba(232,200,50,0.1); border:1px solid var(--gold); border-radius:8px; text-align:center; margin-top:1rem;">
           <div style="font-size:32px; margin-bottom:1rem;">✓</div>
           <p style="font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--cream); margin-bottom:0.75rem; font-weight:300;">See you at the table.</p>
-          <p style="font-size:14px; color:var(--text-on-navy); line-height:1.8;">Thank you — we'll be in touch directly on the number you shared to confirm your seat.</p>
+          <p style="font-size:14px; color:var(--text-on-navy); line-height:1.8;">Thank you — we'll be in touch directly to confirm your seat.</p>
           <p style="font-size:12px; color:rgba(245,240,232,0.35); margin-top:1rem; letter-spacing:0.08em; text-transform:uppercase;">Small group · Confidential · No cameras</p>
         </div>
       </div>
@@ -842,7 +514,7 @@ window.addEventListener('load', function() {
           <img class="host-cta-seal" src="Circular_Seal_HIC_LOGO.png" alt="">
           <h3>Ready to host a HuCon in your city?</h3>
           <p>We'll give you the question prompts, the format, and the archive destination. You bring the people, the place, and the food.</p>
-         <p style="font-size:15px;color:var(--text-on-navy);position:relative;z-index:1;">Write to us at <strong style="color:var(--cream);font-weight:500;">hello@humansinconversation.com</strong></p>
+          <p style="font-size:15px;color:var(--text-on-navy);position:relative;z-index:1;">Write to us at <strong style="color:var(--cream);font-weight:500;">hello@humansinconversation.com</strong></p>
         </div>
       </div>
     </div>
@@ -856,27 +528,13 @@ window.addEventListener('load', function() {
     <p class="section-label light reveal" style="justify-content:center;">The archive</p>
     <h2 class="section-title light reveal reveal-delay-1" style="text-align:center;">Every story<br><em>lives on Spotify.</em></h2>
     <p class="spotify-sub reveal reveal-delay-2">Every table, every city, every honest conversation — listen directly below or open in Spotify.</p>
-
     <div class="spotify-embed-wrap reveal reveal-delay-3">
-  <div>
-    <iframe style="border-radius:12px"
-      src="https://open.spotify.com/embed/episode/4Wue61msZOxyvyRooJDlrg?utm_source=generator&theme=0"
-      width="100%" height="352" frameBorder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
-    <iframe style="border-radius:12px"
-      src="https://open.spotify.com/embed/episode/3CvPDW2V2C914HemG8FYzn?utm_source=generator&theme=0"
-      width="100%" height="352" frameBorder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
-    <iframe style="border-radius:12px"
-      src="https://open.spotify.com/embed/episode/5gBBitmFRGBwLyqrAOvO0s?utm_source=generator&theme=0"
-      width="100%" height="352" frameBorder="0"
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-      loading="lazy"></iframe>
-  </div>
-</div>
-
+      <div>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/4Wue61msZOxyvyRooJDlrg?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/3CvPDW2V2C914HemG8FYzn?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/5gBBitmFRGBwLyqrAOvO0s?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+    </div>
     <div class="reveal reveal-delay-4" style="margin-top:2rem;">
       <a href="https://open.spotify.com/show/2ILbCJPVYC5YXUJunZSBy6" target="_blank" class="spotify-btn">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
@@ -895,7 +553,6 @@ window.addEventListener('load', function() {
         <h2>Humans in Conversation</h2>
       </div>
       <p>HuCon is where cities pause to listen to how we're really doing. Join us at a table, host one yourself, or listen to the archive on Spotify.</p>
-
       <div class="founder-note">
         <div class="founder-img-wrap">
           <img src="https://images.squarespace-cdn.com/content/v1/58854f90e4fcb5d74e14606e/1603472864038-GYRXM0MODM6BM0OUKE01/Kehinde-Bademosi-black-high-res.png" alt="Dr. Kehinde Bademosi" class="founder-img">
@@ -918,7 +575,7 @@ window.addEventListener('load', function() {
         <li><a href="#listen">Listen</a></li>
       </ul>
     </div>
-    </div>
+  </div>
   <div class="footer-bottom">
     <p>© 2026 Humans in Conversation. All rights reserved.</p>
     <span class="footer-tagline">Where cities pause to listen.</span>
@@ -926,48 +583,20 @@ window.addEventListener('load', function() {
 </footer>
 
 <script>
-  function toggleMenu() {
-    document.getElementById('nav-links').classList.toggle('open');
-    document.getElementById('hamburger').classList.toggle('open');
-  }
-  function closeMenu() {
-    document.getElementById('nav-links').classList.remove('open');
-    document.getElementById('hamburger').classList.remove('open');
-  }
-
+  function toggleMenu() { document.getElementById('nav-links').classList.toggle('open'); document.getElementById('hamburger').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('nav-links').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); }
   const cursor = document.getElementById('cursor');
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-    });
-    document.querySelectorAll('a, button, .event-row, .hero-card').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
-    });
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+    document.querySelectorAll('a, button, .event-row, .hero-card').forEach(el => { el.addEventListener('mouseenter', () => cursor.classList.add('grow')); el.addEventListener('mouseleave', () => cursor.classList.remove('grow')); });
   }
-
   try {
-    const obs = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+    const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
-  } catch(e) {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-  }
-
-  setTimeout(() => {
-    document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible'));
-  }, 1000);
-
-  document.querySelectorAll('.mission .body-text').forEach(el => {
-    el.style.color = 'rgba(245,240,232,0.65)';
-  });
-  document.querySelectorAll('.mission .body-text strong').forEach(el => {
-    el.style.color = '#f5f0e8';
-    el.style.fontWeight = '400';
-  });
-
+  } catch(e) { document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')); }
+  setTimeout(() => { document.querySelectorAll('.reveal:not(.visible)').forEach(el => el.classList.add('visible')); }, 1000);
+  document.querySelectorAll('.mission .body-text').forEach(el => { el.style.color = 'rgba(245,240,232,0.65)'; });
+  document.querySelectorAll('.mission .body-text strong').forEach(el => { el.style.color = '#f5f0e8'; el.style.fontWeight = '400'; });
   const nav = document.getElementById('main-nav');
   window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 </script>
@@ -977,35 +606,10 @@ window.addEventListener('load', function() {
 window.addEventListener('load', function() {
   const mapEl = document.getElementById('hucon-map');
   if (!mapEl) return;
-
-  const map = L.map('hucon-map', {
-    center: [20, 15],
-    zoom: 2,
-    zoomControl: true,
-    scrollWheelZoom: false,
-    attributionControl: false
-  });
-
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    maxZoom: 18
-  }).addTo(map);
-
-  const goldIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:14px;height:14px;background:#e8c832;border-radius:50%;border:2px solid #f5f0e8;box-shadow:0 0 8px rgba(232,200,50,0.6)"></div>',
-    iconSize: [14, 14],
-    iconAnchor: [7, 7],
-    popupAnchor: [0, -10]
-  });
-
-  const upcomingIcon = L.divIcon({
-    className: '',
-    html: '<div style="width:12px;height:12px;background:transparent;border-radius:50%;border:2px solid rgba(232,200,50,0.5)"></div>',
-    iconSize: [12, 12],
-    iconAnchor: [6, 6],
-    popupAnchor: [0, -10]
-  });
-
+  const map = L.map('hucon-map', { center: [20, 15], zoom: 2, zoomControl: true, scrollWheelZoom: false, attributionControl: false });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(map);
+  const goldIcon = L.divIcon({ className: '', html: '<div style="width:14px;height:14px;background:#e8c832;border-radius:50%;border:2px solid #f5f0e8;box-shadow:0 0 8px rgba(232,200,50,0.6)"></div>', iconSize: [14,14], iconAnchor: [7,7], popupAnchor: [0,-10] });
+  const upcomingIcon = L.divIcon({ className: '', html: '<div style="width:12px;height:12px;background:transparent;border-radius:50%;border:2px solid rgba(232,200,50,0.5)"></div>', iconSize: [12,12], iconAnchor: [6,6], popupAnchor: [0,-10] });
   const cities = [
     { name: 'Pittsburgh', country: 'USA', lat: 40.4406, lng: -79.9959, done: true, host: 'Jennifer Schaupp', date: '13 March 2026' },
     { name: 'Milano', country: 'Italy', lat: 45.4654, lng: 9.1859, done: true, host: 'Carlo Bobbiesi', date: '20 March 2026' },
@@ -1013,18 +617,14 @@ window.addEventListener('load', function() {
     { name: 'Bari', country: 'Italy', lat: 41.1171, lng: 16.8719, done: true, host: 'Gianni Marsico', date: '2025' },
     { name: 'Lagos', country: 'Nigeria', lat: 6.5244, lng: 3.3792, done: true, host: 'Marvis Chukwudi', date: '2025' },
     { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
-    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, done: false, host: 'TBC', date: '27 May 2026' },
-    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, done: false, host: 'Albert Asensio', date: '28 May 2026' },
+    { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, done: true, host: 'Matías González', date: '28 May 2026' },
+    { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, done: true, host: 'Noemí & Albert', date: '29 May 2026' },
+    { name: 'London', country: 'UK', lat: 51.5074, lng: -0.1278, done: false, host: 'Susan Obehioye', date: '27 June 2026' },
   ];
-
   cities.forEach(city => {
     const icon = city.done ? goldIcon : upcomingIcon;
     const status = city.done ? 'Completed' : 'Upcoming';
-    const popup = L.popup({
-      className: 'hucon-popup',
-      closeButton: false,
-      maxWidth: 200
-    }).setContent(
+    const popup = L.popup({ className: 'hucon-popup', closeButton: false, maxWidth: 200 }).setContent(
       '<div style="font-family:Outfit,sans-serif;padding:4px 2px">' +
       '<div style="font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#e8c832;margin-bottom:4px">' + status + '</div>' +
       '<div style="font-size:16px;font-family:Cormorant Garamond,serif;color:#111e4a;font-weight:400;margin-bottom:2px">' + city.name + '</div>' +
@@ -1034,7 +634,6 @@ window.addEventListener('load', function() {
     );
     L.marker([city.lat, city.lng], { icon }).addTo(map).bindPopup(popup);
   });
-
   const style = document.createElement('style');
   style.textContent = '.hucon-popup .leaflet-popup-content-wrapper{background:#f5f0e8;border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,0.3);border:none}.hucon-popup .leaflet-popup-tip{background:#f5f0e8}.leaflet-control-zoom{border:none!important}.leaflet-control-zoom a{background:#111e4a!important;color:#e8c832!important;border:1px solid rgba(232,200,50,0.3)!important}';
   document.head.appendChild(style);
@@ -1045,24 +644,16 @@ window.addEventListener('load', function() {
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('signup-form');
   if (!form) return;
-
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const data = new FormData(form);
-
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(data).toString()
-    })
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
     .then(() => {
       form.style.display = 'none';
       document.getElementById('signup-success').style.display = 'block';
       document.getElementById('signup-success').scrollIntoView({ behavior: 'smooth', block: 'center' });
     })
-    .catch(() => {
-      alert('Something went wrong. Please try again or email us directly.');
-    });
+    .catch(() => { alert('Something went wrong. Please try again or email us directly.'); });
   });
 });
 </script>
