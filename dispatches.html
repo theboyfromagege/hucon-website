@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Field Notes & City Voices — Humans in Conversation</title>
+<meta name="description" content="Dispatches from the field and voices from the table. Kenny's field notes and what cities said when they stopped to listen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #1a2f6b;
+    --navy-deep:  #111e4a;
+    --navy-mid:   #2a4080;
+    --cream:      #f5f0e8;
+    --cream-dark: #e8e0d0;
+    --gold:       #e8c832;
+    --gold-pale:  #f5e27a;
+    --text-on-navy: rgba(245,240,232,0.68);
+    --text-muted: #5a6a8a;
+    --border-navy: rgba(26,47,107,0.14);
+    --border-cream: rgba(245,240,232,0.14);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--navy-deep); font-family: 'Outfit', sans-serif; font-weight: 300; overflow-x: hidden; cursor: none; }
+
+  .cursor { position: fixed; width: 10px; height: 10px; background: var(--navy); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width .25s, height .25s, background .2s; mix-blend-mode: multiply; }
+  .cursor.grow { width: 42px; height: 42px; background: var(--gold); opacity: .7; }
+
+  .lace-bg { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(245,240,232,0.055)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='rgba(245,240,232,0.04)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='9' fill='none' stroke='rgba(245,240,232,0.05)' stroke-width='.4'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='rgba(245,240,232,0.03)' stroke-width='.4'/%3E%3C/svg%3E"); background-size: 60px 60px; pointer-events: none; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.5rem 3.5rem; display: flex; align-items: center; justify-content: space-between; transition: background .4s, backdrop-filter .4s; }
+  nav.scrolled { background: rgba(17,30,74,.96); backdrop-filter: blur(14px); }
+  .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; object-fit: contain; filter: brightness(0) invert(1); opacity: .9; }
+  .nav-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; letter-spacing: .06em; color: var(--cream); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a { font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--cream); text-decoration: none; opacity: .5; transition: opacity .2s; }
+  .nav-links a:hover { opacity: 1; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 200; }
+  .hamburger span { display: block; width: 24px; height: 1.5px; background: var(--cream); transition: all 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  @media (max-width: 960px) {
+    .hamburger { display: flex; }
+    .nav-links { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--navy-deep); flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; z-index: 150; }
+    .nav-links.open { display: flex; }
+    .nav-links a { font-size: 18px; opacity: 0.8; }
+  }
+
+  .page-hero {
+    background: var(--navy-deep);
+    padding: 12rem 5rem 6rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+  .page-eyebrow { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; font-weight: 400; display: flex; align-items: center; gap: 1rem; }
+  .page-eyebrow::before { content:''; display:block; width:36px; height:1px; background:var(--gold); }
+  .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(44px,5vw,72px); font-weight: 300; line-height: 1.06; color: var(--cream); margin-bottom: 1.5rem; }
+  .page-title em { font-style: italic; color: var(--gold); }
+  .page-sub { font-size: 16px; line-height: 1.85; color: var(--text-on-navy); max-width: 520px; }
+
+  .filters-bar {
+    background: var(--navy);
+    border-bottom: 1px solid var(--border-cream);
+    padding: 1rem 5rem;
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .filter-label { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-on-navy); margin-right: .5rem; }
+  .filter-btn {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    padding: 7px 18px;
+    border: 1px solid rgba(245,240,232,.2);
+    background: transparent;
+    color: rgba(245,240,232,.5);
+    cursor: pointer;
+    transition: all .2s;
+    border-radius: 0;
+  }
+  .filter-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .filter-btn.active { background: var(--gold); border-color: var(--gold); color: var(--navy-deep); }
+
+  .archive-wrap { max-width: 1200px; margin: 0 auto; padding: 0 5rem 8rem; }
+
+  .city-block { padding: 4rem 0; border-bottom: 1px solid var(--border-navy); }
+  .city-block:last-of-type { border-bottom: none; }
+
+  .city-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 2rem; }
+  .city-name { font-family: 'Cormorant Garamond', serif; font-size: 42px; font-weight: 300; color: var(--navy-deep); line-height: 1; }
+  .city-meta { display: flex; align-items: center; gap: 1rem; }
+  .city-date { font-size: 12px; color: var(--text-muted); letter-spacing: .06em; }
+  .city-theme { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; padding: 6px 14px; border: 1px solid var(--border-navy); color: var(--text-muted); }
+
+  .city-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+
+  .dispatch-card {
+    background: var(--navy-deep);
+    padding: 2rem 2.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .dispatch-card::after { content:''; position:absolute; bottom:0;left:0;right:0;height:3px;background:var(--gold); }
+  .card-label { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; font-weight: 400; }
+  .dispatch-pull { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; font-style: italic; color: var(--cream); line-height: 1.45; margin-bottom: 1rem; }
+  .dispatch-body { font-size: 14px; line-height: 1.8; color: var(--text-on-navy); margin-bottom: 1.5rem; }
+  .card-link { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(232,200,50,.3); padding-bottom: 2px; transition: border-color .2s; cursor: pointer; }
+  .card-link:hover { border-color: var(--gold); }
+
+  .voices-card {
+    background: #FDFCF8;
+    border: 1px solid var(--border-navy);
+    padding: 2rem 2.25rem;
+  }
+  .voices-card .card-label { color: var(--navy-mid); }
+  .voice-item { border-left: 3px solid var(--border-navy); padding-left: 1.25rem; margin-bottom: 1.5rem; }
+  .voice-item:last-of-type { margin-bottom: 1.5rem; }
+  .voice-quote { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--navy-deep); line-height: 1.5; margin-bottom: .4rem; }
+  .voice-attr { font-size: 11px; color: var(--text-muted); letter-spacing: .04em; }
+
+  .earlier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 3rem; }
+  .earlier-card { background: #FDFCF8; border: 1px solid var(--border-navy); padding: 1.5rem; transition: background .2s; }
+  .earlier-card:hover { background: var(--cream-dark); }
+  .earlier-city { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; color: var(--navy-deep); margin-bottom: .3rem; }
+  .earlier-theme { font-size: 12px; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
+  .earlier-link { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--navy-mid); text-decoration: none; border-bottom: 1px solid var(--border-navy); padding-bottom: 1px; cursor: pointer; }
+
+  .archive-footer { background: var(--navy-deep); padding: 4rem 5rem; position: relative; overflow: hidden; margin-top: 0; }
+  .archive-footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+  .footer-tagline-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 3vw, 36px); font-weight: 300; font-style: italic; color: var(--cream); line-height: 1.3; }
+  .footer-tagline-text em { color: var(--gold); font-style: normal; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 12px; font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; color: var(--navy-deep); background: var(--gold); padding: 15px 32px; text-decoration: none; border: none; cursor: pointer; transition: background .25s; }
+  .btn-primary:hover { background: var(--gold-pale); }
+
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .85s ease, transform .85s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal-delay-1 { transition-delay:.1s; }
+  .reveal-delay-2 { transition-delay:.2s; }
+  .reveal-delay-3 { transition-delay:.3s; }
+
+  footer { background: var(--navy-deep); border-top: 1px solid var(--border-cream); padding: 3rem 5rem; }
+  .footer-bottom { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+  .footer-bottom p { font-size: 12px; color: rgba(245,240,232,.28); }
+  .footer-tagline-small { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 15px; color: rgba(245,240,232,.32); }
+
+  @media (max-width: 960px) {
+    .cursor { display: none; } body { cursor: auto; }
+    nav { padding: 1.25rem 1.5rem; }
+    .page-hero { padding: 8rem 1.5rem 4rem; }
+    .filters-bar { padding: 1rem 1.5rem; }
+    .archive-wrap { padding: 0 1.5rem 5rem; }
+    .city-header { flex-direction: column; gap: .75rem; }
+    .city-grid { grid-template-columns: 1fr; }
+    .earlier-grid { grid-template-columns: 1fr 1fr; }
+    .archive-footer { padding: 3rem 1.5rem; }
+    .archive-footer-inner { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
+    footer { padding: 2rem 1.5rem; }
+    .footer-bottom { flex-direction: column; gap: 1rem; }
+  }
+  @media (max-width: 480px) {
+    .earlier-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<nav id="main-nav">
+  <a href="/" class="nav-logo">
+    <img src="Circular_Seal_HIC_LOGO.png" alt="HuCon seal">
+    <span class="nav-logo-text">HuCon</span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/#what" onclick="closeMenu()">What is HuCon</a></li>
+    <li><a href="/#events" onclick="closeMenu()">Events</a></li>
+    <li><a href="/#map" onclick="closeMenu()">Cities</a></li>
+    <li><a href="/#signup" onclick="closeMenu()">Join a table</a></li>
+    <li><a href="/#host" onclick="closeMenu()">Host</a></li>
+    <li><a href="/#listen" onclick="closeMenu()">Listen</a></li>
+    <li><a href="/dispatches" onclick="closeMenu()" style="opacity:1;color:var(--gold);">Dispatches</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="page-hero">
+  <div class="lace-bg"></div>
+  <div class="page-hero-inner">
+    <p class="page-eyebrow">From the field</p>
+    <h1 class="page-title">Field Notes &amp;<br><em>City Voices.</em></h1>
+    <p class="page-sub">Two voices from every table. Kenny's dispatch — written in transit, in red ink, on the train out. And what the city said — the lines people carry long after the bowl was passed.</p>
+  </div>
+</section>
+
+<div class="filters-bar">
+  <span class="filter-label">Show:</span>
+  <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+  <button class="filter-btn" onclick="setFilter('dispatch', this)">Dispatches only</button>
+  <button class="filter-btn" onclick="setFilter('voices', this)">City voices only</button>
+</div>
+
+<div class="archive-wrap">
+
+  <!-- BARCELONA -->
+  <div class="city-block reveal">
+    <div class="city-header">
+      <div class="city-name">Barcelona</div>
+      <div class="city-meta">
+        <span class="city-date">29 May 2026</span>
+        <span class="city-theme">Identity &amp; displacement</span>
+      </div>
+    </div>
+    <div class="city-grid">
+      <div class="dispatch-card filterable dispatch">
+        <p class="card-label">Kenny's dispatch</p>
+        <p class="dispatch-pull">"We climbed to get here. Most of us arrived winded — up on a hill above the city, above the noise."</p>
+        <p class="dispatch-body">Barcelona has 1.5 million residents. In 2025, it welcomed 16 million visitors. Up on that hill, in Noemí's studio, we asked the question nobody below seemed to be asking: who does this city belong to? The table that followed did not resolve it. It held it — honestly, generously, without pretending.</p>
+        <a class="card-link">Read full dispatch →</a>
+      </div>
+      <div class="voices-card filterable voices">
+        <p class="card-label">What the city said</p>
+        <div class="voice-item">
+          <p class="voice-quote">"I no longer recognise my own city."</p>
+          <p class="voice-attr">Anonymous — Barcelona table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"I won't be forced to forget where I come from."</p>
+          <p class="voice-attr">Anonymous — Barcelona table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"This is home. And I am not leaving."</p>
+          <p class="voice-attr">Anonymous — Barcelona table</p>
+        </div>
+        <a class="card-link" style="color:var(--navy-mid);border-color:var(--border-navy);">Hear the episode →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MADRID -->
+  <div class="city-block reveal reveal-delay-1">
+    <div class="city-header">
+      <div class="city-name">Madrid</div>
+      <div class="city-meta">
+        <span class="city-date">28 May 2026</span>
+        <span class="city-theme">Belonging &amp; the bubble</span>
+      </div>
+    </div>
+    <div class="city-grid">
+      <div class="dispatch-card filterable dispatch">
+        <p class="card-label">Kenny's dispatch</p>
+        <p class="dispatch-pull">"How do you describe a table graced by people who hold unconditional love and clear-eyed tension in the same breath?"</p>
+        <p class="dispatch-body">Sol. 7pm. The blue light fading into something like an oil painting. Most Madrileños just leaving work. Around the table — people who came to Madrid for different reasons and stayed. Old wounds opened quietly. New friendships formed. No one wanted to leave.</p>
+        <a class="card-link">Read full dispatch →</a>
+      </div>
+      <div class="voices-card filterable voices">
+        <p class="card-label">What the city said</p>
+        <div class="voice-item">
+          <p class="voice-quote">"Madrid is like a lover. You fall in love with the city or you don't."</p>
+          <p class="voice-attr">Anonymous — Madrid table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"I went somewhere else in Spain and experienced racism and homophobia in the same conversation. When I returned to Madrid, I said: ¡Viva España! Because in Madrid, I knew that would never happen."</p>
+          <p class="voice-attr">Anonymous — Madrid table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"I don't feel like myself here. I am myself here."</p>
+          <p class="voice-attr">Anonymous — Madrid table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"We're all closer to the bottom than we think."</p>
+          <p class="voice-attr">Anonymous — Madrid table</p>
+        </div>
+        <a class="card-link" style="color:var(--navy-mid);border-color:var(--border-navy);">Hear the episode →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROME -->
+  <div class="city-block reveal reveal-delay-2">
+    <div class="city-header">
+      <div class="city-name">Rome</div>
+      <div class="city-meta">
+        <span class="city-date">27 March 2026</span>
+        <span class="city-theme">Reinvention &amp; starting over</span>
+      </div>
+    </div>
+    <div class="city-grid">
+      <div class="dispatch-card filterable dispatch">
+        <p class="card-label">Kenny's dispatch</p>
+        <p class="dispatch-pull">"You came to Rome to begin again. But what did it cost your well-being?"</p>
+        <p class="dispatch-body">An Afghan musician played Bella Ciao — and was told which neighbourhoods of Rome would welcome it and which wouldn't. An Argentinian actor described the two lines at the immigration office: one for citizens, one for extracomunitari. A retired Southerner who moved to Rome to search for happiness found it — not in one moment, but in the daily rush of joy when he left the house each morning.</p>
+        <a class="card-link">Read full dispatch →</a>
+      </div>
+      <div class="voices-card filterable voices">
+        <p class="card-label">What the city said</p>
+        <div class="voice-item">
+          <p class="voice-quote">"There are three Romes. The first: the postcard Rome, the magic I experienced as a child. The second: the city of my father — I arrived when he was leaving. And now: the city of care."</p>
+          <p class="voice-attr">Anonymous — Rome table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"When I arrived in Italy, I read Rinascimento — Rebirth. And for me it truly was a rebirth."</p>
+          <p class="voice-attr">Anonymous — Rome table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"In Rome, you can be yourself. You don't have to be someone you're not."</p>
+          <p class="voice-attr">Anonymous — Rome table</p>
+        </div>
+        <a class="card-link" style="color:var(--navy-mid);border-color:var(--border-navy);">Hear the episode →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MILAN -->
+  <div class="city-block reveal reveal-delay-3">
+    <div class="city-header">
+      <div class="city-name">Milan</div>
+      <div class="city-meta">
+        <span class="city-date">20 March 2026</span>
+        <span class="city-theme">Performance &amp; exhaustion</span>
+      </div>
+    </div>
+    <div class="city-grid">
+      <div class="dispatch-card filterable dispatch">
+        <p class="card-label">Kenny's dispatch</p>
+        <p class="dispatch-pull">"In a city that rewards image and performance, how are you really doing?"</p>
+        <p class="dispatch-body">A ballet dancer returned to Italy after fifteen years abroad and arrived in Milan with hope. A young professional described the decade she spent following someone else's pattern for how a life should go — until she stopped. A wellbeing professional who once wore scrubs every day and never thought about what she put on. The city that doesn't ask how you are — it asks what you've achieved.</p>
+        <a class="card-link">Read full dispatch →</a>
+      </div>
+      <div class="voices-card filterable voices">
+        <p class="card-label">What the city said</p>
+        <div class="voice-item">
+          <p class="voice-quote">"The park was full of people. And I thought: so many people in Milan, and I'm here alone. Why is it me, alone? Where are the others?"</p>
+          <p class="voice-attr">Anonymous — Milan table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"I'm surrounded by people and I don't have a real friend to call. I'm sick — who do I write?"</p>
+          <p class="voice-attr">Anonymous — Milan table</p>
+        </div>
+        <div class="voice-item">
+          <p class="voice-quote">"The moment I decided I didn't want to perform anymore, that I just wanted to be myself — that's when I actually started experiencing life."</p>
+          <p class="voice-attr">Anonymous — Milan table</p>
+        </div>
+        <a class="card-link" style="color:var(--navy-mid);border-color:var(--border-navy);">Hear the episode →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- EARLIER TABLES -->
+  <div class="city-block reveal">
+    <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:1.5rem;">Earlier tables</p>
+    <div class="earlier-grid">
+      <div class="earlier-card">
+        <p class="earlier-city">Pittsburgh</p>
+        <p class="earlier-theme">March 2026 · Care &amp; dignity</p>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"The folks who have the least ability to pay out of pocket for healthcare are the same ones who are not receiving it through their employers."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Pittsburgh table</p>
+        </div>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Our stress is being commodified for profits."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Pittsburgh table</p>
+        </div>
+        <a class="earlier-link">View dispatch &amp; voices →</a>
+      </div>
+      <div class="earlier-card">
+        <p class="earlier-city">Lagos</p>
+        <p class="earlier-theme">Nov 2025 · Money &amp; health</p>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"The term mental health is bastardized. People use it as an excuse."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Lagos table</p>
+        </div>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Even commuting stress can snowball to affect every part of your life. Every discomfort is a significant conversation."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Lagos table</p>
+        </div>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Grow into more than just survival."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Lagos table</p>
+        </div>
+        <a class="earlier-link">View dispatch &amp; voices →</a>
+      </div>
+      <div class="earlier-card">
+        <p class="earlier-city">Valdosta</p>
+        <p class="earlier-theme">Jan 2026 · Self-image &amp; body</p>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"It is amazing how some of these things happen, and then they live in us. We feel we have outgrown them, but we end up seeing them constantly as we navigate life."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Valdosta table</p>
+        </div>
+        <a class="earlier-link">View dispatch &amp; voices →</a>
+      </div>
+      <div class="earlier-card">
+        <p class="earlier-city">Bari</p>
+        <p class="earlier-theme">2025 · Caregiving &amp; loss</p>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Every time I hear her on the phone, there's this attempt to make me feel guilty. Or maybe I already feel guilty."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Bari table</p>
+        </div>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"I've carried the sense that I abandoned the family. Yet I go on — maybe because I am selfish — so I go on anyway."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Bari table</p>
+        </div>
+        <div style="margin:1rem 0;border-left:2px solid var(--border-navy);padding-left:.875rem;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"If once I was a tree, now I'm becoming a toothpick."</p>
+          <p style="font-size:11px;color:var(--text-muted);">Anonymous — Bari table</p>
+        </div>
+        <a class="earlier-link">View dispatch &amp; voices →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="archive-footer">
+  <div class="lace-bg"></div>
+  <div class="archive-footer-inner">
+    <p class="footer-tagline-text">Cities that listen<br>design with <em>empathy.</em></p>
+    <a href="/#signup" class="btn-primary">Join a table →</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <p>© 2026 Humans in Conversation. All rights reserved.</p>
+    <span class="footer-tagline-small">The bowl travels.</span>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('nav-links').classList.toggle('open'); document.getElementById('hamburger').classList.toggle('open'); }
+  function closeMenu() { document.getElementById('nav-links').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); }
+
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+    document.addEventListener('mousemove', e => { cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px'; });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('grow'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('grow'));
+    });
+  }
+
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
+
+  try {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.06 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } catch(e) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+
+  function setFilter(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.filterable').forEach(el => {
+      if (type === 'all') { el.style.display = ''; }
+      else if (type === 'dispatch') { el.style.display = el.classList.contains('dispatch') ? '' : 'none'; }
+      else if (type === 'voices') { el.style.display = el.classList.contains('voices') ? '' : 'none'; }
+    });
+    document.querySelectorAll('.city-grid').forEach(grid => {
+      if (type !== 'all') { grid.style.gridTemplateColumns = '1fr'; }
+      else { grid.style.gridTemplateColumns = ''; }
+    });
+  }
+</script>
+
+</body>
+</html>
