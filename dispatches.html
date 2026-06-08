@@ -173,6 +173,164 @@
   @media (max-width: 480px) {
     .earlier-grid { grid-template-columns: 1fr; }
   }
+
+  /* ── REQUEST MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(17,30,74,.82);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--cream);
+    max-width: 520px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-box::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .modal-header {
+    background: var(--navy-deep);
+    padding: 2rem 2.25rem 1.5rem;
+  }
+  .modal-label {
+    font-size: 10px;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .5rem;
+    font-weight: 400;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: .5rem;
+  }
+  .modal-sub {
+    font-size: 13px;
+    color: var(--text-on-navy);
+    line-height: 1.6;
+  }
+  .modal-body { padding: 1.75rem 2.25rem 2rem; }
+  .modal-close {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    background: none;
+    border: none;
+    color: rgba(245,240,232,.5);
+    font-size: 22px;
+    cursor: pointer;
+    line-height: 1;
+    transition: color .2s;
+  }
+  .modal-close:hover { color: var(--cream); }
+  .modal-form { display: flex; flex-direction: column; gap: 1rem; }
+  .modal-field { display: flex; flex-direction: column; gap: .4rem; }
+  .modal-field label {
+    font-size: 10px;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--navy-mid);
+    font-weight: 400;
+  }
+  .modal-field input,
+  .modal-field select,
+  .modal-field textarea {
+    background: #FDFCFA;
+    border: 1.5px solid var(--border-navy);
+    color: var(--navy-deep);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color .2s;
+    width: 100%;
+    border-radius: 0;
+    appearance: none;
+  }
+  .modal-field input:focus,
+  .modal-field select:focus,
+  .modal-field textarea:focus { border-color: var(--navy); }
+  .modal-field textarea { resize: vertical; min-height: 80px; }
+  .modal-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a2f6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+  .modal-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .modal-submit {
+    width: 100%;
+    padding: 14px 24px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .2s;
+    margin-top: .5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .modal-submit::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+  .modal-submit:hover { background: var(--navy-deep); }
+  .modal-success {
+    display: none;
+    text-align: center;
+    padding: 2.5rem 2rem;
+  }
+  .modal-success-icon {
+    width: 52px; height: 52px;
+    background: var(--navy);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.25rem;
+  }
+  .modal-success-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--navy-deep);
+    margin-bottom: .75rem;
+  }
+  .modal-success-sub {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  @media (max-width: 560px) {
+    .modal-two-col { grid-template-columns: 1fr; }
+    .modal-header, .modal-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+  }
 </style>
 </head>
 <body>
@@ -231,7 +389,7 @@
         <p class="card-label">Kenny's dispatch</p>
         <p class="dispatch-pull">"We climbed to get here. Most of us arrived winded. up on a hill above the city, above the noise."</p>
         <p class="dispatch-body">Barcelona has 1.5 million residents. In 2025, it welcomed 16 million visitors. Up on that hill, in Noemí's studio, we asked the question nobody below seemed to be asking: who does this city belong to? The table that followed did not resolve it. It held it. honestly, generously, without pretending.</p>
-        <a class="card-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full dispatch →</a>
+        <a class="card-link" href="#" onclick="openModal();return false;">Request full dispatch →</a>
       </div>
       <div class="voices-card filterable voices">
         <p class="card-label">What the city said</p>
@@ -266,7 +424,7 @@
         <p class="card-label">Kenny's dispatch</p>
         <p class="dispatch-pull">"How do you describe a table graced by people who hold unconditional love and clear-eyed tension in the same breath?"</p>
         <p class="dispatch-body">Sol. 7pm. The blue light fading into something like an oil painting. Most Madrileños just leaving work. Around the table. people who came to Madrid for different reasons and stayed. Old wounds opened quietly. New friendships formed. No one wanted to leave.</p>
-        <a class="card-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full dispatch →</a>
+        <a class="card-link" href="#" onclick="openModal();return false;">Request full dispatch →</a>
       </div>
       <div class="voices-card filterable voices">
         <p class="card-label">What the city said</p>
@@ -305,7 +463,7 @@
         <p class="card-label">Kenny's dispatch</p>
         <p class="dispatch-pull">"You came to Rome to begin again. But what did it cost your well-being?"</p>
         <p class="dispatch-body">An Afghan musician played Bella Ciao. and was told which neighbourhoods of Rome would welcome it and which wouldn't. An Argentinian actor described the two lines at the immigration office: one for citizens, one for extracomunitari. A retired Southerner who moved to Rome to search for happiness found it. not in one moment, but in the daily rush of joy when he left the house each morning.</p>
-        <a class="card-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full dispatch →</a>
+        <a class="card-link" href="#" onclick="openModal();return false;">Request full dispatch →</a>
       </div>
       <div class="voices-card filterable voices">
         <p class="card-label">What the city said</p>
@@ -340,7 +498,7 @@
         <p class="card-label">Kenny's dispatch</p>
         <p class="dispatch-pull">"In a city that rewards image and performance, how are you really doing?"</p>
         <p class="dispatch-body">A ballet dancer returned to Italy after fifteen years abroad and arrived in Milan with hope. A young professional described the decade she spent following someone else's pattern for how a life should go. until she stopped. A wellbeing professional who once wore scrubs every day and never thought about what she put on. The city that doesn't ask how you are. it asks what you've achieved.</p>
-        <a class="card-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full dispatch →</a>
+        <a class="card-link" href="#" onclick="openModal();return false;">Request full dispatch →</a>
       </div>
       <div class="voices-card filterable voices">
         <p class="card-label">What the city said</p>
@@ -376,7 +534,7 @@
           <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Our stress is being commodified for profits."</p>
           <p style="font-size:11px;color:var(--text-muted);">Anonymous. Pittsburgh table</p>
         </div>
-        <a class="earlier-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full notes →</a>
+        <a class="earlier-link" href="#" onclick="openModal();return false;">Request full notes →</a>
       </div>
       <div class="earlier-card">
         <p class="earlier-city">Lagos</p>
@@ -393,7 +551,7 @@
           <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"Grow into more than just survival."</p>
           <p style="font-size:11px;color:var(--text-muted);">Anonymous. Lagos table</p>
         </div>
-        <a class="earlier-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full notes →</a>
+        <a class="earlier-link" href="#" onclick="openModal();return false;">Request full notes →</a>
       </div>
       <div class="earlier-card">
         <p class="earlier-city">Valdosta</p>
@@ -402,7 +560,7 @@
           <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"It is amazing how some of these things happen, and then they live in us. We feel we have outgrown them, but we end up seeing them constantly as we navigate life."</p>
           <p style="font-size:11px;color:var(--text-muted);">Anonymous. Valdosta table</p>
         </div>
-        <a class="earlier-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full notes →</a>
+        <a class="earlier-link" href="#" onclick="openModal();return false;">Request full notes →</a>
       </div>
       <div class="earlier-card">
         <p class="earlier-city">Bari</p>
@@ -419,7 +577,7 @@
           <p style="font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--navy-deep);line-height:1.5;margin-bottom:.3rem;">"If once I was a tree, now I'm becoming a toothpick."</p>
           <p style="font-size:11px;color:var(--text-muted);">Anonymous. Bari table</p>
         </div>
-        <a class="earlier-link" href="mailto:hello@humansinconversation.com?subject=HuCon%20Full%20Dispatch%20Request&body=Hi%20Kenny%2C%20I%20would%20love%20to%20receive%20the%20full%20HuCon%20dispatch%20and%20learn%20more%20about%20the%20project.">Request full notes →</a>
+        <a class="earlier-link" href="#" onclick="openModal();return false;">Request full notes →</a>
       </div>
     </div>
   </div>
@@ -481,5 +639,104 @@
   }
 </script>
 
+
+<!-- REQUEST MODAL -->
+<div class="modal-overlay" id="requestModal" onclick="closeModalOutside(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()" aria-label="Close">×</button>
+    <div class="modal-header">
+      <p class="modal-label">Humans in Conversation</p>
+      <p class="modal-title">Request a full dispatch</p>
+      <p class="modal-sub">Tell us a little about yourself and how you'd like to use the material. We'll be in touch directly.</p>
+    </div>
+    <div class="modal-body">
+      <form
+        class="modal-form"
+        id="requestForm"
+        name="hucon-dispatch-request"
+        method="POST"
+        data-netlify="true"
+        netlify-honeypot="bot-field"
+      >
+        <input type="hidden" name="form-name" value="hucon-dispatch-request">
+        <p style="display:none;"><input name="bot-field"></p>
+
+        <div class="modal-two-col">
+          <div class="modal-field">
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="Your name" required>
+          </div>
+          <div class="modal-field">
+            <label>Email address</label>
+            <input type="email" name="email" placeholder="your@email.com" required>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Organisation</label>
+          <input type="text" name="organisation" placeholder="Company, university, institution...">
+        </div>
+        <div class="modal-two-col">
+          <div class="modal-field">
+            <label>Country</label>
+            <input type="text" name="country" placeholder="Your country">
+          </div>
+          <div class="modal-field">
+            <label>City</label>
+            <input type="text" name="city" placeholder="Your city">
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>How do you want to use this dispatch?</label>
+          <textarea name="usage" placeholder="Research, education, journalism, partnership, something else..." required></textarea>
+        </div>
+        <button type="submit" class="modal-submit">Send request →</button>
+      </form>
+
+      <div class="modal-success" id="modalSuccess">
+        <div class="modal-success-icon">
+          <svg width="22" height="22" viewBox="0 0 28 28" fill="none">
+            <path d="M5 14l7 7L23 7" stroke="#e8c832" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="modal-success-title">Thank you.</p>
+        <p class="modal-success-sub">Your request has been received. Kenny will be in touch directly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('requestModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('requestModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('requestModal')) closeModal();
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  const requestForm = document.getElementById('requestForm');
+  if (requestForm) {
+    requestForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = new FormData(requestForm);
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString()
+      }).then(() => {
+        requestForm.style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+      }).catch(() => {
+        requestForm.style.display = 'none';
+        document.getElementById('modalSuccess').style.display = 'block';
+      });
+    });
+  }
+</script>
 </body>
 </html>
