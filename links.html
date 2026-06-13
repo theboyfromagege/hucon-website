@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HuCon — Links</title>
+<meta name="description" content="Humans in Conversation — where cities pause to listen to how we're really doing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #111e4a;
+    --navy-mid: #1a2f6b;
+    --gold: #e8c832;
+    --cream: #f5f0e8;
+    --text-on-navy: rgba(245,240,232,0.65);
+    --border: rgba(245,240,232,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: var(--navy);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Lace background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='none' stroke='rgba(245,240,232,0.05)' stroke-width='.5'/%3E%3Ccircle cx='30' cy='30' r='18' fill='none' stroke='rgba(245,240,232,0.04)' stroke-width='.5'/%3E%3Cpath d='M30 2L30 58M2 30L58 30M9 9L51 51M51 9L9 51' stroke='rgba(245,240,232,0.03)' stroke-width='.4'/%3E%3C/svg%3E");
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* Logo */
+  .logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Name */
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  /* Tagline */
+  .tagline {
+    font-size: 13px;
+    color: var(--text-on-navy);
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  /* Links */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 2.5rem;
+  }
+
+  .link-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px 22px;
+    background: rgba(245,240,232,0.06);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--cream);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    cursor: pointer;
+  }
+
+  .link-btn:hover {
+    background: rgba(245,240,232,0.12);
+    border-color: rgba(245,240,232,0.25);
+    transform: translateY(-2px);
+  }
+
+  .link-btn.primary {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .link-btn.primary:hover {
+    background: #f5e27a;
+    border-color: #f5e27a;
+  }
+
+  .link-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .link-icon {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .link-arrow {
+    font-size: 16px;
+    opacity: 0.5;
+    flex-shrink: 0;
+  }
+
+  /* Cities strip */
+  .cities {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 2.5rem;
+    width: 100%;
+  }
+
+  .city-pill {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-on-navy);
+    padding: 4px 12px;
+    border: 0.5px solid rgba(245,240,232,0.15);
+    border-radius: 20px;
+  }
+
+  .city-pill.done {
+    color: var(--gold);
+    border-color: rgba(232,200,50,0.3);
+  }
+
+  /* Footer */
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: rgba(245,240,232,0.25);
+    text-align: center;
+  }
+
+  /* Divider */
+  .divider {
+    width: 40px;
+    height: 1px;
+    background: rgba(232,200,50,0.4);
+    margin: 0 auto 2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <img src="Circular_Seal_HIC_LOGO.png" alt="HuCon" class="logo">
+
+  <h1 class="brand-name">Humans in Conversation</h1>
+  <p class="tagline">Where cities pause to listen to how we're really doing.</p>
+
+  <div class="divider"></div>
+
+  <div class="links">
+
+    <a href="/#signup" class="link-btn primary">
+      <div class="link-left">
+        <span class="link-icon">🪑</span>
+        <span>Reserve your seat at the table</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="https://open.spotify.com/show/2ILbCJPVYC5YXUJunZSBy6" target="_blank" class="link-btn">
+      <div class="link-left">
+        <span class="link-icon">🎙️</span>
+        <span>Listen on Spotify</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="/" class="link-btn">
+      <div class="link-left">
+        <span class="link-icon">🌍</span>
+        <span>Our city footprint</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="/#what" class="link-btn">
+      <div class="link-left">
+        <span class="link-icon">💬</span>
+        <span>What is HuCon?</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="/#host" class="link-btn">
+      <div class="link-left">
+        <span class="link-icon">🏡</span>
+        <span>Host a table in your city</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a href="#" onclick="var a='hello',b='humansinconversation.com';window.location='mailto:'+a+'@'+b;return false;" class="link-btn">
+      <div class="link-left">
+        <span class="link-icon">✉️</span>
+        <span>Get in touch</span>
+      </div>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+  <p class="footer-text">humansinconversation.com</p>
+
+</div>
+
+</body>
+</html>
