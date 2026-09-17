@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="netlify-email-obfuscation" content="off">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HuCon — Humans in Conversation</title>
-<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Join us in London — 27 June 2026.">
+<title>HuCon: Humans in Conversation</title>
+<meta name="description" content="HuCon is where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras. Nine cities, one question, one first season.">
 <meta name="keywords" content="Humans in Conversation, HuCon, storytelling, wellbeing, urban listening, Kehinde Bademosi">
-<meta property="og:title" content="HuCon — Humans in Conversation">
+<meta property="og:title" content="HuCon: Humans in Conversation">
 <meta property="og:description" content="Where cities pause to listen to how we're really doing. Small tables. Honest stories. No cameras.">
 <meta property="og:image" content="HIC_bowl.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HuCon — Humans in Conversation">
+<meta name="twitter:title" content="HuCon: Humans in Conversation">
 <meta name="twitter:description" content="Where cities pause to listen to how we're really doing.">
 <link rel="canonical" href="https://humansinconversation.com">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -229,6 +229,7 @@
     <li><a href="#signup" onclick="closeMenu()">Join a table</a></li>
     <li><a href="#host" onclick="closeMenu()">Host</a></li>
     <li><a href="#listen" onclick="closeMenu()">Listen</a></li>
+    <li><a href="/reports/london.html" onclick="closeMenu()">Report</a></li>
     <li><a href="/dispatches" onclick="closeMenu()">Dispatches</a></li>
   </ul>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
@@ -244,7 +245,7 @@
   <div class="hero-left">
     <p class="hero-eyebrow">Humans in Conversation</p>
     <h1 class="hero-headline">Where cities<br>pause to<br><em>really listen.</em></h1>
-    <p class="hero-sub">Small tables. Honest stories. No cameras. HuCon gathers people in cities around the world to practise empathy — sharing how they're truly doing — and sends those stories into a global archive.</p>
+    <p class="hero-sub">Small tables. Honest stories. No cameras. HuCon gathers people in cities around the world to practice empathy, sharing how they're truly doing, and sends those stories into a global archive.</p>
     <div style="display:flex;gap:1rem;flex-wrap:wrap;">
       <a href="#events" class="btn-primary">Find an event →</a>
       <a href="#host" class="btn-outline">Host a table</a>
@@ -262,11 +263,10 @@
       <p class="hero-card-title" style="opacity:0.6;">"Where do you go when you feel like a tourist in your own city?"</p>
       <p class="hero-card-meta" style="color:var(--gold);opacity:0.8;">Held ✓</p>
     </div>
-    <div class="hero-card">
-      <div class="event-pill"><div class="event-dot"></div> Upcoming</div>
-      <p class="hero-card-label">London · 27 June 2026 · 10:00</p>
-      <p class="hero-card-title">"This city doesn't stop. But how are you really doing inside it?"</p>
-      <p class="hero-card-meta">Small group &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; No cameras</p>
+    <div class="hero-card" style="opacity:0.45;">
+      <p class="hero-card-label" style="text-decoration:line-through;">London · 27 June 2026</p>
+      <p class="hero-card-title" style="opacity:0.6;">"This city doesn't stop. But how are you really doing inside it?"</p>
+      <p class="hero-card-meta" style="color:var(--gold);opacity:0.8;">Held ✓</p>
     </div>
     <p style="font-size:12px;color:rgba(245,240,232,.28);letter-spacing:.06em;margin-top:.5rem;">These are the stories we don't usually tell.</p>
   </div>
@@ -283,14 +283,14 @@
 <!-- BOWL FEATURE -->
 <section class="bowl-section">
   <div class="bowl-img-wrap">
-    <img src="HIC_bowl.png" alt="HuCon ceremonial bowl — Humans in Conversation">
+    <img src="HIC_bowl.png" alt="HuCon ceremonial bowl, Humans in Conversation">
   </div>
   <div class="bowl-text">
     <div class="lace-bg"></div>
     <p class="section-label reveal" style="position:relative;z-index:1;">The ritual</p>
     <p class="bowl-quote reveal reveal-delay-1" style="position:relative;z-index:1;">"Every table begins with a meditation bell and food that means something to the community."</p>
-    <p class="bowl-body reveal reveal-delay-2" style="position:relative;z-index:1;">The HuCon bowl sits at the centre of every gathering. Sharing food is not incidental — it's the ritual that opens people to honesty. It signals: this is a different kind of conversation.</p>
-    <p class="bowl-body reveal reveal-delay-3" style="margin-top:1rem;position:relative;z-index:1;">When you host a table, you choose a dish from your world, bring it to the room, and explain its meaning — to the people present, and to the global archive.</p>
+    <p class="bowl-body reveal reveal-delay-2" style="position:relative;z-index:1;">The HuCon bowl sits at the center of every gathering. Sharing food is not incidental. It's the ritual that opens people to honesty. It signals: this is a different kind of conversation.</p>
+    <p class="bowl-body reveal reveal-delay-3" style="margin-top:1rem;position:relative;z-index:1;">When you host a table, you choose a dish from your world, bring it to the room, and explain its meaning, to the people present and to the global archive.</p>
   </div>
 </section>
 
@@ -304,9 +304,9 @@
         <img class="seal-img reveal reveal-delay-2" src="Circular_Seal_HIC_LOGO.png" alt="Humans in Conversation seal">
       </div>
       <div>
-        <p class="body-text reveal reveal-delay-2">HuCon — <strong>Humans in Conversation</strong> — is a global movement that creates intimate, guided listening tables in cities around the world. Each table begins with one question about well-being that truly matters to the people in the room and creates the conditions for genuine empathy.</p>
-        <p class="body-text reveal reveal-delay-3">Participants share honest, often anonymous stories about how they're really doing. Everything is <strong>audio-recorded</strong> and published on the HuCon Spotify archive — a living document of urban well-being and human experience.</p>
-        <p class="body-text reveal reveal-delay-4">Ultimately, HuCon is a global storytelling lab that helps us foster well-being through <strong>empathy in our cities and institutions</strong> in an era when authentic human data matters more than ever.</p>
+        <p class="body-text reveal reveal-delay-2">HuCon, <strong>Humans in Conversation</strong>, is a global movement that creates intimate, guided listening tables in cities around the world. Each table begins with one question about well-being that truly matters to the people in the room and creates the conditions for genuine empathy.</p>
+        <p class="body-text reveal reveal-delay-3">Participants share honest, often anonymous stories about how they're really doing. Everything is <strong>audio-recorded</strong> and published on the HuCon Spotify archive, a living document of urban well-being and human experience.</p>
+        <p class="body-text reveal reveal-delay-4">Ultimately, HuCon is a global storytelling lab that helps us foster well-being through <strong>empathy in our cities and institutions</strong> in an era when authentic human connection matters more than ever.</p>
 
         <div class="partners-block reveal reveal-delay-5" style="margin-bottom:4rem; padding-bottom:3rem; border-bottom:2px solid var(--border-navy);">
           <p class="partners-label">Partners &amp; collaborators</p>
@@ -325,7 +325,7 @@
         </div>
       </div>
     </div>
-    <blockquote class="big-quote reveal" style="margin-top:5rem;">"We aim to honor human experiences that are often reduced or misunderstood. When people feel seen and heard, empathy becomes possible — and cities become more human."</blockquote>
+    <blockquote class="big-quote reveal" style="margin-top:5rem;">"We aim to honor human experiences that are often reduced or misunderstood. When people feel seen and heard, empathy becomes possible, and cities become more human."</blockquote>
   </div>
 </section>
 
@@ -336,9 +336,9 @@
     <p class="section-label light reveal">How it works</p>
     <h2 class="section-title light reveal reveal-delay-1">Five steps.<br><em>One honest evening.</em></h2>
     <div class="steps-grid">
-      <div class="step reveal reveal-delay-1"><div class="step-num">01</div><h3>Pick a date &amp; question</h3><p>Choose a theme rooted in your city's reality — reinvention, identity, belonging, pressure. The question should matter to everyone at the table.</p></div>
+      <div class="step reveal reveal-delay-1"><div class="step-num">01</div><h3>Pick a date &amp; question</h3><p>Choose a theme rooted in your city's reality: reinvention, identity, belonging, pressure. The question should matter to everyone at the table.</p></div>
       <div class="step reveal reveal-delay-2"><div class="step-num">02</div><h3>Find your tribe</h3><p>Invite 3 to 10 people who agree to share their stories. It's a conversation, not a panel. Find people who'll be honest.</p></div>
-      <div class="step reveal reveal-delay-3"><div class="step-num">03</div><h3>Choose a safe space</h3><p>Somewhere guests can speak freely. A home, a quiet room, a trusted community space. You guide — that's all.</p></div>
+      <div class="step reveal reveal-delay-3"><div class="step-num">03</div><h3>Choose a safe space</h3><p>Somewhere guests can speak freely. A home, a quiet room, a trusted community space. You guide. That's all.</p></div>
       <div class="step reveal reveal-delay-4"><div class="step-num">04</div><h3>Press record</h3><p>Audio only. No cameras. Ever. Participants may choose to share anonymously. Record and send to the global archive.</p></div>
       <div class="step reveal reveal-delay-5"><div class="step-num">05</div><h3>Share food &amp; send</h3><p>Bring a dish meaningful to your community. Tell the global audience its significance. Send your stories. You've hosted a HuCon.</p></div>
     </div>
@@ -381,17 +381,27 @@
         <div class="event-theme">"Where do you go when you feel like a tourist in your own city?"</div>
         <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
-      <div class="event-row reveal reveal-delay-5">
+      <div class="event-row reveal reveal-delay-5" style="opacity:0.45;">
         <div class="event-date">27<span>June 2026</span></div>
-        <div class="event-city">London</div>
+        <div class="event-city" style="text-decoration:line-through; opacity:0.6;">London</div>
         <div class="event-theme">"This city doesn't stop. But how are you really doing inside it?"</div>
-        <a href="#signup" class="event-tag live">Register →</a>
+        <span class="event-tag" style="color:var(--gold);border-color:var(--gold);">Held ✓</span>
       </div>
     </div>
     <div style="margin-top:3rem;" class="reveal">
       <p style="font-size:14px;color:var(--text-muted);margin-bottom:1.25rem;">Don't see your city? Host a table yourself.</p>
       <a href="#host" class="btn-outline" style="color:var(--navy-deep);border-color:var(--navy);">Learn to host →</a>
     </div>
+  </div>
+</section>
+
+<!-- FIRST SEASON REPORT CALLOUT -->
+<section style="background:var(--navy-deep);padding:5.5rem 0;">
+  <div class="section-inner" style="text-align:center;">
+    <p class="section-label light reveal" style="color:var(--gold);">The first season</p>
+    <h2 class="section-title light reveal reveal-delay-1" style="color:var(--cream);">What one city<br><em>told us.</em></h2>
+    <p class="body-text reveal reveal-delay-2" style="color:rgba(245,240,232,.7);max-width:560px;margin:1.5rem auto 2.25rem;">We read London the way we read every table. Not for what people said, but for where empathy between a city and its people is breaking, holding, or beginning to open. The London Listening Report is the first full read of the season. It is honest, and it names where the work is.</p>
+    <a href="/reports/london.html" class="btn-primary" style="justify-content:center;">Read the London report →</a>
   </div>
 </section>
 
@@ -404,7 +414,7 @@
     <div class="map-wrap reveal reveal-delay-3" id="hucon-map-wrap">
       <div id="hucon-map" style="width:100%;height:420px;border-radius:8px;overflow:hidden;"></div>
       <div style="display:flex;gap:3rem;margin-top:1.5rem;flex-wrap:wrap;">
-        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">9</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 8 held</div></div>
+        <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">9</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Cities · 9 held</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">3</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Continents</div></div>
         <div><div style="font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--navy);line-height:1;">1</div><div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);">Question</div></div>
       </div>
@@ -419,8 +429,8 @@
     <div class="signup-grid">
       <div>
         <p class="section-label light reveal">Join a table</p>
-        <h2 class="section-title light reveal reveal-delay-1">Reserve your<br><em>seat.</em></h2>
-        <p class="signup-sub reveal reveal-delay-2">Small group. Confidential. No cameras. Tell us your name, email, and which city you want to join — we'll be in touch directly.</p>
+        <h2 class="section-title light reveal reveal-delay-1">Join the<br><em>list.</em></h2>
+        <p class="signup-sub reveal reveal-delay-2">The first season is complete. We are building what comes next. Leave your name and your city, and we will write to you when a table opens near you.</p>
       </div>
       <div class="reveal reveal-delay-2">
         <form name="hucon-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="signup-form" id="signup-form">
@@ -444,12 +454,8 @@
           </div>
 
           <div class="form-group">
-            <label>Which city are you interested in?</label>
-            <select name="city" required>
-              <option value="" disabled selected>Select a city</option>
-              <option value="London — 27 June 2026">London — 27 June 2026</option>
-              <option value="Other / notify me">Other — notify me when my city is added</option>
-            </select>
+            <label>Which city should HuCon come to?</label>
+            <input type="text" name="city" placeholder="Your city" required>
           </div>
 
           <div class="form-group">
@@ -457,13 +463,13 @@
             <textarea name="message" rows="3" placeholder="How did you hear about HuCon, or anything else..."></textarea>
           </div>
 
-          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;cursor:pointer;">Reserve my seat →</button>
+          <button type="submit" class="btn-primary" style="width:100%;justify-content:center;cursor:pointer;">Join the list →</button>
         </form>
 
         <div id="signup-success" style="display:none; padding:2.5rem; background:rgba(232,200,50,0.1); border:1px solid var(--gold); border-radius:8px; text-align:center; margin-top:1rem;">
           <div style="font-size:32px; margin-bottom:1rem;">✓</div>
-          <p style="font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--cream); margin-bottom:0.75rem; font-weight:300;">See you at the table.</p>
-          <p style="font-size:14px; color:var(--text-on-navy); line-height:1.8;">Thank you — we'll be in touch directly to confirm your seat.</p>
+          <p style="font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--cream); margin-bottom:0.75rem; font-weight:300;">You're on the list.</p>
+          <p style="font-size:14px; color:var(--text-on-navy); line-height:1.8;">Thank you. We will write to you when a table opens near you.</p>
           <p style="font-size:12px; color:rgba(245,240,232,0.35); margin-top:1rem; letter-spacing:0.08em; text-transform:uppercase;">Small group · Confidential · No cameras</p>
         </div>
       </div>
@@ -479,12 +485,12 @@
       <div class="mission-left">
         <p class="section-label light reveal">The mission</p>
         <h2 class="section-title light reveal reveal-delay-1">Cities that listen<br><em>design with empathy.</em></h2>
-        <p class="body-text mission reveal reveal-delay-2">In a world shaped by curated feeds and performance metrics, people have fewer spaces to speak honestly about <strong>reinvention, loneliness, belonging, and most importantly our well-being.</strong></p>
-        <p class="body-text mission reveal reveal-delay-3">HuCon creates that space — and then sends what it hears back to the cities, health and wellbeing researchers, and AI systems that need to understand <strong>what humans actually experience.</strong> Because empathy is not a soft skill. It is the foundation of every system that works.</p>
+        <p class="body-text mission reveal reveal-delay-2">In the age of machines and declining trust, <strong>the third place</strong> is disappearing, the space between home and work where strangers become neighbors and people are honest about how they are really doing.</p>
+        <p class="body-text mission reveal reveal-delay-3">HuCon builds one on purpose, for two hours, around one question, and listens to what a city has stopped hearing. What it hears goes back to the cities, health and wellbeing researchers, and AI systems that need to understand <strong>what humans actually experience.</strong> Because empathy is not a soft skill. It is the foundation of every system that works.</p>
       </div>
       <div class="mission-right">
         <div class="stats-grid reveal">
-          <div class="stat-cell"><div class="stat-big">12+</div><div class="stat-desc">Cities in the 2026 programme</div></div>
+          <div class="stat-cell"><div class="stat-big">12+</div><div class="stat-desc">Cities in the 2026 program</div></div>
           <div class="stat-cell"><div class="stat-big">3–10</div><div class="stat-desc">Participants per table</div></div>
           <div class="stat-cell"><div class="stat-big">0</div><div class="stat-desc">Cameras. Ever.</div></div>
           <div class="stat-cell"><div class="stat-big">∞</div><div class="stat-desc">Stories in the global archive</div></div>
@@ -504,7 +510,7 @@
         <div class="host-steps">
           <div class="host-step reveal"><div class="host-step-num">1</div><div><h4>Be passionate about the topic and your city</h4><p>That's the most important first step. Everything else follows from genuine care.</p></div></div>
           <div class="host-step reveal reveal-delay-1"><div class="host-step-num">2</div><div><h4>Find 3 to 10 people willing to share</h4><p>People who bring honest stories to the table. A conversation, not a performance.</p></div></div>
-          <div class="host-step reveal reveal-delay-2"><div class="host-step-num">3</div><div><h4>Choose a location where guests can speak freely</h4><p>All you need to do is guide. You don't need to be an expert — just a good listener.</p></div></div>
+          <div class="host-step reveal reveal-delay-2"><div class="host-step-num">3</div><div><h4>Choose a location where guests can speak freely</h4><p>All you need to do is guide. You don't need to be an expert. Just a good listener.</p></div></div>
           <div class="host-step reveal reveal-delay-3"><div class="host-step-num">4</div><div><h4>Press record on your audio device</h4><p>Audio only. No cameras, no video, ever. Ready to send to the global archive.</p></div></div>
           <div class="host-step reveal reveal-delay-4"><div class="host-step-num">5</div><div><h4>Share food that means something to your community</h4><p>Tell your global audience its significance. Send your stories. You've hosted a HuCon.</p></div></div>
         </div>
@@ -528,7 +534,7 @@
   <div class="section-inner" style="position:relative;z-index:2;">
     <p class="section-label light reveal" style="justify-content:center;">The archive</p>
     <h2 class="section-title light reveal reveal-delay-1" style="text-align:center;">Every story<br><em>lives on Spotify.</em></h2>
-    <p class="spotify-sub reveal reveal-delay-2">Every table, every city, every honest conversation — listen directly below or open in Spotify.</p>
+    <p class="spotify-sub reveal reveal-delay-2">Every table, every city, every honest conversation. Listen directly below or open in Spotify.</p>
     <div class="spotify-embed-wrap reveal reveal-delay-3">
       <div>
         <iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/4Wue61msZOxyvyRooJDlrg?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
@@ -561,7 +567,7 @@
         <div class="founder-text">
           <p class="founder-label">Convener</p>
           <p class="founder-name">Dr. Kehinde Bademosi</p>
-          <p class="founder-bio">Storytelling strategist and empathy researcher. Author of the forthcoming Bloomsbury book <em>Design in Public Health Crises: The Power of Empathy in Visual Storytelling</em> (2026). Founder of Orange Academy — Africa's first practical school of Integrated Brand Experience. His work spans Africa, the US, and Europe, helping brands, public health institutions, and cities communicate with empathy. HuCon is his global storytelling lab — investigating how empathy shapes the way our cities and institutions listen, respond, and design for real human lives.</p>
+          <p class="founder-bio">Storytelling strategist and a researcher of empathy in storytelling systems. Author of the forthcoming Bloomsbury book <em>Design in Public Health Crises: The Power of Empathy in Visual Storytelling</em> (2026). Founder of Orange Academy, Africa's first practical school of Integrated Brand Experience. His work spans Africa, the US, and Europe, helping brands, public health institutions, and cities communicate with empathy. HuCon is his global storytelling lab, investigating how empathy shapes the way our cities and institutions listen, respond, and design for real human lives.</p>
           <a href="https://kehindebademosi.org" target="_blank" class="founder-link">kehindebademosi.org →</a>
         </div>
       </div>
@@ -620,7 +626,7 @@ window.addEventListener('load', function() {
     { name: 'Valdosta', country: 'USA', lat: 30.8327, lng: -83.2785, done: true, host: 'Unoma Azuah', date: 'Jan 2026' },
     { name: 'Madrid', country: 'Spain', lat: 40.4168, lng: -3.7038, done: true, host: 'Matías González', date: '28 May 2026' },
     { name: 'Barcelona', country: 'Spain', lat: 41.3851, lng: 2.1734, done: true, host: 'Noemí & Albert', date: '29 May 2026' },
-    { name: 'London', country: 'UK', lat: 51.5074, lng: -0.1278, done: false, host: 'Susan Obehioye', date: '27 June 2026' },
+    { name: 'London', country: 'UK', lat: 51.5074, lng: -0.1278, done: true, host: 'Susan Obehioye', date: '27 June 2026' },
   ];
   cities.forEach(city => {
     const icon = city.done ? goldIcon : upcomingIcon;
